@@ -1,0 +1,3 @@
+[submodule "test/validation-agent"]
+	path = test/validation-agent
+	url = https://github.com/EmergenceAI/validation-agent.git
