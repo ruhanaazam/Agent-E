@@ -153,7 +153,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     logger.info(f"Intent: {command}, Task ID: {task_id}")
 
     if start_url:
-        await page.goto(start_url, wait_until='load', timeout=30000)
+        await page.goto(start_url, wait_until='load', timeout=60000)
 
     start_time = time.time()
     current_url = await browser_manager.get_current_url()

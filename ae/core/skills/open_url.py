@@ -4,7 +4,7 @@ from ae.utils.logger import logger
 
 
 async def openurl(url: Annotated[str, "The URL to navigate to. Value must include the protocol (http:// or https://)."],
-            timeout: Annotated[int, "Additional wait time in seconds after initial load."] = 3) -> Annotated[str, "Returns the result of this request in text form"]:
+            timeout: Annotated[int, "Additional wait time in seconds after initial load."] = 6) -> Annotated[str, "Returns the result of this request in text form"]:
     """
     Opens a specified URL in the active browser instance. Waits for an initial load event, then waits for either
     the 'domcontentloaded' event or a configurable timeout, whichever comes first.

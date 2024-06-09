@@ -37,7 +37,6 @@ class Evaluator:
         """
         raise NotImplementedError("This method should be overridden by subclasses.")
 
-
 class StringEvaluator(Evaluator):
     """Evaluates string-based answers using various matching criteria.
 
@@ -100,7 +99,6 @@ class StringEvaluator(Evaluator):
                 case _:
                     logger.info(f"Unknown approach value received: {approach}")
         return score
-
 
 class URLEvaluator(Evaluator):
     """Evaluates if the given URL matches the expected URL criteria defined in the configuration.
@@ -186,7 +184,6 @@ class URLEvaluator(Evaluator):
 
         return score
 
-
 class VQAEvaluator(Evaluator):
     async def __call__(
         self, 
@@ -204,7 +201,7 @@ class VQAEvaluator(Evaluator):
             answer (str | None, optional): Not used in this evaluator.
 
         Returns:
-            float: ???
+            float: 0.0 for failure and 1.0 if the VQA evaluates the task as complete
 
         """
         task_id = task_config["task_id"]
