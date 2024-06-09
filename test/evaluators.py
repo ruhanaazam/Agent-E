@@ -11,10 +11,12 @@ from test.test_utils import evaluate_must_include
 from test.test_utils import evaluate_ua_match
 from typing import Any
 
-from ae.utils.logger import logger
+from ae.utils.logger import logger 
 from playwright.sync_api import CDPSession
 from playwright.sync_api import Page
 
+from .validation_agent import validator
+import os
 
 class Evaluator:
     """Base class for evaluation strategies.
@@ -185,6 +187,38 @@ class URLEvaluator(Evaluator):
         return score
 
 
+class VQAEvaluator(Evaluator):
+    async def __call__(
+        self, 
+        task_config: dict[str, Any], 
+        page: Page, 
+        client: CDPSession, 
+        answer: str
+    ) -> float:
+        """Evaluates the current task using a VQA model
+
+        Parameters:
+            task_config (dict[str, Any]): The task configuration containing evaluation criteria.
+            page (Page): The Playwright page object for the current webpage.
+            client (CDPSession | None, optional): The Chrome DevTools Protocol session object.
+            answer (str | None, optional): Not used in this evaluator.
+
+        Returns:
+            float: ???
+
+        """
+        task_id = task_config["task_id"]
+        task = task_config["intent"]
+        state_seq = []
+        score = 0.0
+        try:
+            state_seq.append({"id":task_id, "path_to_screenshot": f"{os. getcwd()}/test/screenshots/task_{task_id}.png"})
+            score_dict = validator.validate_task_vqa(state_seq, task)
+            score = score_dict["pred_task_completed"]
+        except:
+            print("Screenshot not found...")
+        return score
+
 class HTMLContentEvaluator(Evaluator):
     """Evaluates if specified HTML content or elements appear on the webpage.
 
@@ -328,8 +362,6 @@ class ManualContentEvaluator(Evaluator):
             print(f"Received response: {user_response}")
             raise ValueError("Invalid user response. Please enter 'Pass' or 'Fail'.")
        
-
-
 class EvaluatorComb(Evaluator):
     """Combines multiple evaluators to perform a comprehensive evaluation based on different criteria.
 
@@ -388,6 +420,9 @@ def evaluator_router(task_config: dict[str, Any]) -> EvaluatorComb:
     evaluators: list[Evaluator] = []
     for eval_type in eval_types:
         match eval_type:
+            case "vqa":
+                logger.info("Adding VQA evaluator")
+                evaluators.append(VQAEvaluator())
             case "string_match":
                 logger.info("Adding string evaluator")
                 evaluators.append(StringEvaluator())
