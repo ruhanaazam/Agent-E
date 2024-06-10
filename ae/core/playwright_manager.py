@@ -11,6 +11,8 @@ from ae.core.ui_manager import UIManager
 from ae.utils.js_helper import escape_js_message
 from ae.utils.logger import logger
 
+# Enusres that playwright does not wait for font loading when taking screenshots. Reference: https://github.com/microsoft/playwright/issues/28995
+os.environ["PW_TEST_SCREENSHOT_NO_FONTS_READY"] = "1"
 
 class PlaywrightManager:
     """
