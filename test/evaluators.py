@@ -206,15 +206,15 @@ class VQAEvaluator(Evaluator):
         """
         task_id = task_config["task_id"]
         task = task_config["intent"]
-        state_seq = []
+        state_seq: list[Any] = []
         score = 0.0
         try:
-            state_seq.append({"id":task_id, "path_to_screenshot": f"{os. getcwd()}/test/screenshots/task_{task_id}.png"})
-            score_dict = validator.validate_task_vqa(state_seq, task)
+            state_seq.append({"id":task_id, "path_to_screenshot": f"{os. getcwd()}/test/screenshots/task_{task_id}.png"}) 
+            score_dict = validator.validate_task_vqa(state_seq, task) # type: ignore
             score = score_dict["pred_task_completed"]
         except:
             print("Screenshot not found...")
-        return score
+        return score # type: ignore
 
 class HTMLContentEvaluator(Evaluator):
     """Evaluates if specified HTML content or elements appear on the webpage.

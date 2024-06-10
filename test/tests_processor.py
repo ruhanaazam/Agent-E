@@ -158,9 +158,9 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     start_time = time.time()
     current_url = await browser_manager.get_current_url()
     command_exec_result = await ag.process_command(command, current_url)
-    await page.wait_for_selector('body', timeout=60000)
     try:
-        await page.screenshot(path=f"./test/screenshots/task_{task_id}.png") #try to take a screenshot
+        await page.wait_for_selector('body', timeout=0)
+        await page.screenshot(path=f"./test/screenshots/task_{task_id}.png", timeout=0) #try to take a screenshot
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
 

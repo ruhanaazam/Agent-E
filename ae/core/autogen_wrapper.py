@@ -11,7 +11,8 @@ import re
 #from autogen import Cache
 from dotenv import load_dotenv
 from ae.core.agents.browser_nav_agent import BrowserNavAgent
-from ae.core.agents.high_level_planner_agent import PlannerAgent  
+from ae.core.agents.high_level_planner_agent import PlannerAgent 
+from ae.core.agents.task_verification_agent  import VerificationAgent #todo: add verification agent here 
 from ae.core.prompts import LLM_PROMPTS
 from ae.utils.logger import logger
 from ae.core.skills.get_url import geturl
@@ -53,7 +54,8 @@ class AutogenWrapper:
         """
         print(f">>> Creating AutogenWrapper with {agents_needed} and {max_chat_round} rounds.")
         if agents_needed is None:
-            agents_needed = ["user", "browser_nav_executor", "planner_agent", "browser_nav_agent"]
+            agents_needed = ["user", "browser_nav_executor", "planner_agent", "browser_nav_agent", "self_validator_agent"]
+        
         # Create an instance of cls
         self = cls(max_chat_round)
         load_dotenv()
@@ -175,10 +177,12 @@ class AutogenWrapper:
             elif agent_needed == "planner_agent":
                 planner_agent = self.__create_planner_agent(user_delegate_agent)
                 agents_map["planner_agent"] = planner_agent
+            elif agent_needed == "self_validator_agent":
+                self_validator_agent = self.__create_self_validator_agent() # type: ignore
+                agents_map["self_validator_agent"] = self_validator_agent
             else:
                 raise ValueError(f"Unknown agent type: {agent_needed}")
         return agents_map
-
 
     async def __create_user_delegate_agent(self) -> autogen.ConversableAgent:
         """
@@ -240,7 +244,7 @@ class AutogenWrapper:
             name="browser_nav_executor",
             is_termination_msg=is_browser_executor_termination_message,
             human_input_mode="NEVER",
-            llm_config=None,
+            llm_config=False,
             max_consecutive_auto_reply=self.number_of_rounds,
             code_execution_config={
                                 "last_n_messages": 1,
@@ -267,6 +271,11 @@ class AutogenWrapper:
         #print(">>> browser agent tools:", json.dumps(browser_nav_agent.agent.llm_config.get("tools"), indent=2))
         print(">>> browser_nav_agent:", browser_nav_agent.agent)
         return browser_nav_agent.agent
+
+    def __create_self_validator_agent(self) -> autogen.ConversableAgent: # type: ignore
+        self_validator_agent = VerificationAgent(self.config_list) # type: ignore
+        print(">>> self_validator_agent:", self_validator_agent.agent)
+        return self_validator_agent.agent
 
     def __create_planner_agent(self, assistant_agent: autogen.ConversableAgent):
         """
@@ -306,7 +315,8 @@ class AutogenWrapper:
             print(f">>> browser_nav_executor: {self.agents_map['browser_nav_executor']}")
             print(self.agents_map["browser_nav_executor"].function_map) # type: ignore
             
-            result=await self.agents_map["user"].a_initiate_chat( # type: ignore
+            # Get the plan from the planner agent
+            plan_result=await self.agents_map["user"].a_initiate_chat( # type: ignore
                 self.agents_map["planner_agent"], # self.manager # type: ignore
                 max_turns=self.number_of_rounds,
                 #clear_history=True,
@@ -314,7 +324,33 @@ class AutogenWrapper:
                 silent=False,
                 cache=None,
             )
-            return result
+            return plan_result
+
+            # # Validate the plan with the validator agent
+            # validation_prompt = Template(LLM_PROMPTS["VALIDATION_PROMPT"]).substitute(plan=plan_result.message) # type: ignore
+            # validation_result = await self.agents_map["user"].a_initiate_chat( # type: ignore
+            #     self.agents_map["validator_agent"],
+            #     max_turns=self.number_of_rounds,
+            #     message=validation_prompt,
+            #     silent=False,
+            #     cache=None,
+            # )
+            
+            # # Check validation result and proceed accordingly
+            # if "approve" in validation_result.message.lower():
+            #     logger.info("Plan approved by validator agent. Proceeding with execution.")
+            #     # Proceed with the execution or further processing
+            #     # ...
+            #     return plan_result
+            # else:
+            #     logger.warning("Plan not approved by validator agent. Adjustments needed.")
+            #     # Handle adjustments or re-planning
+            #     # ...
+            #     return validation_result
+            
+
+            # return validation_result
+        
         except openai.BadRequestError as bre:
             logger.error(f"Unable to process command: \"{command}\". {bre}")
             traceback.print_exc()

@@ -1,5 +1,3 @@
-from string import Template
-
 import autogen  # type: ignore
 from typing import Union
 from typing import Tuple, Optional
@@ -20,15 +18,16 @@ class VerificationAgent:
         - user_proxy_agent: An instance of the UserProxyAgent class.
         """
 
-        user_ltm = self.__get_ltm()
-        system_message = LLM_PROMPTS["PLANNER_AGENT_PROMPT"]
+        user_ltm = self.__get_ltm() # type: ignore
+        system_message = LLM_PROMPTS["VERFICATION_AGENT"]
         print(f">>> Verifier system_message: {system_message}")
-        if user_ltm: #add the user LTM to the system prompt if it exists
-            user_ltm = "\n" + user_ltm
-            system_message = Template(system_message).substitute(basic_user_information=user_ltm)
+        
+        # if user_ltm: #add the user LTM to the system prompt if it exists
+        #     user_ltm = "\n" + user_ltm
+        #     system_message = Template(system_message).substitute(basic_user_information=user_ltm)
 
         self.agent = autogen.ConversableAgent(
-            name="planner_agent",
+            name="self_validator_agent",
             system_message=system_message,
             llm_config={
                 "config_list": config_list,
@@ -56,3 +55,4 @@ class VerificationAgent:
         print(f">>> generate_oai_reply: {messages}")
         print(f">>> Header: {Header}")
         return True, "Hello from PlannerAgent"
+    
