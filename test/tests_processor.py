@@ -153,14 +153,14 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     logger.info(f"Intent: {command}, Task ID: {task_id}")
 
     if start_url:
-        await page.goto(start_url, wait_until='load', timeout=60000)
+        await page.goto(start_url, wait_until='load', timeout=150000)
 
     start_time = time.time()
     current_url = await browser_manager.get_current_url()
     command_exec_result = await ag.process_command(command, current_url)
     try:
         await page.wait_for_selector('body', timeout=0)
-        await page.screenshot(path=f"./test/screenshots/task_{task_id}.png", timeout=0) #try to take a screenshot
+        await page.screenshot(path=f"./test/screenshots/task_{task_id}.png", full_page=True, timeout=0) #try to take a screenshot
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
 
@@ -285,10 +285,11 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
     total_cost = sum(result["compute_cost"].get("cost", 0) for result in test_results) # type: ignore
     total_tokens = sum(result["compute_cost"].get("total_tokens", 0) for result in test_results) # type: ignore
 
+    unlabled_tests = [result for result in test_results if result['score'] == -1]
     passed_tests = [result for result in test_results if result['score'] == 1]
     summary_table = [ # type: ignore
         ['Total Tests', 'Passed', 'Failed', 'Average Time Taken (s)', 'Total Time Taken (s)', 'Total Tokens', 'Total Cost ($)'],
-        [total_tests, len(passed_tests), total_tests - len(passed_tests),
+        [total_tests, len(passed_tests), total_tests - len(passed_tests)-len(unlabled_tests),
          round(sum(test['tct'] for test in test_results) / total_tests, 2), # type: ignore
          round(sum(test['tct'] for test in test_results), 2),  # type: ignore
          total_tokens, total_cost]
