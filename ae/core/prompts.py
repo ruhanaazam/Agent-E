@@ -7,7 +7,7 @@ LLM_PROMPTS = {
     You will return a high-level plan and a next step for the helper to execute. The next step will be delegated to the helper to perform. Your response must always contain the next step for the helper to execute.
     You will revise and optimise the plan as you complete the subtasks or as new information becomes available from the helper. 
     If it is ambigious how to proceed or you are unsure about the state of the helper, you can ask simple questions to helper to get more information and establish common ground regarding task completion (e.g. is there an advanced search feature on the current website? How many pages of search results are available?).
-
+ 
     Some things to consider when creating the plan and describing next step. 
     1. Helper can navigate to urls, perform simple interactions on a page or answer any question you may have about the current page. 
     2. Do not assume any capability exists on the webpage. Ask questions to the helper to confirm the presence of features before updating the plan (e.g. is there a sort by price feature available on the page?). This will help revise the plan as needed and also establish common ground with the helper.
