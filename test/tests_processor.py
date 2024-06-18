@@ -233,6 +233,14 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     command_exec_result = await ag.process_command(command, current_url)
     end_time = time.time()
 
+    # Take a screenshot after completing a single task
+    try:
+        await page.wait_for_selector('body', timeout=0)
+        await page.screenshot(path=f"./test/screenshots/temp/task_{task_id}.png", full_page=True, timeout=0)
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+
+    
     evaluator_result: dict[str, float | str] = {}
     last_agent_response: str = ""
     command_cost: dict[str, Any] = {}
@@ -412,5 +420,4 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
 
     print('\nSummary Report:')
     print(tabulate(summary_table, headers='firstrow', tablefmt='grid')) # type: ignore
-
     return test_results

@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from nltk.tokenize import word_tokenize  # type: ignore
 from openai import OpenAI
 
+from PIL import Image
+
 load_dotenv()
 client = OpenAI()
 
@@ -261,3 +263,25 @@ def get_formatted_current_timestamp(format: str = "%Y-%m-%d %H:%M:%S") -> str:
     # Format the timestamp as a human-readable string
     timestamp_str = current_time.strftime(format)
     return timestamp_str
+
+
+
+
+def compress_png(file_path, max_size_mb=20, reduce_factor=0.9):
+    try:
+        file_size_mb = os.path.getsize(file_path) / (1024 * 1024)
+        while file_size_mb > max_size_mb:
+            print(f"Compressing {file_path} (Initial Size: {file_size_mb:.2f} MB)")
+            with Image.open(file_path) as img:
+                width, height = img.size
+                new_width = int(width * reduce_factor)
+                new_height = int(height * reduce_factor)
+                img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                img.save(file_path, optimize=True)
+                file_size_mb = os.path.getsize(file_path) / (1024 * 1024)
+                print(f"Resized to: {new_width}x{new_height}, Size: {file_size_mb:.2f} MB")
+        print(f"Final Size of {file_path}: {file_size_mb:.2f} MB")
+        return file_size_mb <= max_size_mb
+    except Exception as e:
+        print(f"Error compressing {file_path}: {e}")
+        return False
