@@ -57,3 +57,20 @@ def parse_response(message: str) -> Dict[str, Any]:
                 json_response["terminate"] = "no"
     
     return json_response
+
+def isPlanValid(messages):
+    """
+    Given a list of messages from a chat, will determine if the latest plan has been validated.
+    """
+
+    # Find the lastest response from the validator
+    for message in messages: 
+        content = message.get("content", None)
+        role = message.get("name", None)
+
+        # Return the response given by the validator
+        if role == "validator":
+            content_json=parse_response(content)
+            valid = content_json.get("valid_plan", None)
+            return valid == "yes"
+    return False

@@ -22,6 +22,7 @@ from ae.core.prompts import LLM_PROMPTS
 from ae.utils.logger import logger
 from ae.utils.autogen_sequential_function_call import UserProxyAgent_SequentialFunctionExecution
 from ae.utils.response_parser import parse_response
+from ae.utils.response_parser import isPlanValid
 from ae.core.skills.get_url import geturl
 import nest_asyncio # type: ignore
 from ae.core.post_process_responses import final_reply_callback_planner_agent as print_message_from_planner  # type: ignore
@@ -93,27 +94,67 @@ class AutogenWrapper:
         with tempfile.NamedTemporaryFile(delete=False, mode='w') as temp:
             json.dump(env_var, temp)
             temp_file_path = temp.name
-
         self.config_list = autogen.config_list_from_json(env_or_file=temp_file_path, filter_dict={"model": {autogen_model_name}}) # type: ignore
-        self.agents_map = await self.__initialize_agents(agents_needed)
         
+        # Intialize inividual agents
+        self.agents_map = await self.__initialize_agents(agents_needed)   
+        # Intialize group chat and group chat manager
+        user_agent = self.agents_map["user"]
+        planner_agent = self.agents_map["planner_agent"]
+        validator_agent = self.agents_map["validator_agent"]
+        
+        def state_transition(last_speaker, groupchat):
+            if last_speaker is user_agent:
+                return planner_agent
+            if last_speaker is planner_agent:
+                return validator_agent
+            if last_speaker is validator_agent:
+                return planner_agent
+            print(f"Speaker is {last_speaker}")
+            return None
+        groupchat = autogen.GroupChat(
+            agents=[user_agent, planner_agent, validator_agent], 
+            messages=[], 
+            max_round=12,
+            speaker_selection_method=state_transition,
+            )
+        self.manager = autogen.GroupChatManager(
+            groupchat=groupchat, 
+            llm_config={
+                    "config_list": self.config_list,
+                    "cache_seed": None,
+                    "temperature": 0.0
+                },
+            )
+            
         def trigger_nested_chat(manager: autogen.ConversableAgent):
-            content:str=manager.last_message()["content"] # type: ignore
+            messages = manager.chat_messages[planner_agent][-1] # This chat is shared among all in the group chat
+            content:str= messages.get("content", None) # type: ignore
             content_json=parse_response(content)
             next_step = content_json.get('next_step', None)
             plan = content_json.get('plan', None)
+            
+            # Cap validation after max iterations is met
+            if len(messages) == 10: 
+                return True
+            
+            # Find the lastest call to the validator
+            valid_plan = isPlanValid(manager.chat_messages[planner_agent]) 
+
             if plan is not None:
                 print_message_from_planner("Plan: "+ str(plan))
-            print(f"Next Step: {next_step}")
+            print(f"Checking nested_chat trigger...\nValid Plan: {valid_plan}, Next Step: {next_step}\n")
             if next_step is None: 
-                print_message_from_planner("Received no response, terminating..") # type: ignore
-                print("Trigger nested chat returned False")
+                print_message_from_planner("Received no next step response, terminating..") # type: ignore
                 return False
-            else:
-                print_message_from_planner(next_step) # type: ignore
+            if valid_plan is None:
+                print_message_from_planner("Received no valid_plan response, terminating..") # type: ignore
+                return False
+            if valid_plan and next_step:
+                print_message_from_planner(next_step)
                 return True 
+            return False
 
-        
         def get_url() -> str:
             return asyncio.run(geturl())
 
@@ -142,7 +183,7 @@ class AutogenWrapper:
                 return next_step # type: ignore
 
         print(f">>> Registering nested chat. Available agents: {self.agents_map}")
-        self.agents_map["user"].register_nested_chats( # type: ignore
+        self.agents_map["validator_agent"].register_nested_chats( # type: ignore
             [
                 {
             "sender": self.agents_map["browser_nav_executor"],
@@ -207,10 +248,14 @@ class AutogenWrapper:
         agents_map["browser_nav_executor"] = browser_nav_executor
         agents_needed.remove("browser_nav_executor")
         
+        agents_needed.append("validator_agent")
         for agent_needed in agents_needed:
             if agent_needed == "browser_nav_agent":
                 browser_nav_agent: autogen.ConversableAgent = self.__create_browser_nav_agent(agents_map["browser_nav_executor"] )
                 agents_map["browser_nav_agent"] = browser_nav_agent
+            elif agent_needed == "validator_agent":
+                validator_agent = self.__create_validator_agent()
+                agents_map["validator_agent"] = validator_agent
             elif agent_needed == "planner_agent":
                 planner_agent = self.__create_planner_agent(user_delegate_agent)
                 agents_map["planner_agent"] = planner_agent
@@ -310,6 +355,19 @@ class AutogenWrapper:
         """
         planner_agent = PlannerAgent(self.config_list, assistant_agent) # type: ignore
         return planner_agent.agent
+    
+    def __create_validator_agent(self,):
+        validator_agent = autogen.AssistantAgent(
+            name="validator",
+            system_message="You are an agent which verifies a solution by providing showing step-by-step how to get to the solution. Write your solution in the form of a json object with two objects -- valid_plan and feedback, e.g. {\"valid_plan\": \"yes\", \"feedback\": \"The solution looks correct because...\" }. Your feedback should be simple to help a 5 year solve the given problem.",
+            llm_config={
+                "config_list": self.config_list,
+                "cache_seed": None,
+                "temperature": 0.0
+            },
+            human_input_mode="NEVER",
+        )
+        return validator_agent
 
     async def process_command(self, command: str, current_url: str | None = None) -> autogen.ChatResult | None:
         """
@@ -334,9 +392,8 @@ class AutogenWrapper:
             if self.agents_map is None:
                 raise ValueError("Agents map is not initialized.")
             print(self.agents_map["browser_nav_executor"].function_map) # type: ignore
-            
             result=await self.agents_map["user"].a_initiate_chat( # type: ignore
-                self.agents_map["planner_agent"], # self.manager # type: ignore
+                self.manager,
                 max_turns=self.number_of_rounds,
                 #clear_history=True,
                 message=prompt,
@@ -352,5 +409,3 @@ class AutogenWrapper:
             logger.error(f"Unable to process command: \"{command}\". {bre}")
             traceback.print_exc()
 
-
-    
