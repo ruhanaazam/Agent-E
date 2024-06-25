@@ -22,7 +22,7 @@ from ae.core.prompts import LLM_PROMPTS
 from ae.utils.logger import logger
 from ae.utils.autogen_sequential_function_call import UserProxyAgent_SequentialFunctionExecution
 from ae.utils.response_parser import parse_response
-from ae.utils.response_parser import isPlanValid
+from ae.utils.response_parser import isPlanValid, getLastPlannerMessage, getLastValidationMessage
 from ae.core.skills.get_url import geturl
 import nest_asyncio # type: ignore
 from ae.core.post_process_responses import final_reply_callback_planner_agent as print_message_from_planner  # type: ignore
@@ -104,6 +104,13 @@ class AutogenWrapper:
         validator_agent = self.agents_map["validator_agent"]
         
         def state_transition(last_speaker, groupchat):
+            # If plan is valid always trigger the planner
+            messages = groupchat.messages
+            isValid = isPlanValid(messages)
+            if isValid:
+                return planner_agent
+            
+            # While the plan in  not valid, do the following
             if last_speaker is user_agent:
                 return planner_agent
             if last_speaker is planner_agent:
@@ -127,17 +134,24 @@ class AutogenWrapper:
                 },
             )
             
-        def trigger_nested_chat(manager: autogen.ConversableAgent):
-            messages = manager.chat_messages[planner_agent][-1] # This chat is shared among all in the group chat
-            content:str= messages.get("content", None) # type: ignore
-            content_json=parse_response(content)
-            next_step = content_json.get('next_step', None)
-            plan = content_json.get('plan', None)
-            
+        def trigger_nested_chat(manager: autogen.ConversableAgent) -> bool:
+            messages = manager.chat_messages[planner_agent] # This chat is shared among all in the group chat
+                        
             # Cap validation after max iterations is met
             if len(messages) == 10: 
                 return True
             
+            lastValMessage = getLastValidationMessage(messages)
+            lastPlanMessage = getLastPlannerMessage(messages)
+            
+            if not lastValMessage or not lastPlanMessage:
+                return False # Plan or validation is missing
+            
+            content:str= lastPlanMessage.get("content", None) # type: ignore
+            content_json=parse_response(content)
+            next_step = content_json.get('next_step', None)
+            plan = content_json.get('plan', None)
+
             # Find the lastest call to the validator
             valid_plan = isPlanValid(manager.chat_messages[planner_agent]) 
 
@@ -358,7 +372,7 @@ class AutogenWrapper:
     
     def __create_validator_agent(self,):
         validator_agent = autogen.AssistantAgent(
-            name="validator",
+            name="validator_agent",
             system_message="You are an agent which verifies a solution by providing showing step-by-step how to get to the solution. Write your solution in the form of a json object with two objects -- valid_plan and feedback, e.g. {\"valid_plan\": \"yes\", \"feedback\": \"The solution looks correct because...\" }. Your feedback should be simple to help a 5 year solve the given problem.",
             llm_config={
                 "config_list": self.config_list,

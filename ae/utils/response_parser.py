@@ -1,3 +1,4 @@
+from audioop import reverse
 import json
 from typing import Dict, Any
 
@@ -62,9 +63,8 @@ def isPlanValid(messages):
     """
     Given a list of messages from a chat, will determine if the latest plan has been validated.
     """
-
     # Find the lastest response from the validator
-    for message in messages: 
+    for message in reversed(messages): 
         content = message.get("content", None)
         role = message.get("name", None)
 
@@ -74,3 +74,23 @@ def isPlanValid(messages):
             valid = content_json.get("valid_plan", None)
             return valid == "yes"
     return False
+
+def getLastValidationMessage(messages):
+    for message in reversed(messages): 
+        content = message.get("content", None)
+        role = message.get("name", None)
+
+        # Return the response given by the validator
+        if role == "validator":
+            return message
+    return None
+
+def getLastPlannerMessage(messages):
+    for message in reversed(messages): 
+        content = message.get("content", None)
+        role = message.get("name", None)
+
+        # Return the response given by the planner
+        if role == "planner":
+            return message
+    return None
