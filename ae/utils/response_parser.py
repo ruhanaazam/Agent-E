@@ -59,38 +59,48 @@ def parse_response(message: str) -> Dict[str, Any]:
     
     return json_response
 
+def getLastValidationMessage(messages):
+    """
+    Given a list of messages from a chat, will find the last message from the validator_agent 
+    """
+    for message in reversed(messages): 
+        role = message.get("name", None)
+
+        # Return the response given by the validator
+        if role == "validator_agent":
+            content = message.get("content", None)
+            content_json=parse_response(content)
+            return content_json
+    return None
+
+def getLastPlannerMessage(messages):
+    """
+    Given a list of messages from a chat, will find the last message from the planner_agent 
+    """
+    for message in reversed(messages): 
+        role = message.get("name", None)
+
+        # Return the parsed response given by the planner
+        if role == "planner_agent":
+            content = message.get("content", None)
+            content_json=parse_response(content)
+            return content_json
+    return None
+
 def isPlanValid(messages):
     """
     Given a list of messages from a chat, will determine if the latest plan has been validated.
     """
-    # Find the lastest response from the validator
-    for message in reversed(messages): 
-        content = message.get("content", None)
-        role = message.get("name", None)
-
-        # Return the response given by the validator
-        if role == "validator":
-            content_json=parse_response(content)
-            valid = content_json.get("valid_plan", None)
-            return valid == "yes"
+    content = getLastValidationMessage(messages)
+    if content:
+        return content.get("valid_plan", None) == "yes"
     return False
 
-def getLastValidationMessage(messages):
-    for message in reversed(messages): 
-        content = message.get("content", None)
-        role = message.get("name", None)
-
-        # Return the response given by the validator
-        if role == "validator":
-            return message
-    return None
-
-def getLastPlannerMessage(messages):
-    for message in reversed(messages): 
-        content = message.get("content", None)
-        role = message.get("name", None)
-
-        # Return the response given by the planner
-        if role == "planner":
-            return message
-    return None
+def isTerminate(messages):
+    """
+    Given a list of messages from a chat, will determine if the task should be terminated
+    """
+    content = getLastPlannerMessage(messages)
+    if content:
+        return content.get("terminate", None) == "yes"
+    return False

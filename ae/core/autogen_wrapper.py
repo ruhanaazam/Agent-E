@@ -1,4 +1,5 @@
 import asyncio
+from email import message
 import json
 import os
 import re
@@ -22,7 +23,7 @@ from ae.core.prompts import LLM_PROMPTS
 from ae.utils.logger import logger
 from ae.utils.autogen_sequential_function_call import UserProxyAgent_SequentialFunctionExecution
 from ae.utils.response_parser import parse_response
-from ae.utils.response_parser import isPlanValid, getLastPlannerMessage, getLastValidationMessage
+from ae.utils.response_parser import getLastPlannerMessage, getLastValidationMessage, isPlanValid, isTerminate
 from ae.core.skills.get_url import geturl
 import nest_asyncio # type: ignore
 from ae.core.post_process_responses import final_reply_callback_planner_agent as print_message_from_planner  # type: ignore
@@ -98,27 +99,37 @@ class AutogenWrapper:
         
         # Intialize inividual agents
         self.agents_map = await self.__initialize_agents(agents_needed)   
+        
         # Intialize group chat and group chat manager
         user_agent = self.agents_map["user"]
         planner_agent = self.agents_map["planner_agent"]
         validator_agent = self.agents_map["validator_agent"]
         
         def state_transition(last_speaker, groupchat):
-            # If plan is valid always trigger the planner
+            print(f"Speaker is {last_speaker.name}")
             messages = groupchat.messages
-            isValid = isPlanValid(messages)
-            if isValid:
-                return planner_agent
             
-            # While the plan in  not valid, do the following
+            # Always call planner when last agent was user
             if last_speaker is user_agent:
                 return planner_agent
+            
+            # Call user when plan is valid 
+            isValid = isPlanValid(messages)
+            if isValid:
+                return user_agent
+            
+            # Call user when task is completed
+            shouldTerminate = isTerminate(messages)
+            if shouldTerminate:
+                return user_agent
+            
+            # While the plan in not valid, continue validation
             if last_speaker is planner_agent:
                 return validator_agent
             if last_speaker is validator_agent:
                 return planner_agent
-            print(f"Speaker is {last_speaker}")
             return None
+        
         groupchat = autogen.GroupChat(
             agents=[user_agent, planner_agent, validator_agent], 
             messages=[], 
@@ -135,8 +146,15 @@ class AutogenWrapper:
             )
             
         def trigger_nested_chat(manager: autogen.ConversableAgent) -> bool:
-            messages = manager.chat_messages[planner_agent] # This chat is shared among all in the group chat
-                        
+            print("Checking trigger_nested_chat()...")
+            
+            messages = manager.chat_messages[planner_agent] # this chat is shared
+            
+            # Do not trigger nested chat if if was just called
+            lastAgent = messages[-1].get("name", None)
+            if lastAgent == "user":
+                return False
+                    
             # Cap validation after max iterations is met
             if len(messages) == 10: 
                 return True
@@ -145,24 +163,20 @@ class AutogenWrapper:
             lastPlanMessage = getLastPlannerMessage(messages)
             
             if not lastValMessage or not lastPlanMessage:
-                return False # Plan or validation is missing
+                return False # Either plan or validation is missing
             
-            content:str= lastPlanMessage.get("content", None) # type: ignore
-            content_json=parse_response(content)
-            next_step = content_json.get('next_step', None)
-            plan = content_json.get('plan', None)
+            next_step = lastPlanMessage.get('next_step', None)
+            plan = lastPlanMessage.get('plan', None)
+            valid_plan = lastValMessage.get("valid_plan", None) == "yes"
 
-            # Find the lastest call to the validator
-            valid_plan = isPlanValid(manager.chat_messages[planner_agent]) 
-
+            print(f"valid_plan: {valid_plan}, next_step: {next_step}")
             if plan is not None:
                 print_message_from_planner("Plan: "+ str(plan))
-            print(f"Checking nested_chat trigger...\nValid Plan: {valid_plan}, Next Step: {next_step}\n")
             if next_step is None: 
-                print_message_from_planner("Received no next step response, terminating..") # type: ignore
+                print_message_from_planner("Received no next step response, terminating..") 
                 return False
             if valid_plan is None:
-                print_message_from_planner("Received no valid_plan response, terminating..") # type: ignore
+                print_message_from_planner("Received no valid_plan response, terminating..")
                 return False
             if valid_plan and next_step:
                 print_message_from_planner(next_step)
@@ -186,18 +200,18 @@ class AutogenWrapper:
             return recipient.last_message(sender)["content"] # type: ignore
         
         def reflection_message(recipient, messages, sender, config): # type: ignore
-            last_message=messages[-1]["content"] # type: ignore
-            content_json = parse_response(last_message)
-            next_step = content_json.get('next_step', None)
+            last_message=getLastPlannerMessage(messages)
+            next_step = last_message.get('next_step', None)
             if next_step is None: 
                 print ("Message to nested chat returned None")
                 return None
             else:
                 next_step = next_step.strip() +" " + get_url() # type: ignore
+                print(f"Message to nested chat: {next_step}")
                 return next_step # type: ignore
 
         print(f">>> Registering nested chat. Available agents: {self.agents_map}")
-        self.agents_map["validator_agent"].register_nested_chats( # type: ignore
+        self.agents_map["user"].register_nested_chats( # type: ignore
             [
                 {
             "sender": self.agents_map["browser_nav_executor"],
@@ -287,12 +301,15 @@ class AutogenWrapper:
 
         """
         def is_planner_termination_message(x: dict[str, str])->bool: # type: ignore
-             should_terminate = False
-             content:Any = x.get("content", "") 
-             if content is None:
+            print(f"Checking is_planner_termination_message()...{x}")
+            if x.get("name", None) != "planner_agent":
+                return False
+            should_terminate = False
+            content:Any = x.get("content", "") 
+            if content is None:
                 content = ""
                 should_terminate = True
-             else:
+            else:
                 try:
                     content_json = parse_response(content)
                     _terminate = content_json.get('terminate', "no")
@@ -301,15 +318,14 @@ class AutogenWrapper:
                 except json.JSONDecodeError:
                     print("Error decoding JSON content")
                     should_terminate = True
-            
-             return should_terminate # type: ignore
+            return should_terminate # type: ignore
         
         task_delegate_agent = autogen.ConversableAgent(
             name="user",
             llm_config=False, 
             system_message=LLM_PROMPTS["USER_AGENT_PROMPT"],
             is_termination_msg=is_planner_termination_message, # type: ignore
-            human_input_mode="NEVER",
+            human_input_mode="NEVER", 
             max_consecutive_auto_reply=self.number_of_rounds,
         )
         return task_delegate_agent
@@ -373,7 +389,7 @@ class AutogenWrapper:
     def __create_validator_agent(self,):
         validator_agent = autogen.AssistantAgent(
             name="validator_agent",
-            system_message="You are an agent which verifies a solution by providing showing step-by-step how to get to the solution. Write your solution in the form of a json object with two objects -- valid_plan and feedback, e.g. {\"valid_plan\": \"yes\", \"feedback\": \"The solution looks correct because...\" }. Your feedback should be simple to help a 5 year solve the given problem.",
+            system_message="You are an agent which is an expert at navigating the web. Given a task and a plan, your job is to predict if a plan will execute successfully and in the most effecient manner. If you believe the plan will not be succeessful and effecient, place provide feedback on what can be inproved. Write your solution in the form of a json object with two objects -- valid_plan and feedback, e.g. {\"valid_plan\": \"no\", \"feedback\": \"This plan is not the most effecient, instead of googling amazon.com, you can directly go to amazon.com by typing into the url bar.\" }.",
             llm_config={
                 "config_list": self.config_list,
                 "cache_seed": None,

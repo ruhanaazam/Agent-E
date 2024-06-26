@@ -25,7 +25,8 @@ class PlannerAgent:
         if user_ltm: #add the user LTM to the system prompt if it exists
             user_ltm = "\n" + user_ltm
             system_message = Template(system_message).substitute(basic_user_information=user_ltm)
-        system_message = system_message + "\n" + f"Today's date is {datetime.now().strftime('%d %B %Y')}"
+        system_message = system_message + "\n" + f"Today's date is {datetime.now().strftime('%d %B %Y')}" 
+        
         self.agent = autogen.AssistantAgent(
             name="planner_agent",
             system_message=system_message,
