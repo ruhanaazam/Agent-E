@@ -25,6 +25,7 @@ nltk.download('punkt') # type: ignore
 TEST_TASKS = os.path.join(PROJECT_TEST_ROOT, 'tasks')
 TEST_LOGS = os.path.join(PROJECT_TEST_ROOT, 'logs')
 TEST_RESULTS = os.path.join(PROJECT_TEST_ROOT, 'results')
+MAX_TIMEOUT: int = int(os.getenv("MAX_TIMEOUT", 30000))
 
 last_agent_response = ""
 
@@ -226,7 +227,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     logger.info(f"Intent: {command}, Task ID: {task_id}")
 
     if start_url:
-        await page.goto(start_url, wait_until='load', timeout=30000)
+        await page.goto(start_url, wait_until='load', timeout=MAX_TIMEOUT)
 
     start_time = time.time()
     current_url = await browser_manager.get_current_url()
