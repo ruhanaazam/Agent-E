@@ -1,4 +1,5 @@
 from audioop import reverse
+from email import message
 import json
 from typing import Dict, Any
 
@@ -104,3 +105,17 @@ def isTerminate(messages):
     if content:
         return content.get("terminate", None) == "yes"
     return False
+
+def getIntent(messages: Optional[List[Dict[str, Any]]])-> str | None:
+    '''
+    Get the intent from the user agent's message
+    '''
+    message:str = messages[0]
+    try:
+        content = message.get("content", None)
+        start, end = content.find('\"') + 1, content.find('\"', start_index)
+        intent = content[start:end]
+        return intent
+    except:
+        print("No intent found in the chat messages.")
+    return None
