@@ -18,7 +18,6 @@ class PlannerAgent:
         - config_list: A list of configuration parameters required for AssistantAgent.
         - user_proxy_agent: An instance of the UserProxyAgent class.
         """
-
         user_ltm = self.__get_ltm()
         system_message = LLM_PROMPTS["PLANNER_AGENT_PROMPT"]
         print(f">>> Planner system_message: {system_message}")
@@ -36,18 +35,6 @@ class PlannerAgent:
                 "temperature": 0.0
             },
         )
-
-        # # Register get_user_input skill for LLM by assistant agent
-        # self.agent.register_for_llm(description=LLM_PROMPTS["GET_USER_INPUT_PROMPT"])(get_user_input)
-        # # Register get_user_input skill for execution by user_proxy_agent
-        # user_proxy_agent.register_for_execution()(get_user_input)
-
-        # self.agent.register_reply( # type: ignore
-        #     [autogen.AssistantAgent, None],
-        #     reply_func=print_message_as_planner,
-        #     config={"callback": None},
-        #     ignore_async_in_sync_chat=True
-        # )
 
     def __get_ltm(self):
         """

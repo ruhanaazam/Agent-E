@@ -120,8 +120,13 @@ class AutogenWrapper:
                 return validator_agent
             
             # When task is not valid
-            if last_speaker is validator_agent:
-                return user_agent # alternatively could be planner agent...
+            if last_speaker is validator_agent: #possible to split this into two
+                message = messages[-1]
+                content = message.get("content", None)
+                if content == "The task was completed successfully.":
+                    return user_agent # The user agent is expected to terminate
+                else:
+                    return planner_agent # Continue planning with new feedback
             
             # Until task is complete, go between validation and user agent
             if last_speaker is planner_agent:
@@ -297,7 +302,7 @@ class AutogenWrapper:
             Return:
                 Boolean determining if the intent was completed.
             '''
-            print(f"Checking is_planner_termination_message()...{x}")
+            print(f"Checking is_planner_termination_message()...")
             if x.get("name", None) != "validator_agent":
                 return False
             
@@ -369,22 +374,14 @@ class AutogenWrapper:
 
         Returns:
             autogen.AssistantAgent: An instance of PlannerAgent.
-
         """
         planner_agent = PlannerAgent(self.config_list, assistant_agent) # type: ignore
         return planner_agent.agent
     
     def __create_validator_agent(self,):
-        # intialize validator agent
+        # intialize the validator agent
         validator_agent = ValidationAgent(
             name="validator_agent",
-            # system_message="You are an agent which is an expert at navigating the web. Given a task and a plan, your job is to predict if a plan will execute successfully and in the most effecient manner. If you believe the plan will not be succeessful and effecient, place provide feedback on what can be inproved. Write your solution in the form of a json object with two objects -- valid_plan and feedback, e.g. {\"valid_plan\": \"no\", \"feedback\": \"This plan is not the most effecient, instead of googling amazon.com, you can directly go to amazon.com by typing into the url bar.\" }.",
-            # llm_config={
-            #     "config_list": self.config_list,
-            #     "cache_seed": None,
-            #     "temperature": 0.0
-            # },
-            # is_termination_msg=is_planner_termination_message,
             human_input_mode="NEVER",
         )
         return validator_agent
