@@ -196,6 +196,5 @@ Revise search query if needed, ask for more information if needed, and always ve
 
    By following these guidelines, you will enhance the efficiency, reliability, and user interaction of your web navigation tasks.
    Always aim for clear, concise, and well-structured code that aligns with best practices in asynchronous programming and web automation.
-   """,
-   "SELF_VALIDATION_PROMPT": "Given a plan and a task, provides feedback on weather the plan is valid before executing the task. Every plan needs to be validated before it can executed so this skill must be called until it is labeled as valid!",
+   """
 }

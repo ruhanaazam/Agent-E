@@ -14,7 +14,7 @@ from ae.config import PROJECT_TEST_ROOT
 from ae.core.autogen_wrapper import AutogenWrapper
 from ae.core.playwright_manager import PlaywrightManager
 from ae.utils.logger import logger
-from ae.utils.response_parser import parse_response
+from ae.utils.response_parser import parse_response, getLastPlannerMessage
 from autogen.agentchat.chat import ChatResult  # type: ignore
 from playwright.async_api import Page
 from tabulate import tabulate
@@ -100,12 +100,15 @@ def extract_last_response(messages: list[dict[str, Any]]) -> str:
     """Extract the last response message from chat history."""
     try:
         # Iterate over the messages in reverse order
-        for message in reversed(messages):
-            if message and 'content' in message:
-                content=message.get('content', "")
-                content_json = parse_response(content)
-                final_answer = content_json.get('final_response', None)
-                if final_answer:
+        for message in reversed(messages): 
+            role = message.get("role", None)
+            
+            # Return the final_response from the planner
+            if role == "assistant":
+                content = message.get("content", None)
+                content_json=parse_response(content)
+                if "final_response" in content_json:
+                    final_answer = content_json.get('final_response', None)
                     return final_answer
         return ""
     except:

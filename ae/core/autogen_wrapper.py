@@ -19,11 +19,12 @@ from dotenv import load_dotenv
 from ae.config import SOURCE_LOG_FOLDER_PATH
 from ae.core.agents.browser_nav_agent import BrowserNavAgent
 from ae.core.agents.high_level_planner_agent import PlannerAgent  
+from ae.core.agents.validator_agent import ValidationAgent
 from ae.core.prompts import LLM_PROMPTS
 from ae.utils.logger import logger
 from ae.utils.autogen_sequential_function_call import UserProxyAgent_SequentialFunctionExecution
 from ae.utils.response_parser import parse_response
-from ae.utils.response_parser import getLastPlannerMessage, getLastValidationMessage, isPlanValid, isTerminate
+from ae.utils.response_parser import getLastPlannerMessage, isTerminate
 from ae.core.skills.get_url import geturl
 import nest_asyncio # type: ignore
 from ae.core.post_process_responses import final_reply_callback_planner_agent as print_message_from_planner  # type: ignore
@@ -113,19 +114,18 @@ class AutogenWrapper:
             if last_speaker is user_agent:
                 return planner_agent
             
-            # Call user when plan is valid 
-            isValid = isPlanValid(messages)
-            if isValid:
-                return user_agent
-            
-            # Call user when task is completed
+            # Call validation when planner outputs terminate flag
             shouldTerminate = isTerminate(messages)
-            if shouldTerminate:
-                return user_agent
-            
-            # While the plan in not valid, continue validation
-            if last_speaker is planner_agent:
+            if last_speaker is planner_agent and shouldTerminate:
                 return validator_agent
+            
+            # When task is not valid
+            if last_speaker is validator_agent:
+                return user_agent # alternatively could be planner agent...
+            
+            # Until task is complete, go between validation and user agent
+            if last_speaker is planner_agent:
+                return user_agent
             if last_speaker is validator_agent:
                 return planner_agent
             return None
@@ -143,45 +143,31 @@ class AutogenWrapper:
                     "cache_seed": None,
                     "temperature": 0.0
                 },
-            )
-            
+            )  
         def trigger_nested_chat(manager: autogen.ConversableAgent) -> bool:
             print("Checking trigger_nested_chat()...")
             
             messages = manager.chat_messages[planner_agent] # this chat is shared
             
-            # Do not trigger nested chat if if was just called
-            lastAgent = messages[-1].get("name", None)
-            if lastAgent == "user":
-                return False
-                    
-            # Cap validation after max iterations is met
-            if len(messages) == 10: 
-                return True
-            
-            lastValMessage = getLastValidationMessage(messages)
+            # # Do not trigger nested chat if if was just called
+            # lastAgent = messages[-1].get("name", None)
+            # if lastAgent == "user":
+            #     return False
+
+            # Get the last message from the planner
             lastPlanMessage = getLastPlannerMessage(messages)
-            
-            if not lastValMessage or not lastPlanMessage:
+            if not lastPlanMessage:
                 return False # Either plan or validation is missing
             
             next_step = lastPlanMessage.get('next_step', None)
             plan = lastPlanMessage.get('plan', None)
-            valid_plan = lastValMessage.get("valid_plan", None) == "yes"
-
-            print(f"valid_plan: {valid_plan}, next_step: {next_step}")
+        
             if plan is not None:
                 print_message_from_planner("Plan: "+ str(plan))
             if next_step is None: 
                 print_message_from_planner("Received no next step response, terminating..") 
                 return False
-            if valid_plan is None:
-                print_message_from_planner("Received no valid_plan response, terminating..")
-                return False
-            if valid_plan and next_step:
-                print_message_from_planner(next_step)
-                return True 
-            return False
+            return True
 
         def get_url() -> str:
             return asyncio.run(geturl())
@@ -301,23 +287,25 @@ class AutogenWrapper:
 
         """
         def is_planner_termination_message(x: dict[str, str])->bool: # type: ignore
+            '''
+            Determines if the current task is completed.
+            This function is called before each user agent call. 
+            
+            Parameter:
+                x: The last message posted by an agent.
+            
+            Return:
+                Boolean determining if the intent was completed.
+            '''
             print(f"Checking is_planner_termination_message()...{x}")
-            if x.get("name", None) != "planner_agent":
+            if x.get("name", None) != "validator_agent":
                 return False
+            
             should_terminate = False
             content:Any = x.get("content", "") 
-            if content is None:
-                content = ""
+            if content == "The task was completed successfully." or content is None:
                 should_terminate = True
-            else:
-                try:
-                    content_json = parse_response(content)
-                    _terminate = content_json.get('terminate', "no")
-                    if(_terminate == "yes"):
-                        should_terminate = True
-                except json.JSONDecodeError:
-                    print("Error decoding JSON content")
-                    should_terminate = True
+            print(f"Should terminate ... {should_terminate}")
             return should_terminate # type: ignore
         
         task_delegate_agent = autogen.ConversableAgent(
@@ -387,14 +375,16 @@ class AutogenWrapper:
         return planner_agent.agent
     
     def __create_validator_agent(self,):
-        validator_agent = autogen.AssistantAgent(
+        # intialize validator agent
+        validator_agent = ValidationAgent(
             name="validator_agent",
-            system_message="You are an agent which is an expert at navigating the web. Given a task and a plan, your job is to predict if a plan will execute successfully and in the most effecient manner. If you believe the plan will not be succeessful and effecient, place provide feedback on what can be inproved. Write your solution in the form of a json object with two objects -- valid_plan and feedback, e.g. {\"valid_plan\": \"no\", \"feedback\": \"This plan is not the most effecient, instead of googling amazon.com, you can directly go to amazon.com by typing into the url bar.\" }.",
-            llm_config={
-                "config_list": self.config_list,
-                "cache_seed": None,
-                "temperature": 0.0
-            },
+            # system_message="You are an agent which is an expert at navigating the web. Given a task and a plan, your job is to predict if a plan will execute successfully and in the most effecient manner. If you believe the plan will not be succeessful and effecient, place provide feedback on what can be inproved. Write your solution in the form of a json object with two objects -- valid_plan and feedback, e.g. {\"valid_plan\": \"no\", \"feedback\": \"This plan is not the most effecient, instead of googling amazon.com, you can directly go to amazon.com by typing into the url bar.\" }.",
+            # llm_config={
+            #     "config_list": self.config_list,
+            #     "cache_seed": None,
+            #     "temperature": 0.0
+            # },
+            # is_termination_msg=is_planner_termination_message,
             human_input_mode="NEVER",
         )
         return validator_agent

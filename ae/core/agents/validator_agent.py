@@ -76,7 +76,7 @@ class ValidationAgent(ConversableAgent):
         #system_message = system_message + "\n" + f"Today's date is {datetime.now().strftime('%d %B %Y')}" 
         
         # Get the intent from messages
-        messages = list(self.chat_messages.values())[0] # This can probably be done in a better way
+        messages = list(self.chat_messages.values())[0] # Note: This can probably be done in a better way
         intent = getIntent(messages=messages)
         
         # Get the relevant chat sequence to validate
@@ -90,6 +90,7 @@ class ValidationAgent(ConversableAgent):
         else:
             response = f"The task was not completed succesfully. {score_dict['pred_rationale']} Please try again."   
         
+        print(f"Validator Raw Response: {score_dict}")
         print("Validator called successfully")
         return {"content": response}
 
