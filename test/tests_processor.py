@@ -2,6 +2,8 @@ import asyncio
 import json
 import os
 import time
+
+from regex import E
 from test.evaluators import evaluator_router
 from test.test_utils import get_formatted_current_timestamp
 from test.test_utils import load_config
@@ -14,6 +16,7 @@ from ae.config import PROJECT_TEST_ROOT
 from ae.core.autogen_wrapper import AutogenWrapper
 from ae.core.playwright_manager import PlaywrightManager
 from ae.utils.logger import logger
+from ae.utils.response_parser import parse_response
 from autogen.agentchat.chat import ChatResult  # type: ignore
 from playwright.async_api import Page
 from tabulate import tabulate
@@ -24,6 +27,7 @@ nltk.download('punkt') # type: ignore
 TEST_TASKS = os.path.join(PROJECT_TEST_ROOT, 'tasks')
 TEST_LOGS = os.path.join(PROJECT_TEST_ROOT, 'logs')
 TEST_RESULTS = os.path.join(PROJECT_TEST_ROOT, 'results')
+MAX_TIMEOUT: int = int(os.getenv("MAX_TIMEOUT", 30000))
 
 last_agent_response = ""
 
@@ -97,13 +101,19 @@ def save_individual_test_result(test_result: dict[str, str | int | float | None]
 
 def extract_last_response(messages: list[dict[str, Any]]) -> str:
     """Extract the last response message from chat history."""
-    # Iterate over the messages in reverse order
-    for message in reversed(messages):
-        if message and 'content' in message:
-            content=message.get('content', "")
-            if content and  '##TERMINATE##' in content:
-                return message['content'].replace("##TERMINATE##", "").strip()
-    return ""
+    try:
+        # Iterate over the messages in reverse order
+        for message in reversed(messages):
+            if message and 'content' in message:
+                content=message.get('content', "")
+                content_json = parse_response(content)
+                final_answer = content_json.get('final_response', None)
+                if final_answer:
+                    return final_answer
+        return ""
+    except:
+        logger.error("Error extracting last response from chat history.")
+        return ""
 
 
 def print_progress_bar(current: int, total: int, bar_length: int = 50) -> None:
@@ -219,55 +229,70 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     logger.info(f"Intent: {command}, Task ID: {task_id}")
 
     if start_url:
-        await page.goto(start_url, wait_until='load', timeout=30000)
+        await page.goto(start_url, wait_until='load', timeout=MAX_TIMEOUT)
 
     start_time = time.time()
     current_url = await browser_manager.get_current_url()
     command_exec_result = await ag.process_command(command, current_url)
     end_time = time.time()
 
-    logger.info(f"Command \"{command}\" took: {round(end_time - start_time, 2)} seconds.")
-    logger.info(f"Task {task_id} completed.")
-
-    messages = ag.agents_map["planner_agent"].chat_messages # type: ignore
-    messages_str_keys = {str(key): value for key, value in messages.items()} # type: ignore
-
-    agent_key = list(messages.keys())[0] # type: ignore
-
-    last_agent_response = extract_last_response(messages[agent_key]) # type: ignore
-    dump_log(str(task_id), messages_str_keys , logs_dir)
-    evaluator = evaluator_router(task_config)
-
-    cdp_session = await page.context.new_cdp_session(page)
-    score = await evaluator(
-        task_config=task_config,
-        page=page,
-        client=cdp_session,
-        answer=last_agent_response,
-    )
+    evaluator_result: dict[str, float | str] = {}
+    last_agent_response: str = ""
+    command_cost: dict[str, Any] = {}
+    single_task_result: dict[str, Any] = {}
     try:
+        single_task_result = {
+            "task_id": task_id,
+            "task_index": task_index,
+            "start_url": start_url,
+            "intent": str(command),
+            "last_url": page.url,
+            "tct": end_time - start_time,
+            "start_ts": start_ts,
+            "completion_ts": get_formatted_current_timestamp()
+        }
+
+        agent_name: str = "planner_agent" if ag.agents_map is not None and "planner_agent" in ag.agents_map else "browser_nav_agent"
+
         command_cost = get_command_exec_cost(command_exec_result) # type: ignore
         print(f"Command cost: {command_cost}")
+        single_task_result["compute_cost"] = command_cost
+
+        logger.info(f"Command \"{command}\" took: {round(end_time - start_time, 2)} seconds.")
+        logger.info(f"Task {task_id} completed.")
+
+        messages = ag.agents_map[agent_name].chat_messages # type: ignore
+        messages_str_keys = {str(key): value for key, value in messages.items()} # type: ignore
+        agent_key = list(messages.keys())[0] # type: ignore
+        last_agent_response = extract_last_response(messages[agent_key]) # type: ignore
+
+        dump_log(str(task_id), messages_str_keys, logs_dir)
+
+        single_task_result["last_statement"] = last_agent_response
+
+
+        evaluator = evaluator_router(task_config)
+        cdp_session = await page.context.new_cdp_session(page)
+        evaluator_result = await evaluator(
+            task_config=task_config,
+            page=page,
+            client=cdp_session,
+            answer=last_agent_response,
+        )
+
+        single_task_result["score"] = evaluator_result["score"]
+        single_task_result["reason"] = evaluator_result["reason"]
     except Exception as e:
         logger.error(f"Error getting command cost: {e}")
         command_cost = {"cost": -1, "total_tokens": -1}
-    return {
-        "task_id": task_id,
-        "task_index": task_index,
-        "start_url": start_url,
-        "intent": str(command),
-        "score": score,
-        "tct": end_time - start_time,
-        "last_statement": last_agent_response,
-        "last_url": page.url,
-        "compute_cost": command_cost,
-        "start_ts": start_ts,
-        "completion_ts": get_formatted_current_timestamp()
-    }
+        single_task_result["compute_cost"] = command_cost
+        single_task_result["error"] = str(e)
+
+    return single_task_result
 
 
 async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_task_index: int, max_task_index: int,
-               test_file: str="", test_results_id: str = "", wait_time_non_headless: int=5, take_screenshots: bool = False) -> list[dict[str, Any]]:
+               test_file: str="", test_results_id: str = "", wait_time_non_headless: int=5, take_screenshots: bool = False, retry_limit: int = 0) -> list[dict[str, Any]]:
     """
     Runs a specified range of test tasks using Playwright for browser interactions and AutogenWrapper for task automation.
     It initializes necessary components, processes each task, handles exceptions, and compiles test results into a structured list.
@@ -314,29 +339,50 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
     total_tests = max_task_index - min_task_index
 
     for index, task_config in enumerate(test_configurations[min_task_index:max_task_index], start=min_task_index):
-        task_id = str(task_config.get('task_id'))
+        for attempt in range(retry_limit + 1): # attempt the task muliple times incase of timeout/connection errors
+            try:
+                task_id = str(task_config.get('task_id'))
 
-        log_folders = create_task_log_folders(task_id, test_results_id)
+                log_folders = create_task_log_folders(task_id, test_results_id)
 
-        ag.set_chat_logs_dir(log_folders["task_log_folder"])
+                ag.set_chat_logs_dir(log_folders["task_log_folder"])
 
-        browser_manager.set_take_screenshots(take_screenshots)
-        if take_screenshots:
-            browser_manager.set_screenshots_dir(log_folders["task_screenshots_folder"])
+                browser_manager.set_take_screenshots(take_screenshots)
+                if take_screenshots:
+                    browser_manager.set_screenshots_dir(log_folders["task_screenshots_folder"])
 
-        print_progress_bar(index - min_task_index, total_tests)
-        task_result = await execute_single_task(task_config, browser_manager, ag, page, log_folders["task_log_folder"])
-        test_results.append(task_result)
-        save_individual_test_result(task_result, results_dir)
-        print_test_result(task_result, index + 1, total_tests)
+                print_progress_bar(index - min_task_index, total_tests)
+                task_result = await execute_single_task(task_config, browser_manager, ag, page, log_folders["task_log_folder"])
+                test_results.append(task_result)
+                save_individual_test_result(task_result, results_dir)
+                print_test_result(task_result, index + 1, total_tests)
 
-        if not browser_manager.isheadless: # no need to wait if we are running headless
-            await asyncio.sleep(wait_time_non_headless)  # give time for switching between tasks in case there is a human observer
+                if not browser_manager.isheadless: # no need to wait if we are running headless
+                    await asyncio.sleep(wait_time_non_headless)  # give time for switching between tasks in case there is a human observer
 
-        await browser_manager.take_screenshots("final", None)
+                await browser_manager.take_screenshots("final", None)
 
-        await browser_manager.close_except_specified_tab(page) # cleanup pages that are not the one we opened here
-
+                await browser_manager.close_except_specified_tab(page) # cleanup pages that are not the one we opened here
+            except Exception as e:
+                print(e)
+                print(f"Task failed in try {attempt}...")
+                await asyncio.sleep(5)
+                continue
+            else: 
+                break # task was successfully tested
+        else:
+            # Log the failed tasks
+            base_path = os.path.join(TEST_LOGS, test_results_id)
+            file_path = os.path.join(base_path, 'failed_tasks.txt')
+            
+            # Check if file exists
+            write_mode = 'a' if os.path.isfile(file_path) else 'w'
+            
+            # Writing to the file
+            with open(file_path, write_mode) as file:
+                file.write(f"task {task_config.get('task_id')}\n")
+            
+            
     print_progress_bar(total_tests, total_tests)  # Complete the progress bar
     print('\n\nAll tests completed.')
 
