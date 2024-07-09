@@ -84,14 +84,12 @@ class ValidationAgent(ConversableAgent):
         score_dict = validate_task_text(state_seq, intent)
         
         # TODO: Play around with fixing this text response.
-        response = "The task was completed successfully."
         if score_dict["pred_task_completed"]:
             response = "The task was completed successfully."   
         else:
-            response = f"The task was not completed succesfully. {score_dict['pred_rationale']} Please try again."   
+            response = f"The task was not completed succesfully. {score_dict['pred_rationale']} Please come up with a new plan which is different than the previous attempted plan(s). This plan should take into account and avoid issue(s) from prior plan(s). You are allowed to attempt build plans which seemed less likely to work previously."   
         
         print(f"Validator Raw Response: {score_dict}")
-        print("Validator called successfully")
         return {"content": response}
 
 
