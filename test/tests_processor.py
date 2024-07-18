@@ -367,6 +367,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
 
                 await browser_manager.close_except_specified_tab(page) # cleanup pages that are not the one we opened here
             except Exception as e:
+                logger.error(f"Issue with task: \"{task_id}\". {e}")
                 print(e)
                 print(f"Task failed in try {attempt}...")
                 await asyncio.sleep(5)
