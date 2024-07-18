@@ -12,6 +12,7 @@ from ae.utils.dom_helper import get_element_outer_html
 from ae.utils.dom_mutation_observer import subscribe
 from ae.utils.dom_mutation_observer import unsubscribe
 from ae.utils.logger import logger
+import os
 
 
 async def click(selector: Annotated[str, "The properly formed query selector string to identify the element for the click action (e.g. [mmid='114']). When \"mmid\" attribute is present, use it for the query selector."],
@@ -78,11 +79,12 @@ async def do_click(page: Page, selector: str, wait_before_execution: float) -> d
         await asyncio.sleep(wait_before_execution)
 
     # Wait for the selector to be present and ensure it's attached and visible. If timeout, try javascript click
+    MAX_TIMEOUT:int = int(os.getenv('MAX_TIMEOUT', 5000))
     try:
         logger.info(f"Executing ClickElement with \"{selector}\" as the selector. Waiting for the element to be attached and visible.")
 
         element = await asyncio.wait_for(
-            page.wait_for_selector(selector, state="attached", timeout=2000),
+            page.wait_for_selector(selector, state="attached", timeout=MAX_TIMEOUT),
             timeout=2000
         )
         if element is None:
@@ -90,14 +92,14 @@ async def do_click(page: Page, selector: str, wait_before_execution: float) -> d
 
         logger.info(f"Element with selector: \"{selector}\" is attached. scrolling it into view if needed.")
         try:
-            await element.scroll_into_view_if_needed(timeout=200)
+            await element.scroll_into_view_if_needed(timeout=MAX_TIMEOUT)
             logger.info(f"Element with selector: \"{selector}\" is attached and scrolled into view. Waiting for the element to be visible.")
         except Exception:
             # If scrollIntoView fails, just move on, not a big deal
             pass
 
         try:
-            await element.wait_for_element_state("visible", timeout=200)
+            await element.wait_for_element_state("visible", timeout=MAX_TIMEOUT)
             logger.info(f"Executing ClickElement with \"{selector}\" as the selector. Element is attached and visibe. Clicking the element.")
         except Exception:
             # If the element is not visible, try to click it anyway
@@ -157,7 +159,7 @@ async def perform_playwright_click(element: ElementHandle, selector: str):
     - None
     """
     logger.info(f"Performing first Step: Playwright Click on element with selector: {selector}")
-    await element.click(force=False, timeout=200)
+    await element.click(force=False, timeout=MAX_TIMEOUT)
 
 
 async def perform_javascript_click(page: Page, selector: str):

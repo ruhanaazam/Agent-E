@@ -352,7 +352,7 @@ class PlaywrightManager:
         return self._screenshots_dir
 
     async def take_screenshots(self, name: str, page: Page|None, full_page: bool = True, include_timestamp: bool = True,
-                               load_state: str = 'domcontentloaded', take_snapshot_timeout: int = 5*1000):
+                               load_state: str = 'domcontentloaded', take_snapshot_timeout: int = 10*1000):
         if not self._take_screenshots:
             return
         if page is None:
@@ -364,12 +364,19 @@ class PlaywrightManager:
             screenshot_name = f"{int(time.time_ns())}_{screenshot_name}"
         screenshot_name += ".png"
         screenshot_path = f"{self.get_screenshots_dir()}/{screenshot_name}"
-        try:
-            await page.wait_for_load_state(state=load_state, timeout=take_snapshot_timeout) # type: ignore
-            await page.screenshot(path=screenshot_path, full_page=full_page, timeout=take_snapshot_timeout, caret="initial", scale="device")
-            print(f"Screen shot saved to: {screenshot_path}")
-        except Exception as e:
-            logger.error(f"Failed to take screenshot and save to \"{screenshot_path}\". Error: {e}")
+        
+        max_attempts = 3
+        for attempts in range(0, max_attempts):
+            try:
+                await page.wait_for_load_state(state=load_state, timeout=take_snapshot_timeout)  # type: ignore
+                await page.screenshot(path=screenshot_path, full_page=full_page, timeout=take_snapshot_timeout, caret="initial", scale="device")
+                print(f"Screenshot saved to: {screenshot_path}")
+                break  # Exit the loop if the operation is successful
+            except Exception as e:
+                attempts += 1
+                logger.error(f"Failed to take screenshot on attempt {attempts}. Error: {e}")
+                if attempts >= max_attempts:
+                    logger.error("Max attempts reached. Unable to take screenshot.")
 
 
     def log_user_message(self, message: str):

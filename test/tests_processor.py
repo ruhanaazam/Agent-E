@@ -2,6 +2,8 @@ import asyncio
 import json
 import os
 import time
+
+from regex import E
 from test.evaluators import evaluator_router
 from test.test_utils import get_formatted_current_timestamp
 from test.test_utils import load_config
@@ -25,6 +27,7 @@ nltk.download('punkt') # type: ignore
 TEST_TASKS = os.path.join(PROJECT_TEST_ROOT, 'tasks')
 TEST_LOGS = os.path.join(PROJECT_TEST_ROOT, 'logs')
 TEST_RESULTS = os.path.join(PROJECT_TEST_ROOT, 'results')
+MAX_TIMEOUT: int = int(os.getenv("MAX_TIMEOUT", 30000))
 
 last_agent_response = ""
 
@@ -229,7 +232,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     logger.info(f"Intent: {command}, Task ID: {task_id}")
 
     if start_url:
-        await page.goto(start_url, wait_until='load', timeout=30000)
+        await page.goto(start_url, wait_until='load', timeout=MAX_TIMEOUT)
 
     start_time = time.time()
     current_url = await browser_manager.get_current_url()
@@ -292,7 +295,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
 
 
 async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_task_index: int, max_task_index: int,
-               test_file: str="", test_results_id: str = "", wait_time_non_headless: int=5, take_screenshots: bool = False) -> list[dict[str, Any]]:
+               test_file: str="", test_results_id: str = "", wait_time_non_headless: int=5, take_screenshots: bool = False, retry_limit: int = 0) -> list[dict[str, Any]]:
     """
     Runs a specified range of test tasks using Playwright for browser interactions and AutogenWrapper for task automation.
     It initializes necessary components, processes each task, handles exceptions, and compiles test results into a structured list.
@@ -339,29 +342,50 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
     total_tests = max_task_index - min_task_index
 
     for index, task_config in enumerate(test_configurations[min_task_index:max_task_index], start=min_task_index):
-        task_id = str(task_config.get('task_id'))
+        for attempt in range(retry_limit + 1): # attempt the task muliple times incase of timeout/connection errors
+            try:
+                task_id = str(task_config.get('task_id'))
 
-        log_folders = create_task_log_folders(task_id, test_results_id)
+                log_folders = create_task_log_folders(task_id, test_results_id)
 
-        ag.set_chat_logs_dir(log_folders["task_log_folder"])
+                ag.set_chat_logs_dir(log_folders["task_log_folder"])
 
-        browser_manager.set_take_screenshots(take_screenshots)
-        if take_screenshots:
-            browser_manager.set_screenshots_dir(log_folders["task_screenshots_folder"])
+                browser_manager.set_take_screenshots(take_screenshots)
+                if take_screenshots:
+                    browser_manager.set_screenshots_dir(log_folders["task_screenshots_folder"])
 
-        print_progress_bar(index - min_task_index, total_tests)
-        task_result = await execute_single_task(task_config, browser_manager, ag, page, log_folders["task_log_folder"])
-        test_results.append(task_result)
-        save_individual_test_result(task_result, results_dir)
-        print_test_result(task_result, index + 1, total_tests)
+                print_progress_bar(index - min_task_index, total_tests)
+                task_result = await execute_single_task(task_config, browser_manager, ag, page, log_folders["task_log_folder"])
+                test_results.append(task_result)
+                save_individual_test_result(task_result, results_dir)
+                print_test_result(task_result, index + 1, total_tests)
 
-        if not browser_manager.isheadless: # no need to wait if we are running headless
-            await asyncio.sleep(wait_time_non_headless)  # give time for switching between tasks in case there is a human observer
+                if not browser_manager.isheadless: # no need to wait if we are running headless
+                    await asyncio.sleep(wait_time_non_headless)  # give time for switching between tasks in case there is a human observer
 
-        await browser_manager.take_screenshots("final", None)
+                await browser_manager.take_screenshots("final", None)
 
-        await browser_manager.close_except_specified_tab(page) # cleanup pages that are not the one we opened here
-
+                await browser_manager.close_except_specified_tab(page) # cleanup pages that are not the one we opened here
+            except Exception as e:
+                print(e)
+                print(f"Task failed in try {attempt}...")
+                await asyncio.sleep(5)
+                continue
+            else: 
+                break # task was successfully tested
+        else:
+            # Log the failed tasks
+            base_path = os.path.join(TEST_LOGS, test_results_id)
+            file_path = os.path.join(base_path, 'failed_tasks.txt')
+            
+            # Check if file exists
+            write_mode = 'a' if os.path.isfile(file_path) else 'w'
+            
+            # Writing to the file
+            with open(file_path, write_mode) as file:
+                file.write(f"task {task_config.get('task_id')}\n")
+            
+            
     print_progress_bar(total_tests, total_tests)  # Complete the progress bar
     print('\n\nAll tests completed.')
 
