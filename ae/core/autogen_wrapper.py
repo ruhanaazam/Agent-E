@@ -304,14 +304,15 @@ class AutogenWrapper:
             '''
             print(f"Checking is_planner_termination_message()...")
             if x.get("name", None) != "validator_agent":
-                return False
-            
-            should_terminate = False
-            content:Any = x.get("content", "") 
-            if content == "The task was completed successfully." or content is None:
-                should_terminate = True
-            print(f"Should terminate ... {should_terminate}")
-            return should_terminate # type: ignore
+                return False 
+                # This might be the place to throw an error... if should_terminate is false, then this is bad, the user agent should never been called...
+            else:
+                content:Any = x.get("content", "")
+                should_terminate = (content == "The task was completed successfully.")
+                print(f"Should terminate ... {should_terminate}")
+                if not should_terminate:
+                    raise Exception('User agent called after validator agent before termination!')
+                return should_terminate # type: ignore
         
         task_delegate_agent = autogen.ConversableAgent(
             name="user",
