@@ -57,12 +57,10 @@ def _fetch_openai_completion(messages: List[Any], model: str, **kwargs) -> str |
     except openai.APIError as e:
         traceback.print_exc()
         print(f"OpenAI API error: {e}")
-        #sys.exit(1)
         return None
     except Exception as e:
         traceback.print_exc()
         print(f"Unknown error: {e}")
-        #sys.exit(1)
         return None
     return response.choices[0].message.content
 
