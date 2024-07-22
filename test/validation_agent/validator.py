@@ -15,6 +15,7 @@ from typing import Dict, Any, List
 import json
 import argparse
 import os
+from test_utils import robust_json_loader
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -188,7 +189,7 @@ def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
 
     # Evaluate
     try:
-        pred_json = json.loads(pred_raw_response.replace("```json", "").replace("```", "").strip())
+        pred_json = robust_json_loader(pred_raw_response.replace("```json", "").replace("```", "").strip())
         pred_rationale: Dict[str, str] = pred_json['rationale']
         pred_is_met: bool = pred_json['was_completed']
         pred_questions: List[Any] = pred_json["reasoning_questions"]

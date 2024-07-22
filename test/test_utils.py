@@ -267,7 +267,7 @@ def list_items_in_folder(path):
     try:
         items = os.listdir(path)
         items_with_mtime = [(item, os.path.getmtime(os.path.join(path, item))) for item in items]
-        items_with_mtime.sort(key=lambda x: x[1])
+        items_with_mtime.sort(key=lambda x: x[0])
         sorted_items = [item for item, mtime in items_with_mtime]
         return sorted_items
     except FileNotFoundError:
@@ -277,21 +277,28 @@ def list_items_in_folder(path):
     except PermissionError:
         return f"Permission denied to access {path}."
 
-def compress_png(file_path, max_size_mb=20, reduce_factor=0.9):
+def compress_png(file_path:str, max_size_mb=20, max_height=2048, max_width=768, reduce_factor=0.9):
+    short_side_limit = min(max_height, max_width)
+    long_side_limit = max(max_height, max_width)
+    
     try:
-        file_size_mb = os.path.getsize(file_path) / (1024 * 1024)
-        while file_size_mb > max_size_mb:
-            print(f"Compressing {file_path} (Initial Size: {file_size_mb:.2f} MB)")
+        # get image size and dimensions
+        file_size_mb = os.path.getsize(file_path) / (1024 * 1024.0)
+        # with Image.open(file_path) as img:
+        #         width, height = img.size
+        
+        while file_size_mb >= max_size_mb:  #or min(width, height) >= short_side_limit or max(width, height) >= long_side_limit:
+            #print(f"Compressing {file_path} (Initial Size: {file_size_mb:.2f} MB)")
             with Image.open(file_path) as img:
                 width, height = img.size
                 new_width = int(width * reduce_factor)
                 new_height = int(height * reduce_factor)
                 img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
                 img.save(file_path, optimize=True)
-                file_size_mb = os.path.getsize(file_path) / (1024 * 1024)
+                file_size_mb = os.path.getsize(file_path) / (1024 * 1024.0)
                 print(f"Resized to: {new_width}x{new_height}, Size: {file_size_mb:.2f} MB")
         print(f"Final Size of {file_path}: {file_size_mb:.2f} MB")
-        return file_size_mb <= max_size_mb
+        return file_size_mb < max_size_mb
     except Exception as e:
         print(f"Error compressing {file_path}: {e}")
         return False
