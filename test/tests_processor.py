@@ -227,7 +227,6 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     task_config_validator(task_config)
 
     command: str = task_config.get('intent', "")
-    command = "go to amazon.com"
     task_id = task_config.get('task_id')
     task_index = task_config.get('task_index')
     start_url = task_config.get('start_url')

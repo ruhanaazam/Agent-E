@@ -415,7 +415,7 @@ class VQAEvaluator(Evaluator):
             client (CDPSession | None, optional): The Chrome DevTools Protocol session object.
             answer (str | None, optional): Not used in this evaluator.
         Returns:
-            float: 0.0 for failure and 1.0 if the VQA evaluates the task as complete
+            dict[str, float|str]: A score representig the status 1 = pass, 0 = fail and -0.1 is a skip. Additionaly, a reason can be provided for the score (mainly for fail/skip).
         """
         task_id = task_config["task_id"]
         task = task_config["intent"]
