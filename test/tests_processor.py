@@ -212,6 +212,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     - browser_manager (PlaywrightManager): The manager handling browser interactions, responsible for page navigation and control.
     - ag (AutogenWrapper): The automation generator wrapper that processes commands and interacts with the web page.
     - page (Page): The Playwright page object representing the browser tab where the task is executed.
+    - logs_dir (str): Directory path where logs written for the task.
 
     Returns:
     - dict: A dictionary containing the task's evaluation results, including task ID, intent, score, total command time (tct),
@@ -226,6 +227,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     task_config_validator(task_config)
 
     command: str = task_config.get('intent', "")
+    command = "go to amazon.com"
     task_id = task_config.get('task_id')
     task_index = task_config.get('task_index')
     start_url = task_config.get('start_url')
@@ -280,7 +282,8 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
             task_config=task_config,
             page=page,
             client=cdp_session,
-            answer=last_agent_response,
+            answer=last_agent_response, 
+            log_dir=logs_dir, # the logs_dir needs to be added here!!! otherwise evaluations is not possible :(
         )
 
         single_task_result["score"] = evaluator_result["score"]

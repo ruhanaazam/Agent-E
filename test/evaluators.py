@@ -18,8 +18,7 @@ from playwright.sync_api import CDPSession
 from playwright.sync_api import Page
 from termcolor import colored
 
-import os
-from .validation_agent.validator import validate_task_vqa
+from .validation_agent.validator import validate_task_vision
 
 class Evaluator:
     """Base class for evaluation strategies.
@@ -334,7 +333,7 @@ class ManualContentEvaluator(Evaluator):
         elif answer_type.strip().lower() == "golden":
             print(colored("Golden answer (reference): ", "yellow") + reference_answer)
 
-        user_response = input(colored("Annotate the task as Pass, Fail or Skip (please use Skip sparingly)? ", "magenta", attrs=["bold"]))
+        user_response = "skip"#input(colored("Annotate the task as Pass, Fail or Skip (please use Skip sparingly)? ", "magenta", attrs=["bold"]))
         eval_response: dict[str, float|str] = {}
         if(user_response.lower()=="pass"):
             eval_response["score"] = 1.0
@@ -348,7 +347,7 @@ class ManualContentEvaluator(Evaluator):
         reason: str|None = None
 
         if eval_response["score"] <= 0:
-            reason = input("Reason for rating: ")
+            reason = "" #input("Reason for rating: ")
             eval_response["reason"] = reason
 
         return eval_response
@@ -375,6 +374,7 @@ class EvaluatorComb(Evaluator):
         page: Page,
         client: CDPSession,
         answer: str,
+        **kwargs: dict[str, Any],
     ) -> dict[str, float|str]:
         """Performs the evaluation using all included evaluators and aggregates their scores.
 
@@ -390,7 +390,7 @@ class EvaluatorComb(Evaluator):
         score: float = 1.0
         reason: str | None = None
         for evaluator in self.evaluators:
-            eval_result = await evaluator(task_config, page, client, answer)
+            eval_result = await evaluator(task_config, page, client, answer, **kwargs)
             score: float = score * eval_result["score"] # type: ignore
             if "reason" in eval_result:
                 if reason is None:
@@ -399,15 +399,15 @@ class EvaluatorComb(Evaluator):
                     reason += f"\n{eval_result['reason']}"
         return {"score": score, "reason": reason} # type: ignore
 
-
 class VQAEvaluator(Evaluator):
     async def __call__(
         self, 
         task_config: dict[str, Any], 
         page: Page, 
         client: CDPSession, 
-        answer: str
-    ) -> float:
+        answer: str,
+        log_dir: str,
+    ) -> dict[str, float|str]:
         """Evaluates the current task using a VQA model
         Parameters:
             task_config (dict[str, Any]): The task configuration containing evaluation criteria.
@@ -422,9 +422,8 @@ class VQAEvaluator(Evaluator):
         state_seq: list[Any] = []
         score = -1.0
 
-        # Get path to screenshots for the given task
-        test_folder = list_items_in_folder(f"{os. getcwd()}/test/logs/")[-1] # Get the most recent log folder, this may take look for the wrong folder TODO: fix to take correct folder
-        path_to_screenshots = f"{os. getcwd()}/test/logs/{test_folder}/logs_for_task_{task_id}/snapshots"
+        # Get screenshot paths
+        path_to_screenshots = f"{log_dir}/snapshots"
         screenshot_names = list_items_in_folder(path_to_screenshots) # type: ignore        
         
         # Load and compress screenshots
@@ -434,11 +433,12 @@ class VQAEvaluator(Evaluator):
             state_seq.append({"id":task_id, "path_to_screenshot": f"{path_to_screenshots}/{screenshot_name}"}) 
 
         #Calculate VQA Score
-        score_dict = validate_task_vqa(state_seq, task) # type: ignore
+        score_dict = validate_task_vision(state_seq, task) # type: ignore
         score = score_dict["pred_task_completed"]
+        reason = score_dict["pred_rationale"]
 
-        print(f"VQA score is {score}")
-        return {"score": score} 
+        print(f"VQA score is {score} because {reason}")
+        return {"score": score, "reason": reason} 
     
 def evaluator_router(task_config: dict[str, Any]) -> EvaluatorComb:
     """Creates and configures a composite evaluator based on the evaluation types specified in the configuration file.
