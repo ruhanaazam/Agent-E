@@ -52,7 +52,7 @@ class StringEvaluator(Evaluator):
         page: Page | None = None,
         client: CDPSession | None = None,
         answer: str | None = None,
-
+        **kwargs: dict[str, Any],
     ) -> dict[str, float|str]:
         last_action = answer or ""
         pred = clean_answer(last_action)
@@ -116,7 +116,8 @@ class URLEvaluator(Evaluator):
         task_config: dict[str, Any],
         page: Page,
         client: CDPSession | None = None,
-        answer: str | None = None
+        answer: str | None = None,
+        **kwargs: dict[str, Any],
     ) -> dict[str, float|str]:
         """Evaluates the current page URL against reference URLs specified in the config file.
 
@@ -202,7 +203,8 @@ class HTMLContentEvaluator(Evaluator):
         task_config: dict[str, Any],
         page: Page,
         client: CDPSession | None = None,
-        answer: str | None = None
+        answer: str | None = None,
+        **kwargs: dict[str, Any],
     ) -> dict[str, float|str]:
         """Evaluates the presence of specified HTML content on the webpage.
 
@@ -303,7 +305,8 @@ class ManualContentEvaluator(Evaluator):
         task_config: dict[str, Any],
         page: Page,
         client: CDPSession | None = None,
-        answer: str | None = None
+        answer: str | None = None,
+        **kwargs: dict[str, Any],
     ) -> dict[str, float|str]:
         """Pauses Execution to get manual evaluation score from user.
 
