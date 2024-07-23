@@ -14,6 +14,7 @@ from typing import Any
 import ae.core.playwright_manager as browserManager
 import nltk  # type: ignore
 from ae.config import PROJECT_TEST_ROOT
+from ae.config import PROJECT_SOURCE_ROOT
 from ae.core.autogen_wrapper import AutogenWrapper
 from ae.core.playwright_manager import PlaywrightManager
 from ae.core.agents.validator_agent import ValidationAgent
@@ -388,6 +389,11 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 chat_history:list[dict [str, str]]= ag.manager.chat_messages[user_agent]
                 count = count_validation_calls(chat_history)
                 logger.info(f"Validator was called {count} times in total.")
+                
+                #move logger file (app.log) to the task folder
+                default_log_directory = f"{PROJECT_SOURCE_ROOT}/app.log"
+                final_log_directory = f"{log_folders['task_log_folder']}/app.log" 
+                os.rename(default_log_directory, final_log_directory)
                 
             except Exception as e:
                 logger.error(f"Issue with task: \"{task_id}\". {e}")
