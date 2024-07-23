@@ -358,6 +358,8 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 log_folders = create_task_log_folders(task_id, test_results_id)
 
                 ag.set_chat_logs_dir(log_folders["task_log_folder"])
+                screenshot_directory: str= f"{log_folders['task_log_folder']}/snapshots"
+                validator_agent.set_screenshot_directory(screenshot_directory)
 
                 browser_manager.set_take_screenshots(take_screenshots)
                 if take_screenshots:
@@ -368,6 +370,13 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 test_results.append(task_result)
                 save_individual_test_result(task_result, results_dir)
                 print_test_result(task_result, index + 1, total_tests)
+
+                if not browser_manager.isheadless: # no need to wait if we are running headless
+                    await asyncio.sleep(wait_time_non_headless)  # give time for switching between tasks in case there is a human observer
+
+                await browser_manager.take_screenshots("final", None)
+
+                await browser_manager.close_except_specified_tab(page) # cleanup pages that are not the one we opened here
                 
                 #check how many screenshot were taken
                 screenshots_taken:int = browser_manager.get_screenshot_sucesses()
@@ -379,13 +388,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 chat_history:list[dict [str, str]]= ag.manager.chat_messages[user_agent]
                 count = count_validation_calls(chat_history)
                 logger.info(f"Validator was called {count} times in total.")
-
-                if not browser_manager.isheadless: # no need to wait if we are running headless
-                    await asyncio.sleep(wait_time_non_headless)  # give time for switching between tasks in case there is a human observer
-
-                await browser_manager.take_screenshots("final", None)
-
-                await browser_manager.close_except_specified_tab(page) # cleanup pages that are not the one we opened here
+                
             except Exception as e:
                 logger.error(f"Issue with task: \"{task_id}\". {e}")
                 print(f"Task failed in try {attempt}...")
