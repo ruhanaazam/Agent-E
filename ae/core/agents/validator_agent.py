@@ -1,3 +1,4 @@
+from errno import EXDEV
 from autogen.agentchat import ConversableAgent
 from typing import List, Dict, Optional, Any, Union
 import asyncio
@@ -9,11 +10,13 @@ from validation_agent.validator import validate_task_text, validate_task_vision 
 from validation_agent.utils import get_screenshot_paths, get_chat_sequence, get_intent # type: ignore
 
 class ValidationAgent(ConversableAgent):
-    def __init__(self, name: str, modality: str="text",  **kwargs):
+    def __init__(self, name: str, modality: str="text",  log_dir: str | None=None, **kwargs):
         """
         Initialize the validation agent. This is a custom conversation agent.
         """ 
         self.modality:str = modality
+        self.log_dir = log_dir
+        self.screenshot_directory =  f"{log_dir}/snapshots" if log_dir else None
         super().__init__(name, **kwargs)
         return 
     
@@ -52,8 +55,9 @@ class ValidationAgent(ConversableAgent):
             # TODO: limit the state_seq to be between now and last validation
             
         if self.modality == "vision":
-            screenshot_path = f"/Users/ruhana/Desktop/Agent-E/ruhana_notes_observations/save_results/baseline_annotated/log_full/logs_for_task_{task_id}/snapshots"
-            screenshot_seq = get_screenshot_paths(screenshot_path) # type: ignore
+            if not self.screenshot_directory:
+                raise Exception("Screenshot directory is not set in validation_agent. Cannot proceed with vision-based evaluation.")
+            screenshot_seq = get_screenshot_paths(self.screenshot_directory) # type: ignore
             score_dict = validate_task_vision(screenshot_seq, intent) # type: ignore
              # TODO: limit the state_seq to be between now and last validation
             
@@ -79,4 +83,10 @@ class ValidationAgent(ConversableAgent):
         self.modality=new_modality
         return
 
+    def get_screenshot_directory(self,):
+        return self.screenshot_directory
+    
+    def set_screenshot_directory(self, screenshot_directory:str ):
+        self.screenshot_directory = screenshot_directory
+        return
 

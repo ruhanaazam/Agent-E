@@ -380,9 +380,13 @@ class AutogenWrapper:
         return planner_agent.agent
     
     def __create_validator_agent(self,):
+        # get log directory for current task
+        log_dir = self.get_chat_logs_dir()
+        
         # intialize the validator agent
         validator_agent = ValidationAgent(
             name="validator_agent",
+            log_dir=log_dir,
             human_input_mode="NEVER",
         )
         return validator_agent
