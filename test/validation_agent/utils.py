@@ -7,6 +7,7 @@ import base64
 import sys
 import traceback
 from typing import Dict, Any, Tuple, List
+from PIL import Image
 
 SYSTEM_PROMPT: str = "You are a helpful assistant that automates digital workflows."
 
@@ -91,3 +92,92 @@ def build_text_prompt_sequence(state_seq: List[Any]) -> List[str]:
             }],
         }) # type: ignore
     return prompt_sequence
+
+def compress_png(file_path:str, max_size_mb:int=20, max_height:int =2048, max_width:int=768, reduce_factor:float=0.9)-> bool:
+    short_side_limit:int= min(max_height, max_width)
+    long_side_limit:int= max(max_height, max_width)
+    
+    try:
+        # get image size and dimensions
+        file_size_mb = os.path.getsize(file_path) / (1024 * 1024.0)  # type: ignore
+        # with Image.open(file_path) as img:
+        #         width, height = img.size
+        
+        while file_size_mb >= max_size_mb:  #or min(width, height) >= short_side_limit or max(width, height) >= long_side_limit:
+            #print(f"Compressing {file_path} (Initial Size: {file_size_mb:.2f} MB)")
+            with Image.open(file_path) as img:
+                width, height = img.size
+                new_width = int(width * reduce_factor)
+                new_height = int(height * reduce_factor)
+                img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                img.save(file_path, optimize=True)
+                file_size_mb = os.path.getsize(file_path) / (1024 * 1024.0)  # type: ignore
+                print(f"Resized to: {new_width}x{new_height}, Size: {file_size_mb:.2f} MB")
+        print(f"Final Size of {file_path}: {file_size_mb:.2f} MB")
+        return file_size_mb < max_size_mb
+    except Exception as e:
+        print(f"Error compressing {file_path}: {e}")
+        return False
+    
+def get_screenshot_paths(file_path:str, compress:bool=True)-> list[str]:
+    '''
+    Will get all screenshots in a folder and compress them.
+    '''
+    # Get all screenshots for a task
+    screenshot_names: list[str]= list_items_in_folder(file_path) # type: ignore     
+   
+    # Check that screenshots exist for evaluation
+    if len(screenshot_names) == 0:
+        raise Exception("No screenshots found!")
+    
+    # Load and compress screenshots
+    state_seq: list[str] = []
+    for screenshot_name in screenshot_names:
+        screenshot_path = f"{file_path}/{screenshot_name}"
+        if compress:
+            compress_sucessful = compress_png(screenshot_path)
+            if not compress_sucessful:
+                print(f"Screenshot {screenshot_path} not added due to issue with compressing image...")
+            else:
+               state_seq.append({"path_to_screenshot": f"{screenshot_path}"}) # type: ignore
+        else: 
+            state_seq.append({"path_to_screenshot": f"{screenshot_path}"}) # type: ignore
+    return state_seq
+
+def get_chat_sequence(messages: List[Dict[str, str]]):
+    '''
+    Creates a list with each user message followed by the final statement from the planner.
+    '''
+    # Get only user output from the chat
+    chat_sequence: list[str] = []
+    for item in messages:        
+        role = item.get('role', None)
+        message = item.get('content', None)
+        if role == "user":
+            chat_sequence.append(message)
+    
+    # Append final statement from the planner
+    if messages[-1].get("role") == "assistant":
+        content = messages[-1].get('content', None)
+        try:
+            content = json.loads(content)
+            message = "The closing statement:" + content["final_response"]
+            chat_sequence.append(message)
+        except Exception as e:
+            chat_sequence.append(content)
+    return chat_sequence
+
+def get_intent(messages: List[Dict[str, str]])-> str | None:
+    '''
+    Get the intent from the user agent's message
+    '''
+    message:str|None = messages[0]
+    try:
+        content: str | None = message.get("content", None)
+        start:int = content.find('\"') + 1
+        end:int = content.find('\"', start)
+        intent:str = content[start:end]
+        return intent
+    except:
+        print("No intent found in the chat messages.")
+    return None

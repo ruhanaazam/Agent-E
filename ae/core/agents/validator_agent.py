@@ -5,45 +5,8 @@ import asyncio
 import sys
 from ae.config import PROJECT_TEST_ROOT
 sys.path.append(PROJECT_TEST_ROOT)
-from validation_agent.validator import validate_task_text
-
-def get_state_sequence(messages: Optional[List[Dict[str, Any]]]):
-    '''
-    Creates a list with each user message followed by the final statement from the planner.
-    '''
-    # Get only user output from the chat
-    chat_sequence: list[str] = []
-    for item in messages:        
-        role = item.get('role', None)
-        message = item.get('content', None)
-        if role == "user":
-            chat_sequence.append(message)
-    
-    # Append final statement from the planner
-    if messages[-1].get("role") == "assistant":
-        content = messages[-1].get('content', None)
-        try:
-            content = json.loads(content)
-            message = "The closing statement:" + content["final_response"]
-            chat_sequence.append(message)
-        except Exception as e:
-            chat_sequence.append(content)
-    return chat_sequence
-
-def getIntent(messages: Optional[List[Dict[str, Any]]])-> str | None:
-    '''
-    Get the intent from the user agent's message
-    '''
-    message:str|None = messages[0]
-    try:
-        content: str | None = message.get("content", None)
-        start:int = content.find('\"') + 1
-        end:int = content.find('\"', start)
-        intent:str = content[start:end]
-        return intent
-    except:
-        print("No intent found in the chat messages.")
-    return None
+from validation_agent.validator import validate_task_text, validate_task_vision # type: ignore
+from validation_agent.utils import get_screenshot_paths, get_chat_sequence, get_intent # type: ignore
 
 class ValidationAgent(ConversableAgent):
     def __init__(self, name: str, modality: str="text",  **kwargs):
@@ -76,21 +39,28 @@ class ValidationAgent(ConversableAgent):
         #print(f">>> Planner system_message: {system_message}")
         #system_message = system_message + "\n" + f"Today's date is {datetime.now().strftime('%d %B %Y')}" 
         
+        # Get the intent from messages
+        messages = list(self.chat_messages.values())[0] # Note: This can probably be done in a better way
+        intent = get_intent(messages=messages) #ignore
+        
+        # Evaluate the intent
         score_dict = {}
-        self.name 
-        if self.modality == "text":
-            # Get the intent from messages
-            messages = list(self.chat_messages.values())[0] # Note: This can probably be done in a better way
-            intent = getIntent(messages=messages)
-            
+        if self.modality == "text":            
             # Get the relevant chat sequence to validate
-            state_seq = get_state_sequence(messages)
-            score_dict = validate_task_text(state_seq, intent)
+            state_seq = get_chat_sequence(messages)  # type: ignore
+            score_dict = validate_task_text(state_seq, intent) # type: ignore
+            # TODO: limit the state_seq to be between now and last validation
             
-        #if self.modality == "vision":
-            # TODO: Implement vision self-validator
+        if self.modality == "vision":
+            screenshot_path = f"/Users/ruhana/Desktop/Agent-E/ruhana_notes_observations/save_results/baseline_annotated/log_full/logs_for_task_{task_id}/snapshots"
+            screenshot_seq = get_screenshot_paths(screenshot_path) # type: ignore
+            score_dict = validate_task_vision(screenshot_seq, intent) # type: ignore
+             # TODO: limit the state_seq to be between now and last validation
+            
+            
         #if self.modality == "test_vision":  
             # TODO: Implement text & vision self-validator
+            
         
         # TODO: Play around with fixing this text response.
         if score_dict["pred_task_completed"]:
