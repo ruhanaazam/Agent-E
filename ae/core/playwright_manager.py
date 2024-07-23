@@ -33,6 +33,8 @@ class PlaywrightManager:
     __async_initialize_done = False
     _take_screenshots = False
     _screenshots_dir = None
+    _screenshot_successes: int = 0
+    _screenshots_attempts: int = 0
 
     def __new__(cls, *args, **kwargs): # type: ignore
         """
@@ -351,6 +353,12 @@ class PlaywrightManager:
     def get_screenshots_dir(self):
         return self._screenshots_dir
 
+    def get_screenshot_attempts(self):
+        return self._screenshots_attempts
+    
+    def get_screenshot_sucesses(self):
+        return self._screenshot_successes
+    
     async def take_screenshots(self, name: str, page: Page|None, full_page: bool = True, include_timestamp: bool = True,
                                load_state: str = 'domcontentloaded', take_snapshot_timeout: int = 10*1000):
         if not self._take_screenshots:
@@ -366,17 +374,19 @@ class PlaywrightManager:
         screenshot_path = f"{self.get_screenshots_dir()}/{screenshot_name}"
         
         max_attempts = 3
+        self._screenshots_attempts += 1 # this is only counted once per state
         for attempts in range(0, max_attempts):
             try:
                 await page.wait_for_load_state(state=load_state, timeout=take_snapshot_timeout)  # type: ignore
                 await page.screenshot(path=screenshot_path, full_page=full_page, timeout=take_snapshot_timeout, caret="initial", scale="device")
-                print(f"Screenshot saved to: {screenshot_path}")
+                self._screenshot_successes += 1
+                print(f"Screenshot saved to: {screenshot_path}, Screenshots success rate for current task: {self._screenshot_successes}/{self._screenshots_attempts}")
                 break  # Exit the loop if the operation is successful
             except Exception as e:
                 attempts += 1
                 logger.error(f"Failed to take screenshot on attempt {attempts}. Error: {e}")
                 if attempts >= max_attempts:
-                    logger.error("Max attempts reached. Unable to take screenshot.")
+                    logger.error(f"Max attempts reached. Unable to take screenshot., Screenshots success rate for current task: {self._screenshot_successes}/{self._screenshots_attempts}")
 
 
     def log_user_message(self, message: str):

@@ -8,6 +8,7 @@ from test.evaluators import evaluator_router
 from test.test_utils import get_formatted_current_timestamp
 from test.test_utils import load_config
 from test.test_utils import task_config_validator
+from test.test_utils import count_validation_calls
 from typing import Any
 
 import ae.core.playwright_manager as browserManager
@@ -367,6 +368,17 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 test_results.append(task_result)
                 save_individual_test_result(task_result, results_dir)
                 print_test_result(task_result, index + 1, total_tests)
+                
+                #check how many screenshot were taken
+                screenshots_taken:int = browser_manager.get_screenshot_sucesses()
+                screenshots_attempted:int = browser_manager.get_screenshot_attempts()
+                logger.info(f"Screenshot success rate: {screenshots_taken}/{screenshots_attempted}")
+                
+                #check how many times validator was called
+                user_agent = ag.agents_map["user"]
+                chat_history:list[dict [str, str]]= ag.manager.chat_messages[user_agent]
+                count = count_validation_calls(chat_history)
+                logger.info(f"Validator was called {count} times in total.")
 
                 if not browser_manager.isheadless: # no need to wait if we are running headless
                     await asyncio.sleep(wait_time_non_headless)  # give time for switching between tasks in case there is a human observer
@@ -376,7 +388,6 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 await browser_manager.close_except_specified_tab(page) # cleanup pages that are not the one we opened here
             except Exception as e:
                 logger.error(f"Issue with task: \"{task_id}\". {e}")
-                print(e)
                 print(f"Task failed in try {attempt}...")
                 await asyncio.sleep(5)
                 continue

@@ -263,7 +263,9 @@ def get_formatted_current_timestamp(format: str = "%Y-%m-%d %H:%M:%S") -> str:
     timestamp_str = current_time.strftime(format)
     return timestamp_str
 
-def list_items_in_folder(path):
+def list_items_in_folder(path: str)-> list[str]:
+    # TODO : remove try except, that way error is caught elsewhere
+    # TODO: consider logging the error somewhere
     try:
         items = os.listdir(path)
         items_with_mtime = [(item, os.path.getmtime(os.path.join(path, item))) for item in items]
@@ -271,11 +273,14 @@ def list_items_in_folder(path):
         sorted_items = [item for item, mtime in items_with_mtime]
         return sorted_items
     except FileNotFoundError:
-        return f"The path {path} does not exist."
+        print(f"The path {path} does not exist.")
+        return []
     except NotADirectoryError:
-        return f"The path {path} is not a directory."
+        print(f"The path {path} is not a directory.")
+        return []
     except PermissionError:
-        return f"Permission denied to access {path}."
+        print(f"Permission denied to access {path}.")
+        return []
 
 def compress_png(file_path:str, max_size_mb=20, max_height=2048, max_width=768, reduce_factor=0.9):
     short_side_limit = min(max_height, max_width)
@@ -336,3 +341,11 @@ def robust_json_loader(json_str):
             print("Cannot fix json formatting")
             return ""
     return json_object
+    
+def count_validation_calls(chat_history:list[dict [str, str]])-> int:
+    count = 0
+    for message in chat_history:
+        name:str = message.get("name", "")
+        if name == "validator_agent":
+            count +=1
+    return count
