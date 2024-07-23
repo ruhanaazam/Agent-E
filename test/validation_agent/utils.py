@@ -4,7 +4,6 @@ import subprocess
 import time
 import openai
 import base64
-import sys
 import traceback
 from typing import Dict, Any, Tuple, List
 from PIL import Image
