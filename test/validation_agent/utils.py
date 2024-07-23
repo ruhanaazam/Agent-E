@@ -8,6 +8,7 @@ import sys
 import traceback
 from typing import Dict, Any, Tuple, List
 from PIL import Image
+import os
 
 SYSTEM_PROMPT: str = "You are a helpful assistant that automates digital workflows."
 
@@ -118,13 +119,32 @@ def compress_png(file_path:str, max_size_mb:int=20, max_height:int =2048, max_wi
     except Exception as e:
         print(f"Error compressing {file_path}: {e}")
         return False
+
+def list_items_in_folder(path: str)-> list[str]:
+    # TODO : remove try except, that way error is caught elsewhere
+    # TODO: consider logging the error somewhere
+    try:
+        items = os.listdir(path)
+        items_with_mtime = [(item, os.path.getmtime(os.path.join(path, item))) for item in items]
+        items_with_mtime.sort(key=lambda x: x[0])
+        sorted_items = [item for item, mtime in items_with_mtime]
+        return sorted_items
+    except FileNotFoundError:
+        print(f"The path {path} does not exist.")
+        return []
+    except NotADirectoryError:
+        print(f"The path {path} is not a directory.")
+        return []
+    except PermissionError:
+        print(f"Permission denied to access {path}.")
+        return []
     
 def get_screenshot_paths(file_path:str, compress:bool=True)-> list[str]:
     '''
     Will get all screenshots in a folder and compress them.
     '''
     # Get all screenshots for a task
-    screenshot_names: list[str]= list_items_in_folder(file_path) # type: ignore     
+    screenshot_names: list[str]= list_items_in_folder(file_path)     
    
     # Check that screenshots exist for evaluation
     if len(screenshot_names) == 0:

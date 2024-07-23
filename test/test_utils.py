@@ -258,25 +258,6 @@ def get_formatted_current_timestamp(format: str = "%Y-%m-%d %H:%M:%S") -> str:
     timestamp_str = current_time.strftime(format)
     return timestamp_str
 
-def list_items_in_folder(path: str)-> list[str]:
-    # TODO : remove try except, that way error is caught elsewhere
-    # TODO: consider logging the error somewhere
-    try:
-        items = os.listdir(path)
-        items_with_mtime = [(item, os.path.getmtime(os.path.join(path, item))) for item in items]
-        items_with_mtime.sort(key=lambda x: x[0])
-        sorted_items = [item for item, mtime in items_with_mtime]
-        return sorted_items
-    except FileNotFoundError:
-        print(f"The path {path} does not exist.")
-        return []
-    except NotADirectoryError:
-        print(f"The path {path} is not a directory.")
-        return []
-    except PermissionError:
-        print(f"Permission denied to access {path}.")
-        return []
-
 def robust_json_loader(json_str):
     '''
     This function will correct any incorrectly formatted json objects then load it.

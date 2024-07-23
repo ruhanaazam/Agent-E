@@ -9,7 +9,7 @@ from test.test_utils import evaluate_exact_match
 from test.test_utils import evaluate_fuzzy_match
 from test.test_utils import evaluate_must_include
 from test.test_utils import evaluate_ua_match
-from test.test_utils import list_items_in_folder
+from test.validation_agent.utils import list_items_in_folder
 from test.validation_agent.utils import compress_png
 from typing import Any
 
