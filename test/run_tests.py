@@ -19,6 +19,8 @@ if __name__ == "__main__":
                         help='A unique identifier for the test results. If not provided, a timestamp is used.')
     parser.add_argument('-config', '--test_config_file', type=str,
                         help='Path to the test configuration file. Default is "test/tasks/test.json" in the project root.')
+    parser.add_argument('-validator', '--validator_type', type=str, default="text",
+                        help='The maximum number of times a single tasks rerun if the run fails (e.g. due to page loading)')
     parser.add_argument('-retry', '--retry_limit', type=int, default=0,
                         help='The maximum number of times a single tasks rerun if the run fails (e.g. due to page loading)')
 
@@ -32,6 +34,7 @@ if __name__ == "__main__":
                   test_file=args.test_config_file, 
                   take_screenshots=args.take_screenshots, 
                   wait_time_non_headless=args.wait_time_non_headless, 
+                  validator_type=args.validator_type,
                   retry_limit=args.retry_limit
                   )
         )

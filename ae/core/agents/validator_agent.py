@@ -46,10 +46,11 @@ def getIntent(messages: Optional[List[Dict[str, Any]]])-> str | None:
     return None
 
 class ValidationAgent(ConversableAgent):
-    def __init__(self, name: str, **kwargs):
+    def __init__(self, name: str, modality: str="text",  **kwargs):
         """
         Initialize the validation agent. This is a custom conversation agent.
         """ 
+        self.modality:str = modality
         super().__init__(name, **kwargs)
         return 
     
@@ -75,13 +76,21 @@ class ValidationAgent(ConversableAgent):
         #print(f">>> Planner system_message: {system_message}")
         #system_message = system_message + "\n" + f"Today's date is {datetime.now().strftime('%d %B %Y')}" 
         
-        # Get the intent from messages
-        messages = list(self.chat_messages.values())[0] # Note: This can probably be done in a better way
-        intent = getIntent(messages=messages)
-        
-        # Get the relevant chat sequence to validate
-        state_seq = get_state_sequence(messages)
-        score_dict = validate_task_text(state_seq, intent)
+        score_dict = {}
+        self.name 
+        if self.modality == "text":
+            # Get the intent from messages
+            messages = list(self.chat_messages.values())[0] # Note: This can probably be done in a better way
+            intent = getIntent(messages=messages)
+            
+            # Get the relevant chat sequence to validate
+            state_seq = get_state_sequence(messages)
+            score_dict = validate_task_text(state_seq, intent)
+            
+        #if self.modality == "vision":
+            # TODO: Implement vision self-validator
+        #if self.modality == "test_vision":  
+            # TODO: Implement text & vision self-validator
         
         # TODO: Play around with fixing this text response.
         if score_dict["pred_task_completed"]:
@@ -91,6 +100,13 @@ class ValidationAgent(ConversableAgent):
         
         print(f"Validator Raw Response: {score_dict}")
         return {"content": response}
-
+    
+    def get_modality(self,)-> str:
+        return self.modality
+    
+    def set_modality(self, new_modality: str):
+        assert (new_modality in ["text", "vision", "text_vision"]), f"{new_modality} is not a valid modality for the validator"
+        self.modality=new_modality
+        return
 
 

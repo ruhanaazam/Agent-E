@@ -15,6 +15,7 @@ import nltk  # type: ignore
 from ae.config import PROJECT_TEST_ROOT
 from ae.core.autogen_wrapper import AutogenWrapper
 from ae.core.playwright_manager import PlaywrightManager
+from ae.core.agents.validator_agent import ValidationAgent
 from ae.utils.logger import logger
 from ae.utils.response_parser import parse_response, getLastPlannerMessage
 from autogen.agentchat.chat import ChatResult  # type: ignore
@@ -297,7 +298,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
 
 
 async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_task_index: int, max_task_index: int,
-               test_file: str="", test_results_id: str = "", wait_time_non_headless: int=5, take_screenshots: bool = False, retry_limit: int = 0) -> list[dict[str, Any]]:
+               test_file: str="", test_results_id: str = "", wait_time_non_headless: int=5, take_screenshots: bool = False, validator_type:str="text", retry_limit: int = 0) -> list[dict[str, Any]]:
     """
     Runs a specified range of test tasks using Playwright for browser interactions and AutogenWrapper for task automation.
     It initializes necessary components, processes each task, handles exceptions, and compiles test results into a structured list.
@@ -338,13 +339,18 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
         browser_manager = browserManager.PlaywrightManager(headless=False)
         await browser_manager.async_initialize()
 
+    # Set the modality of the validator agent
+    validator_agent: ValidationAgent = ag.agents_map["validator_agent"]
+    validator_agent.set_modality(validator_type)
+    
     page=await browser_manager.get_current_page()
     test_results = []
     max_task_index = len(test_configurations) if not max_task_index else max_task_index
     total_tests = max_task_index - min_task_index
 
     for index, task_config in enumerate(test_configurations[min_task_index:max_task_index], start=min_task_index):
-        for attempt in range(retry_limit + 1): # attempt the task muliple times incase of timeout/connection errors
+        # Attempt task
+        for attempt in range(retry_limit + 1): # Tasks are retried if an uncaught exception is thrown
             try:
                 task_id = str(task_config.get('task_id'))
 
