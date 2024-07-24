@@ -1,8 +1,6 @@
 import asyncio
-from email import message
 import json
 import os
-import re
 import tempfile
 import traceback
 from string import Template
@@ -21,9 +19,9 @@ from ae.core.agents.browser_nav_agent import BrowserNavAgent
 from ae.core.agents.high_level_planner_agent import PlannerAgent  
 from ae.core.agents.validator_agent import ValidationAgent
 from ae.core.prompts import LLM_PROMPTS
+import logging
 from ae.utils.logger import logger
 from ae.utils.autogen_sequential_function_call import UserProxyAgent_SequentialFunctionExecution
-from ae.utils.response_parser import parse_response
 from ae.utils.response_parser import getLastPlannerMessage, isTerminate
 from ae.core.skills.get_url import geturl
 import nest_asyncio # type: ignore
@@ -217,7 +215,30 @@ class AutogenWrapper:
 
         return self
 
-
+    def set_logger_to_debug(self, file_name: str):
+        '''
+        This function configers the logger (at the level of the autogen wrapper).
+        Parameter:
+            file_name (str): Name of the file where the logs will be saved
+        '''
+        logging.basicConfig(
+            level=logging.DEBUG, # change level here or use set_log_level() to change it
+            format="[%(asctime)s] %(levelname)s {%(filename)s:%(lineno)d}  - %(message)s", filename=file_name, filemode='a'
+        )
+        return 
+    
+    def set_logger_to_info(self, file_name: str):
+        '''
+        This function configers the logger (at the level of the autogen wrapper).
+        Parameter:
+            file_name (str): Name of the file where the logs will be saved
+        '''
+        logging.basicConfig(
+            level=logging.INFO, # change level here or use set_log_level() to change it
+            format="[%(asctime)s] %(levelname)s {%(filename)s:%(lineno)d}  - %(message)s", filename=file_name, filemode='a'
+        )
+        return 
+    
     def get_chat_logs_dir(self) -> str|None:
         """
         Get the directory for saving chat logs.

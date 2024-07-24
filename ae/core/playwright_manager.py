@@ -380,7 +380,7 @@ class PlaywrightManager:
                 await page.wait_for_load_state(state=load_state, timeout=take_snapshot_timeout)  # type: ignore
                 await page.screenshot(path=screenshot_path, full_page=full_page, timeout=take_snapshot_timeout, caret="initial", scale="device")
                 self._screenshot_successes += 1
-                print(f"Screenshot saved to: {screenshot_path}, Screenshots success rate for current task: {self._screenshot_successes}/{self._screenshots_attempts}")
+                logger.info(f"Screenshot saved to: {screenshot_path}, Screenshots success rate for current task: {self._screenshot_successes}/{self._screenshots_attempts}")
                 break  # Exit the loop if the operation is successful
             except Exception as e:
                 attempts += 1

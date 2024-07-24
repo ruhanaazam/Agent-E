@@ -361,7 +361,10 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 ag.set_chat_logs_dir(log_folders["task_log_folder"])
                 screenshot_directory: str= f"{log_folders['task_log_folder']}/snapshots"
                 validator_agent.set_screenshot_directory(screenshot_directory)
-
+                
+                #Set the logger 
+                ag.set_logger_to_info(f"{log_folders['task_log_folder']}/app.log")
+                
                 browser_manager.set_take_screenshots(take_screenshots)
                 if take_screenshots:
                     browser_manager.set_screenshots_dir(log_folders["task_screenshots_folder"])
@@ -390,14 +393,9 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 count = count_validation_calls(chat_history)
                 logger.info(f"Validator was called {count} times in total.")
                 
-                #move logger file (app.log) to the task folder
-                default_log_directory = f"{PROJECT_SOURCE_ROOT}/app.log"
-                final_log_directory = f"{log_folders['task_log_folder']}/app.log" 
-                os.rename(default_log_directory, final_log_directory)
-                
             except Exception as e:
                 logger.error(f"Issue with task: \"{task_id}\". {e}")
-                print(f"Task failed in try {attempt}...")
+                logger.info(f"Task failed in attempt {attempt}/{retry_limit+1}...")
                 await asyncio.sleep(5)
                 continue
             else: 
