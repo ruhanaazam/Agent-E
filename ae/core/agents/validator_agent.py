@@ -48,6 +48,11 @@ class ValidationAgent(ConversableAgent):
         
         # Evaluate the intent
         score_dict = {}
+        if self.modality == "none":
+            print("Validator is not involked!")
+            response:str = f"The task was completed."
+            return {"content": response}
+        
         if self.modality == "text":            
             # Get the relevant chat sequence to validate
             state_seq = get_chat_sequence(messages)  # type: ignore
@@ -61,14 +66,13 @@ class ValidationAgent(ConversableAgent):
             score_dict = validate_task_vision(screenshot_seq, intent) # type: ignore
              # TODO: limit the state_seq to be between now and last validation
             
-            
         #if self.modality == "test_vision":  
             # TODO: Implement text & vision self-validator
             
         
         # TODO: Play around with fixing this text response.
         if score_dict["pred_task_completed"]:
-            response = "The task was completed successfully."   
+            response = f"The task was completed. {score_dict['pred_rationale']}"   
         else:
             response = f"The task was not completed succesfully. {score_dict['pred_rationale']} Please come up with a new plan which is different than the previous attempted plan(s). This plan should take into account and avoid issue(s) from prior plan(s). You are allowed to attempt build plans which seemed less likely to work previously."   
         

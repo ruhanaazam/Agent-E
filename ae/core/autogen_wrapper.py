@@ -121,7 +121,7 @@ class AutogenWrapper:
             if last_speaker is validator_agent: #possible to split this into two
                 message = messages[-1]
                 content = message.get("content", None)
-                if content == "The task was completed successfully.":
+                if "The task was completed" in content:
                     return user_agent # The user agent is expected to terminate
                 else:
                     return planner_agent # Continue planning with new feedback
@@ -330,7 +330,7 @@ class AutogenWrapper:
                 # This might be the place to throw an error... if should_terminate is false, then this is bad, the user agent should never been called...
             else:
                 content:Any = x.get("content", "")
-                should_terminate = (content == "The task was completed successfully.")
+                should_terminate = ("The task was completed" in content)
                 print(f"Should terminate ... {should_terminate}")
                 if not should_terminate:
                     raise Exception('User agent called after validator agent before termination!')
