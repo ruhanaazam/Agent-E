@@ -83,7 +83,7 @@ class ValidationAgent(ConversableAgent):
         return self.modality
     
     def set_modality(self, new_modality: str):
-        assert (new_modality in ["text", "vision", "text_vision"]), f"{new_modality} is not a valid modality for the validator"
+        assert (new_modality in ["text", "vision", "text_vision", "none"]), f"{new_modality} is not a valid modality for the validator"
         self.modality=new_modality
         return
 
