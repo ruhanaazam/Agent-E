@@ -28,7 +28,6 @@ def parse_response(message: str) -> Dict[str, Any]:
     except:
         # If the response is not a valid JSON, try pass it using string matching. 
         #This should seldom be triggered
-        logging.error(f"Error parsing JSON response {raw_messgae}. Attempting to parse using string matching.")
         if ("plan" in message and "next_step" in message):
             start = message.index("plan") + len("plan")
             end = message.index("next_step")
@@ -58,7 +57,7 @@ def parse_response(message: str) -> Dict[str, Any]:
                 json_response["terminate"] = "yes"
             else:
                 json_response["terminate"] = "no"
-    
+        logging.error(f"Error parsing JSON response {raw_messgae}")
     return json_response
 
 def getLastValidationMessage(messages):
