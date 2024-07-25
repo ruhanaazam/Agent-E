@@ -2,6 +2,7 @@ from audioop import reverse
 from email import message
 import json
 from typing import Dict, Any
+import logging
 
 def parse_response(message: str) -> Dict[str, Any]:
     """
@@ -27,7 +28,7 @@ def parse_response(message: str) -> Dict[str, Any]:
     except:
         # If the response is not a valid JSON, try pass it using string matching. 
         #This should seldom be triggered
-        print(f"Error parsing JSON response {raw_messgae}. Attempting to parse using string matching.")
+        logging.error(f"Error parsing JSON response {raw_messgae}. Attempting to parse using string matching.")
         if ("plan" in message and "next_step" in message):
             start = message.index("plan") + len("plan")
             end = message.index("next_step")

@@ -1,7 +1,9 @@
 import asyncio
 import json
 import os
+import sys
 import time
+import traceback
 
 from regex import E
 from test.evaluators import evaluator_router
@@ -344,7 +346,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
     # Set the modality of the validator agent
     validator_agent: ValidationAgent = ag.agents_map["validator_agent"]
     validator_agent.set_modality(validator_type)
-    
+     
     page=await browser_manager.get_current_page()
     test_results = []
     max_task_index = len(test_configurations) if not max_task_index else max_task_index
@@ -358,13 +360,16 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
 
                 log_folders = create_task_log_folders(task_id, test_results_id)
 
-                ag.set_chat_logs_dir(log_folders["task_log_folder"])
+                ag.set_chat_logs_dir(results_dir)
+                
+                # Set the screenshot
                 screenshot_directory: str= f"{log_folders['task_log_folder']}/snapshots"
                 validator_agent.set_screenshot_directory(screenshot_directory)
                 
-                #Set the logger 
-                ag.set_logger_to_info(f"{log_folders['task_log_folder']}/app.log")
-                
+                #Set the logger to results directory
+                test_dir = os.path.join(TEST_LOGS, f"{test_results_id}", "app.log")
+                ag.set_logger_to_info(test_dir)
+            
                 browser_manager.set_take_screenshots(take_screenshots)
                 if take_screenshots:
                     browser_manager.set_screenshots_dir(log_folders["task_screenshots_folder"])
@@ -394,9 +399,13 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 logger.info(f"Validator was called {count} times in total.")
                 
             except Exception as e:
-                logger.error(f"Issue with task: \"{task_id}\". {e}")
+                logger.error(f"Issue with task \"{task_id}\". {e}")
+                logger.error(f"{traceback.format_exc}")
                 logger.info(f"Task failed in attempt {attempt}/{retry_limit+1}...")
-                await asyncio.sleep(5)
+                traceback.print_exc()
+                
+                if attempt < retry_limit+1:
+                    time.sleep(5)
                 continue
             else: 
                 break # task was successfully tested
