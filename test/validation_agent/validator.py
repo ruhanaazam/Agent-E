@@ -1,3 +1,4 @@
+from random import seed
 from .prompts import (
     prompt__validate_action, 
     prompt__validate_with_vision__intro, prompt__validate_with_vision__close, 
@@ -76,7 +77,7 @@ def validate_task_vision(state_seq: List[Any], task: str) -> Dict[str, str]:
     }
     # Feed (S, S', S'', ...) -- i.e. all screenshots at once
     messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
-    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-vision-preview', temperature=0.0)
+    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-vision-preview', temperature=0.0, seed=1234)
 
     # Evaluate
     try:
@@ -128,7 +129,7 @@ def validate_task_text_vision(text_result: Dict[str,str], vision_result: Dict[st
         prompt_sequence = build_text_prompt_sequence([text_prompt, vision_prompt])
         
         messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
-        pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-turbo-preview', temperature=0.0)
+        pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-turbo-preview', temperature=0.0, seed=1234)
         
         pred_json = json.loads(pred_raw_response.replace("```json", "").replace("```", "").strip())
         pred_rationale: Dict[str, str] = pred_json['rationale']
@@ -185,7 +186,7 @@ def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
     
     # Feed (S, S', S'', ...) -- i.e. all screenshots at once
     messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
-    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-turbo-preview', temperature=0.0)
+    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-turbo-preview', temperature=0.0, seed=1234)
 
     # Evaluate
     try:

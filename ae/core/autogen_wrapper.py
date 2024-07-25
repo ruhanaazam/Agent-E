@@ -144,7 +144,8 @@ class AutogenWrapper:
             llm_config={
                     "config_list": self.config_list,
                     "cache_seed": None,
-                    "temperature": 0.0
+                    "temperature": 0.0,
+                    "seed": 1234
                 },
             )  
         def trigger_nested_chat(manager: autogen.ConversableAgent) -> bool:
