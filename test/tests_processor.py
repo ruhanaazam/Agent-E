@@ -357,12 +357,13 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
         for attempt in range(retry_limit + 1): # Tasks are retried if an uncaught exception is thrown
             try:
                 task_id = str(task_config.get('task_id'))
-
+                # Create task log folder
                 log_folders = create_task_log_folders(task_id, test_results_id)
 
-                ag.set_chat_logs_dir(results_dir)
+                # Set directory where chat log will be saved
+                ag.set_chat_logs_dir(log_folders['task_log_folder']) 
                 
-                # Set the screenshot
+                # Set the screenshot directory
                 screenshot_directory: str= f"{log_folders['task_log_folder']}/snapshots"
                 validator_agent.set_screenshot_directory(screenshot_directory)
                 
@@ -370,6 +371,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 test_dir = os.path.join(TEST_LOGS, f"{test_results_id}", "app.log")
                 ag.set_logger_to_info(test_dir)
             
+                #Take final screenshot
                 browser_manager.set_take_screenshots(take_screenshots)
                 if take_screenshots:
                     browser_manager.set_screenshots_dir(log_folders["task_screenshots_folder"])
