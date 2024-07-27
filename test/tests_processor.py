@@ -302,7 +302,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
 
 
 async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_task_index: int, max_task_index: int,
-               test_file: str="", test_results_id: str = "", wait_time_non_headless: int=5, take_screenshots: bool = False, validator_type:str="text", retry_limit: int = 0) -> list[dict[str, Any]]:
+               test_file: str="", test_results_id: str = "", wait_time_non_headless: int=5, take_screenshots: bool = False, validator_type:str="text", retry_limit: int = 0, task_subset: str| None = None) -> list[dict[str, Any]]:
     """
     Runs a specified range of test tasks using Playwright for browser interactions and AutogenWrapper for task automation.
     It initializes necessary components, processes each task, handles exceptions, and compiles test results into a structured list.
@@ -352,7 +352,13 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
     max_task_index = len(test_configurations) if not max_task_index else max_task_index
     total_tests = max_task_index - min_task_index
 
-    for index, task_config in enumerate(test_configurations[min_task_index:max_task_index], start=min_task_index):
+    if not task_subset:
+        test_configurations_set = test_configurations[min_task_index:max_task_index]
+    else:
+        test_configurations_set = [_task for _task in test_configurations if _task["task_id"] in task_subset]
+    
+    
+    for index, task_config in enumerate(test_configurations_set):
         # Attempt task
         for attempt in range(retry_limit + 1): # Tasks are retried if an uncaught exception is thrown
             try:
@@ -367,15 +373,16 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 screenshot_directory: str= f"{log_folders['task_log_folder']}/snapshots"
                 validator_agent.set_screenshot_directory(screenshot_directory)
                 
-                #Set the logger to results directory
+                # Set the logger to results directory
                 test_dir = os.path.join(TEST_LOGS, f"{test_results_id}", "app.log")
                 ag.set_logger_to_info(test_dir)
             
-                #Take final screenshot
+                # Take final screenshot
                 browser_manager.set_take_screenshots(take_screenshots)
                 if take_screenshots:
                     browser_manager.set_screenshots_dir(log_folders["task_screenshots_folder"])
 
+                # Execute a single task
                 print_progress_bar(index - min_task_index, total_tests)
                 task_result = await execute_single_task(task_config, browser_manager, ag, page, log_folders["task_log_folder"])
                 test_results.append(task_result)
@@ -384,10 +391,12 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
 
                 if not browser_manager.isheadless: # no need to wait if we are running headless
                     await asyncio.sleep(wait_time_non_headless)  # give time for switching between tasks in case there is a human observer
-
+                
+                # Take the final screenshot
                 await browser_manager.take_screenshots("final", None)
 
-                await browser_manager.close_except_specified_tab(page) # cleanup pages that are not the one we opened here
+                # Cleanup pages that are not the one we opened here
+                await browser_manager.close_except_specified_tab(page)
                 
                 #check how many screenshot were taken
                 screenshots_taken:int = browser_manager.get_screenshot_sucesses()

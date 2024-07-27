@@ -15,6 +15,8 @@ if __name__ == "__main__":
                         help='Minimum task index to start tests from (default: 0)')
     parser.add_argument('-max', '--max_task_index', type=int,
                         help='Maximum task index to end tests with, non-inclusive (default is all the tests in the file).')
+    parser.add_argument('-subset', '--test_subset', type=str,
+                        help='Test a subset of tasks in your test. Input should be a list of task_ids.', default=None)
     parser.add_argument('-id', '--test_results_id', type=str, default="",
                         help='A unique identifier for the test results. If not provided, a timestamp is used.')
     parser.add_argument('-config', '--test_config_file', type=str,
@@ -27,6 +29,10 @@ if __name__ == "__main__":
     # Parse the command line arguments
     args = parser.parse_args()
 
+    # Convert string to list
+    if args.test_subset:
+        args.test_subset = eval(args.test_subset)
+
     # Run the main function with the provided or default arguments, not passing browser_manager or AutoGenWrapper will cause the test processor to create new instances of them
     asyncio.run(
         run_tests(None, None, args.min_task_index, args.max_task_index, 
@@ -35,6 +41,7 @@ if __name__ == "__main__":
                   take_screenshots=args.take_screenshots, 
                   wait_time_non_headless=args.wait_time_non_headless, 
                   validator_type=args.validator_type,
-                  retry_limit=args.retry_limit
+                  retry_limit=args.retry_limit,
+                  task_subset=args.test_subset
                   )
         )
