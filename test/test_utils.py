@@ -271,7 +271,7 @@ def robust_json_loader(json_str):
 
         #call gpt-4 to fix
         client = OpenAI(api_key=os.environ['OPENAI_API_KEY'],)
-        prompt = f"Make this string into a proper json object. Please only respond with a plain text and nothing else: {json_str} "
+        prompt = f"Your job is to correct a string to be a perfect json object so it can be parsed. The given string is almost is json. Please help me make this string into proper json format. Please only respond with a plain text and nothing else: {json_str} "
         response = client.chat.completions.create(
             model=model_name,
             messages=[
@@ -283,13 +283,7 @@ def robust_json_loader(json_str):
             temperature=0.0
         )
         new_json_str:str = response.choices[0].message.content
-        #print(f"Reformatted as: {new_json_str}")
-        try:
-            json_object = json.loads(new_json_str)
-            return json_object
-        except Exception as e:
-            print("Cannot fix json formatting")
-            return ""
+        json_object = json.loads(new_json_str)
     return json_object
     
 def count_validation_calls(chat_history:list[dict [str, str]])-> int:
