@@ -77,7 +77,7 @@ def validate_task_vision(state_seq: List[Any], task: str) -> Dict[str, str]:
     }
     # Feed (S, S', S'', ...) -- i.e. all screenshots at once
     messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
-    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-vision-preview', temperature=0.0, seed=1234)
+    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4o', temperature=0.0, seed=1234) #gpt-4-vision-preview
 
     # Evaluate
     try:
@@ -85,10 +85,11 @@ def validate_task_vision(state_seq: List[Any], task: str) -> Dict[str, str]:
         pred_rationale: Dict[str, str] = pred_json['rationale']
         pred_is_met: bool = pred_json['was_completed']
         pred_questions: List[Any] = pred_json["visual_questions"]
-    except:
+    except Exception as e:
         pred_rationale = None
-        pred_is_met = None
+        pred_is_met = True #default answer -- basically an answer given at random
         pred_questions = None
+        pred_raw_response: f"Error in parsing: {pred_raw_response}. Exception given: {e}"
 
     return {
         # metadata
@@ -135,11 +136,11 @@ def validate_task_text_vision(text_result: Dict[str,str], vision_result: Dict[st
         pred_rationale: Dict[str, str] = pred_json['rationale']
         pred_is_met: bool = pred_json['was_completed']
         pred_questions: List[Any] = pred_json["reasoning_questions"]
-    except:
+    except Exception as e:
         pred_rationale = None
-        pred_is_met = None
-        pred_raw_response = None
+        pred_is_met = True #default answer -- basically an answer given at random
         pred_questions = None
+        pred_raw_response: f"Error in parsing: {pred_raw_response}. Exception given: {e}"
 
     return {
         # metadata
@@ -151,20 +152,10 @@ def validate_task_text_vision(text_result: Dict[str,str], vision_result: Dict[st
     } # type: ignore    
     
 def validate_task_raw_vision_text(text_seq: List[Any], vision_seq: List[Any], task: str) -> Dict[str, str]:
-    try:
-        vision_result: Dict[str, str] = validate_task_vqa(vision_seq, task=task)
-        text_result: Dict[str, str] = validate_task_text(text_seq, task=task)
-        result: Dict[str, str] = validate_task_vqa_text(text_result=str(text_result), vision_result=str(vision_result), task=task)
-        return result
-        
-    except:
-        return {
-        # metadata
-        "task_description": task,
-        "pred_rationale": None,
-        "pred_task_completed" : None,
-        "pred_raw_response": None
-    } # type: ignore    
+    vision_result: Dict[str, str] = validate_task_vqa(vision_seq, task=task)
+    text_result: Dict[str, str] = validate_task_text(text_seq, task=task)
+    result: Dict[str, str] = validate_task_vqa_text(text_result=str(text_result), vision_result=str(vision_result), task=task)
+    return result
 
 def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
     ## Simple validator function that takes as input the sequence of states and the task, and determines if it succeeded.
@@ -186,7 +177,7 @@ def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
     
     # Feed (S, S', S'', ...) -- i.e. all screenshots at once
     messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
-    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-turbo-preview', temperature=0.0, seed=1234)
+    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4o', temperature=0.0, seed=1234) # model='gpt-4-turbo-preview'
 
     # Evaluate
     try:
@@ -194,10 +185,11 @@ def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
         pred_rationale: Dict[str, str] = pred_json['rationale']
         pred_is_met: bool = pred_json['was_completed']
         pred_questions: List[Any] = pred_json["reasoning_questions"]
-    except:
+    except Exception as e:
         pred_rationale = None
-        pred_is_met = None
+        pred_is_met = True #default answer -- basically an answer given at random
         pred_questions = None
+        pred_raw_response: f"Error in parsing: {pred_raw_response}. Exception given: {e}"
 
     return {
         # metadata
