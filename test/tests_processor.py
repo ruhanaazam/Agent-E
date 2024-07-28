@@ -238,7 +238,11 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     logger.info(f"Intent: {command}, Task ID: {task_id}")
 
     if start_url:
-        await page.goto(start_url, wait_until='load', timeout=MAX_TIMEOUT)
+        try: 
+            await page.goto(start_url, wait_until='load', timeout=MAX_TIMEOUT)
+        except Exception as e:
+            logger.warning(f"{start_url} did not fully load. Now trying to load the page with dom only.")
+            await page.goto(start_url, wait_until='domcontentloaded', timeout=MAX_TIMEOUT)
 
     start_time = time.time()
     current_url = await browser_manager.get_current_url()
@@ -350,13 +354,12 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
     page=await browser_manager.get_current_page()
     test_results = []
     max_task_index = len(test_configurations) if not max_task_index else max_task_index
-    total_tests = max_task_index - min_task_index
 
     if not task_subset:
         test_configurations_set = test_configurations[min_task_index:max_task_index]
     else:
         test_configurations_set = [_task for _task in test_configurations if _task["task_id"] in task_subset]
-    
+    total_tests = len(test_configurations_set)
     
     for index, task_config in enumerate(test_configurations_set):
         # Attempt task
@@ -383,7 +386,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                     browser_manager.set_screenshots_dir(log_folders["task_screenshots_folder"])
 
                 # Execute a single task
-                print_progress_bar(index - min_task_index, total_tests)
+                print_progress_bar(index, total_tests)
                 task_result = await execute_single_task(task_config, browser_manager, ag, page, log_folders["task_log_folder"])
                 test_results.append(task_result)
                 save_individual_test_result(task_result, results_dir)
