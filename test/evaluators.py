@@ -336,7 +336,7 @@ class ManualContentEvaluator(Evaluator):
         elif answer_type.strip().lower() == "golden":
             print(colored("Golden answer (reference): ", "yellow") + reference_answer)
 
-        user_response = "skip"#input(colored("Annotate the task as Pass, Fail or Skip (please use Skip sparingly)? ", "magenta", attrs=["bold"]))
+        user_response = input(colored("Annotate the task as Pass, Fail or Skip (please use Skip sparingly)? ", "magenta", attrs=["bold"])) # skip
         eval_response: dict[str, float|str] = {}
         if(user_response.lower()=="pass"):
             eval_response["score"] = 1.0
@@ -350,7 +350,7 @@ class ManualContentEvaluator(Evaluator):
         reason: str|None = None
 
         if eval_response["score"] <= 0:
-            reason = "" #input("Reason for rating: ")
+            reason = input("Reason for rating: ")
             eval_response["reason"] = reason
 
         return eval_response

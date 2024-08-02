@@ -340,7 +340,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
     results_dir = create_results_dir(test_file, test_results_id)
     test_results: list[dict[str, str | int | float | None]] = []
 
-    if not ag:
+    if not ag: # Weird that this code in unreachable.... ruhana
         ag = await AutogenWrapper.create()
 
     if not browser_manager:
@@ -413,11 +413,17 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 logger.info(f"Validator was called {count} times in total.")
                 
             except Exception as e:
+                # Cleanup pages that are not the one we opened here
+                await browser_manager.close_except_specified_tab(page)
+                
+                # Log/Print issues
                 logger.error(f"Issue with task \"{task_id}\". {e}")
                 logger.error(f"{traceback.format_exc}")
                 logger.info(f"Task failed in attempt {attempt}/{retry_limit+1}...")
+                print(f"Issue with task \"{task_id}\". {e}")
                 traceback.print_exc()
                 
+                # Retry?
                 if attempt < retry_limit+1:
                     time.sleep(5)
                 continue

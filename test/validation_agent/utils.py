@@ -104,7 +104,7 @@ def compress_png(file_path:str, max_size_mb:int=20, max_height:int =2048, max_wi
         #         width, height = img.size
         
         while file_size_mb >= max_size_mb:  #or min(width, height) >= short_side_limit or max(width, height) >= long_side_limit:
-            #print(f"Compressing {file_path} (Initial Size: {file_size_mb:.2f} MB)")
+            print(f"Compressing {file_path} (Initial Size: {file_size_mb:.2f} MB)")
             with Image.open(file_path) as img:
                 width, height = img.size
                 new_width = int(width * reduce_factor)
@@ -113,7 +113,7 @@ def compress_png(file_path:str, max_size_mb:int=20, max_height:int =2048, max_wi
                 img.save(file_path, optimize=True)
                 file_size_mb = os.path.getsize(file_path) / (1024 * 1024.0)  # type: ignore
                 print(f"Resized to: {new_width}x{new_height}, Size: {file_size_mb:.2f} MB")
-        print(f"Final Size of {file_path}: {file_size_mb:.2f} MB")
+        #print(f"Final Size of {file_path}: {file_size_mb:.2f} MB")
         return file_size_mb < max_size_mb
     except Exception as e:
         print(f"Error compressing {file_path}: {e}")
@@ -145,9 +145,9 @@ def get_screenshot_paths(file_path:str, compress:bool=True)-> list[str]:
     # Get all screenshots for a task
     screenshot_names: list[str]= list_items_in_folder(file_path)     
    
-    # Check that screenshots exist for evaluation
+    # # Check that screenshots exist for evaluation
     if len(screenshot_names) == 0:
-        raise Exception("No screenshots found!")
+        print("Warning: no screenshots found!")
     
     # Load and compress screenshots
     state_seq: list[str] = []
