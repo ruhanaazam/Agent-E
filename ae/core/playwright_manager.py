@@ -386,7 +386,7 @@ class PlaywrightManager:
                 attempts += 1
                 logger.warning(f"Failed to take screenshot on attempt {attempts}. Error: {e}")
                 if attempts >= max_attempts:
-                    logger.error(f"Max attempts reached. Unable to take screenshot., Screenshots success rate for current task: {self._screenshot_successes}/{self._screenshots_attempts}")
+                    logger.warning(f"Max attempts reached. Unable to take screenshot., Screenshots success rate for current task: {self._screenshot_successes}/{self._screenshots_attempts}")
 
 
     def log_user_message(self, message: str):
