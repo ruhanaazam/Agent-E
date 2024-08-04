@@ -8,6 +8,7 @@ from time import time_ns
 from typing import Any
 
 import autogen  # type: ignore
+from autogen.agentchat.groupchat import GroupChatManager
 import nest_asyncio  # type: ignore
 import openai
 
@@ -22,7 +23,7 @@ from ae.core.prompts import LLM_PROMPTS
 import logging
 from ae.utils.logger import logger
 from ae.utils.autogen_sequential_function_call import UserProxyAgent_SequentialFunctionExecution
-from ae.utils.response_parser import getLastPlannerMessage, isTerminate
+from ae.utils.response_parser import getLastPlannerMessage, isTerminate, group_manager_error_check
 from ae.core.skills.get_url import geturl
 import nest_asyncio # type: ignore
 from ae.core.post_process_responses import final_reply_callback_planner_agent as print_message_from_planner  # type: ignore
@@ -97,66 +98,19 @@ class AutogenWrapper:
         self.config_list = autogen.config_list_from_json(env_or_file=temp_file_path, filter_dict={"model": {autogen_model_name}}) # type: ignore
         
         # Intialize inividual agents
-        self.agents_map = await self.__initialize_agents(agents_needed)   
+        self.agents_map = await self.__initialize_agents(agents_needed) 
         
-        # Intialize group chat and group chat manager
-        user_agent = self.agents_map["user"]
         planner_agent = self.agents_map["planner_agent"]
-        validator_agent = self.agents_map["validator_agent"]
-        
-        def state_transition(last_speaker, groupchat):
-            print(f"Speaker is {last_speaker.name}")
-            messages = groupchat.messages
-            
-            # Always call planner when last agent was user
-            if last_speaker is user_agent:
-                return planner_agent
-            
-            # Call validation when planner outputs terminate flag
-            shouldTerminate = isTerminate(messages)
-            if last_speaker is planner_agent and shouldTerminate:
-                return validator_agent
-            
-            # When task is not valid
-            if last_speaker is validator_agent: #possible to split this into two
-                message = messages[-1]
-                content = message.get("content", None)
-                if "The task was completed" in content:
-                    return user_agent # The user agent is expected to terminate
-                else:
-                    return planner_agent # Continue planning with new feedback
-            
-            # Until task is complete, go between validation and user agent
-            if last_speaker is planner_agent:
-                return user_agent
-            if last_speaker is validator_agent:
-                return planner_agent
-            return None
-        
-        groupchat = autogen.GroupChat(
-            agents=[user_agent, planner_agent, validator_agent], 
-            messages=[], 
-            max_round=12,
-            speaker_selection_method=state_transition,
-            )
-        self.manager = autogen.GroupChatManager(
-            groupchat=groupchat, 
-            llm_config={
-                    "config_list": self.config_list,
-                    "cache_seed": None,
-                    "temperature": 0.0,
-                    "seed": 1234
-                },
-            )  
+        self.manager = self.agents_map["manager"]
+              
         def trigger_nested_chat(manager: autogen.ConversableAgent) -> bool:
             print("Checking trigger_nested_chat()...")
             
             messages = manager.chat_messages[planner_agent] # this chat is shared
             
-            # # Do not trigger nested chat if if was just called
-            # lastAgent = messages[-1].get("name", None)
-            # if lastAgent == "user":
-            #     return False
+            if group_manager_error_check(messages):
+                logging.error(f"Group manager did not maintain order!, {messages}")
+                raise Exception("Group manager did not maintain order!")
 
             # Get the last message from the planner
             lastPlanMessage = getLastPlannerMessage(messages)
@@ -302,6 +256,11 @@ class AutogenWrapper:
                 agents_map["planner_agent"] = planner_agent
             else:
                 raise ValueError(f"Unknown agent type: {agent_needed}")
+        
+        # Initalize group chat manager 
+        manager_agent: GroupChatManager = self.__create_group_chat_manager_agent(agents_map)
+        agents_map["manager"] = manager_agent
+        
         return agents_map
 
 
@@ -412,6 +371,61 @@ class AutogenWrapper:
             human_input_mode="NEVER",
         )
         return validator_agent
+    
+    def __create_group_chat_manager_agent(self, agents_map: dict[str, UserProxyAgent_SequentialFunctionExecution  | autogen.ConversableAgent]) -> GroupChatManager:
+        # Intialize group chat and group chat manager
+        user_agent = agents_map["user"]
+        planner_agent = agents_map["planner_agent"]
+        validator_agent = agents_map["validator_agent"]
+        
+        def state_transition(last_speaker, groupchat):
+            print(f"Speaker is {last_speaker.name}")
+            messages = groupchat.messages
+            
+            # Call planner when last agent was user
+            if last_speaker is user_agent: # 
+                return planner_agent
+            
+            # Call validation when planner outputs terminate flag
+            shouldTerminate = isTerminate(messages)
+            if last_speaker is planner_agent and shouldTerminate:
+                return validator_agent
+            #if last_speaker is user_agent and shouldTerminate: # added
+            #    return validator_agent # added 
+            
+            # When task is not valid
+            if last_speaker is validator_agent:
+                message = messages[-1]
+                content = message.get("content", None)
+                if "The task was completed" in content:
+                    return user_agent # The user agent is expected to terminate the task
+                else:
+                    return planner_agent # Continue planning with new feedback
+            
+            # Until task is complete, go between validation and user agent
+            if last_speaker is planner_agent:
+                return user_agent
+            if last_speaker is validator_agent:
+                return planner_agent
+            return None
+        
+        groupchat = autogen.GroupChat(
+            agents=[user_agent, planner_agent, validator_agent], 
+            messages=[], 
+            max_round=12,
+            speaker_selection_method=state_transition,
+            )
+        
+        manager = autogen.GroupChatManager(
+            groupchat=groupchat, 
+            llm_config={
+                    "config_list": self.config_list,
+                    "cache_seed": None,
+                    "temperature": 0.0,
+                    "seed": 1234
+                },
+            ) 
+        return manager
 
     async def process_command(self, command: str, current_url: str | None = None) -> autogen.ChatResult | None:
         """
@@ -436,17 +450,21 @@ class AutogenWrapper:
             if self.agents_map is None:
                 raise ValueError("Agents map is not initialized.")
             print(self.agents_map["browser_nav_executor"].function_map) # type: ignore
+            
+            # Clear chat history for each (new) command
+            for agent in self.agents_map.values():
+                agent.clear_history()
+            
             result=await self.agents_map["user"].a_initiate_chat( # type: ignore
                 self.manager,
                 max_turns=self.number_of_rounds,
-                #clear_history=True,
+                clear_history=True,
                 message=prompt,
                 silent=False,
                 cache=None,
             )
-            # reset usage summary for all agents after each command
-            for agent in self.agents_map.values():
-                if hasattr(agent, "client") and agent.client is not None:
+            # reset usage summary for all agents after each command            for agent in self.agents_map.values():
+            if hasattr(agent, "client") and agent.client is not None:
                     agent.client.clear_usage_summary() # type: ignore
             return result
         except openai.BadRequestError as bre:
