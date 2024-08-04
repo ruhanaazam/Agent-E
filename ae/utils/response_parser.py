@@ -61,7 +61,7 @@ def parse_response(message: str) -> Dict[str, Any]:
         # TODO: add robust parser here
     return json_response
 
-def getLastValidationMessage(messages):
+def getLastValidationMessage(messages:List[Dict[Any, Any]]):
     """
     Given a list of messages from a chat, will find the last message from the validator_agent 
     """
@@ -75,7 +75,7 @@ def getLastValidationMessage(messages):
             return content_json
     return None
 
-def getLastPlannerMessage(messages):
+def getLastPlannerMessage(messages:List[Dict[Any, Any]]):
     """
     Given a list of messages from a chat, will find the last message from the planner_agent 
     """
@@ -89,7 +89,7 @@ def getLastPlannerMessage(messages):
             return content_json
     return None
 
-def isPlanValid(messages):
+def isPlanValid(messages:List[Dict[Any, Any]]):
     """
     Given a list of messages from a chat, will determine if the latest plan has been validated.
     """
@@ -98,7 +98,7 @@ def isPlanValid(messages):
         return content.get("valid_plan", None) == "yes"
     return False
 
-def isTerminate(messages):
+def isTerminate(messages:List[Dict[Any, Any]]):
     """
     Given a list of messages from a chat, will determine if the task should be terminated
     """
