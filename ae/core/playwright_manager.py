@@ -384,7 +384,7 @@ class PlaywrightManager:
                 break  # Exit the loop if the operation is successful
             except Exception as e:
                 attempts += 1
-                logger.error(f"Failed to take screenshot on attempt {attempts}. Error: {e}")
+                logger.warning(f"Failed to take screenshot on attempt {attempts}. Error: {e}")
                 if attempts >= max_attempts:
                     logger.error(f"Max attempts reached. Unable to take screenshot., Screenshots success rate for current task: {self._screenshot_successes}/{self._screenshots_attempts}")
 
