@@ -1,7 +1,7 @@
 from audioop import reverse
 from email import message
 import json
-from typing import Dict, Any
+from typing import Dict, Any, List
 import logging
 
 def parse_response(message: str) -> Dict[str, Any]:
@@ -104,4 +104,29 @@ def isTerminate(messages):
     content = getLastPlannerMessage(messages)
     if content:
         return content.get("terminate", None) == "yes"
+    return False
+
+def group_manager_error_check(messages:List[Dict[Any, Any]]):
+    # There are generally issues in these cases:
+    # The validator agent is not called after the planner terminates
+    # the planner is not called after the validator agent says a plan is wrong
+    # the user agent is not called after the validator agent says the plan is correct
+    # all these outcomes usually lead to the user agent being called twice in a row when the valiator agent should be called
+    
+    # Checks if group manager ordering has been broken
+    for i in range(len(messages)-1):
+        role_0: str = messages[i].get("name", None)
+        role_next: str = messages[i+1].get("name", None)
+        
+        # check user is not called twice in a row
+        if role_0 == "user" and role_next == "user":
+            return True
+        
+        if role_0 == "planner_agent" and role_next == "user":
+            content = messages[i].get("content", None)
+            content_json=parse_response(content)
+            if content_json.get("terminate", None) == "yes":
+                print(f"Error with message {i}")
+                return True # validator was not called!
+                
     return False

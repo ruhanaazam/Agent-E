@@ -248,59 +248,61 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     current_url = await browser_manager.get_current_url()
     command_exec_result = await ag.process_command(command, current_url)
     end_time = time.time()
+    print(f"Completed in {end_time - start_time} seconds.")
+    logger.info(f"Completed in {end_time - start_time} seconds.")
 
     evaluator_result: dict[str, float | str] = {}
     last_agent_response: str = ""
     command_cost: dict[str, Any] = {}
     single_task_result: dict[str, Any] = {}
-    try:
-        single_task_result = {
-            "task_id": task_id,
-            "task_index": task_index,
-            "start_url": start_url,
-            "intent": str(command),
-            "last_url": page.url,
-            "tct": end_time - start_time,
-            "start_ts": start_ts,
-            "completion_ts": get_formatted_current_timestamp()
-        }
+    # try:
+    single_task_result = {
+        "task_id": task_id,
+        "task_index": task_index,
+        "start_url": start_url,
+        "intent": str(command),
+        "last_url": page.url,
+        "tct": end_time - start_time,
+        "start_ts": start_ts,
+        "completion_ts": get_formatted_current_timestamp()
+    }
 
-        agent_name: str = "planner_agent" if ag.agents_map is not None and "planner_agent" in ag.agents_map else "browser_nav_agent"
+    agent_name: str = "planner_agent" if ag.agents_map is not None and "planner_agent" in ag.agents_map else "browser_nav_agent"
 
-        command_cost = get_command_exec_cost(command_exec_result) # type: ignore
-        print(f"Command cost: {command_cost}")
-        single_task_result["compute_cost"] = command_cost
+    command_cost = get_command_exec_cost(command_exec_result) # type: ignore
+    print(f"Command cost: {command_cost}")
+    single_task_result["compute_cost"] = command_cost
 
-        logger.info(f"Command \"{command}\" took: {round(end_time - start_time, 2)} seconds.")
-        logger.info(f"Task {task_id} completed.")
+    logger.info(f"Command \"{command}\" took: {round(end_time - start_time, 2)} seconds.")
+    logger.info(f"Task {task_id} completed.")
 
-        messages = ag.agents_map[agent_name].chat_messages # type: ignore
-        messages_str_keys = {str(key): value for key, value in messages.items()} # type: ignore
-        agent_key = list(messages.keys())[0] # type: ignore
-        last_agent_response = extract_last_response(messages[agent_key]) # type: ignore
+    messages = ag.agents_map[agent_name].chat_messages # type: ignore
+    messages_str_keys = {str(key): value for key, value in messages.items()} # type: ignore
+    agent_key = list(messages.keys())[0] # type: ignore
+    last_agent_response = extract_last_response(messages[agent_key]) # type: ignore
 
-        dump_log(str(task_id), messages_str_keys, logs_dir)
+    dump_log(str(task_id), messages_str_keys, logs_dir)
 
-        single_task_result["last_statement"] = last_agent_response
+    single_task_result["last_statement"] = last_agent_response
 
 
-        evaluator = evaluator_router(task_config)
-        cdp_session = await page.context.new_cdp_session(page)
-        evaluator_result = await evaluator(
-            task_config=task_config,
-            page=page,
-            client=cdp_session,
-            answer=last_agent_response, 
-            log_dir=logs_dir, # the logs_dir needs to be added here!!! otherwise evaluations is not possible :(
-        )
+    evaluator = evaluator_router(task_config)
+    cdp_session = await page.context.new_cdp_session(page)
+    evaluator_result = await evaluator(
+        task_config=task_config,
+        page=page,
+        client=cdp_session,
+        answer=last_agent_response, 
+        log_dir=logs_dir, # the logs_dir needs to be added here!!! otherwise evaluations is not possible :(
+    )
 
-        single_task_result["score"] = evaluator_result["score"]
-        single_task_result["reason"] = evaluator_result["reason"]
-    except Exception as e:
-        logger.error(f"Error getting command cost: {e}")
-        command_cost = {"cost": -1, "total_tokens": -1}
-        single_task_result["compute_cost"] = command_cost
-        single_task_result["error"] = str(e)
+    single_task_result["score"] = evaluator_result["score"]
+    single_task_result["reason"] = evaluator_result["reason"]
+    # except Exception as e:
+    #     logger.error(f"Error getting command cost: {e}")
+    #     command_cost = {"cost": -1, "total_tokens": -1}
+    #     single_task_result["compute_cost"] = command_cost
+    #     single_task_result["error"] = str(e)
 
     return single_task_result
 
@@ -340,7 +342,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
     results_dir = create_results_dir(test_file, test_results_id)
     test_results: list[dict[str, str | int | float | None]] = []
 
-    if not ag: # Weird that this code in unreachable.... ruhana
+    if not ag:
         ag = await AutogenWrapper.create()
 
     if not browser_manager:
@@ -366,6 +368,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
         for attempt in range(retry_limit + 1): # Tasks are retried if an uncaught exception is thrown
             try:
                 task_id = str(task_config.get('task_id'))
+                
                 # Create task log folder
                 log_folders = create_task_log_folders(task_id, test_results_id)
 
@@ -401,16 +404,17 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 # Cleanup pages that are not the one we opened here
                 await browser_manager.close_except_specified_tab(page)
                 
-                #check how many screenshot were taken
+                # Check how many screenshot were taken
                 screenshots_taken:int = browser_manager.get_screenshot_sucesses()
                 screenshots_attempted:int = browser_manager.get_screenshot_attempts()
                 logger.info(f"Screenshot success rate: {screenshots_taken}/{screenshots_attempted}")
                 
-                #check how many times validator was called
+                # Check how many times validator was called
                 user_agent = ag.agents_map["user"]
                 chat_history:list[dict [str, str]]= ag.manager.chat_messages[user_agent]
                 count = count_validation_calls(chat_history)
                 logger.info(f"Validator was called {count} times in total.")
+                logger.info(f"Completed running task id {task_id}.")
                 
             except Exception as e:
                 # Cleanup pages that are not the one we opened here
@@ -422,6 +426,11 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 logger.info(f"Task failed in attempt {attempt}/{retry_limit+1}...")
                 print(f"Issue with task \"{task_id}\". {e}")
                 traceback.print_exc()
+                
+                # Save chat log thus far 
+                messages = ag.agents_map[agent_name].chat_messages # type: ignore
+                messages_str_keys = {str(key): value for key, value in messages.items()} # type: ignore
+                dump_log(task_id, messages_str_keys, log_folders["task_log_folder"])
                 
                 # Retry?
                 if attempt < retry_limit+1:
