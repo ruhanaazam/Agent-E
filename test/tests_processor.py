@@ -428,6 +428,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 traceback.print_exc()
                 
                 # Save chat log thus far 
+                agent_name: str = "planner_agent" if ag.agents_map is not None and "planner_agent" in ag.agents_map else "browser_nav_agent"
                 messages = ag.agents_map[agent_name].chat_messages # type: ignore
                 messages_str_keys = {str(key): value for key, value in messages.items()} # type: ignore
                 dump_log(task_id, messages_str_keys, log_folders["task_log_folder"])
