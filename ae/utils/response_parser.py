@@ -58,6 +58,7 @@ def parse_response(message: str) -> Dict[str, Any]:
             else:
                 json_response["terminate"] = "no"
         logging.error(f"Error parsing JSON response {raw_messgae}")
+        # TODO: add robust parser here
     return json_response
 
 def getLastValidationMessage(messages):
