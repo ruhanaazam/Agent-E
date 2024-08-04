@@ -6,8 +6,8 @@ import asyncio
 import sys
 from ae.config import PROJECT_TEST_ROOT
 sys.path.append(PROJECT_TEST_ROOT)
-from validation_agent.validator import validate_task_text, validate_task_vision # type: ignore
-from validation_agent.utils import get_screenshot_paths, get_chat_sequence, get_intent # type: ignore
+from test.validation_agent.validator import validate_task_text, validate_task_vision, validate_task_text_vision 
+from test.validation_agent.utils import get_screenshot_paths, get_chat_sequence, get_intent, get_final_response 
 
 class ValidationAgent(ConversableAgent):
     def __init__(self, name: str, modality: str="text",  log_dir: str | None=None, **kwargs):
@@ -42,8 +42,15 @@ class ValidationAgent(ConversableAgent):
         #print(f">>> Planner system_message: {system_message}")
         #system_message = system_message + "\n" + f"Today's date is {datetime.now().strftime('%d %B %Y')}" 
         
-        # Get the intent from messages
         messages = list(self.chat_messages.values())[0] # Note: This can probably be done in a better way
+        
+        # Check if max validator calls have been hit
+        MAX_VALIDATOR_CALLS = 5
+        if countValidatorAgent(messages) >= MAX_VALIDATOR_CALLS:
+            response = f"The task was completed. Validator was called over {MAX_VALIDATOR_CALLS} times."   
+            return {"content": response}
+        
+        # Get the intent from messages
         intent = get_intent(messages=messages) #ignore
         
         # Evaluate the intent
@@ -63,18 +70,20 @@ class ValidationAgent(ConversableAgent):
             if not self.screenshot_directory:
                 raise Exception("Screenshot directory is not set in validation_agent. Cannot proceed with vision-based evaluation.")
             screenshot_seq = get_screenshot_paths(self.screenshot_directory) # type: ignore
-            score_dict = validate_task_vision(screenshot_seq, intent) # type: ignore
+            final_response = get_final_response(messages=messages)
+            score_dict = validate_task_vision(state_seq=screenshot_seq, task=intent, final_response=final_response) # type: ignore
              # TODO: limit the state_seq to be between now and last validation
             
-        #if self.modality == "test_vision":  
-            # TODO: Implement text & vision self-validator
+        if self.modality == "text_vision":  
+            state_seq = get_chat_sequence(messages)  # type: ignore
+            screenshot_seq = get_screenshot_paths(self.screenshot_directory) # type: ignore
+            score_dict = validate_task_text_vision(state_seq, screenshot_seq, task=intent)
             
         
-        # TODO: Play around with fixing this text response.
         if score_dict["pred_task_completed"]:
             response = f"The task was completed. {score_dict['pred_rationale']}"   
         else:
-            response = f"The task was not completed succesfully. {score_dict['pred_rationale']} Please come up with a new plan which is different than the previous attempted plan(s). This plan should take into account and avoid issue(s) from prior plan(s). You are allowed to attempt build plans which seemed less likely to work previously."   
+            response = f"The task was not completed succesfully. {score_dict['pred_rationale']} Please come up with a new plan which is different than the previous attempted plan(s). This plan should take into account and avoid issue(s) from prior plan(s). You are allowed to attempt plans which seemed less likely to work previously."   
         
         print(f"Validator Raw Response: {score_dict}")
         return {"content": response}
@@ -93,4 +102,16 @@ class ValidationAgent(ConversableAgent):
     def set_screenshot_directory(self, screenshot_directory:str ):
         self.screenshot_directory = screenshot_directory
         return
+    
+def countValidatorAgent(messages:List[Dict[Any, Any]]):
+    """
+    Given a list of messages from a chat, will count the number of times the validator was valled thus far.
+    """
+    count = 0
+    for message in reversed(messages): 
+        role = message.get("name", None)
+
+        if role == "validator_agent":
+            count +=1
+    return count
 
