@@ -358,7 +358,7 @@ class AutogenWrapper:
             autogen.AssistantAgent: An instance of PlannerAgent.
         """
         planner_agent = PlannerAgent(self.config_list, assistant_agent) # type: ignore
-        return planner_agent.agent
+        return planner_agent#.agent
     
     def __create_validator_agent(self,):
         # get log directory for current task
@@ -382,18 +382,7 @@ class AutogenWrapper:
             print(f"Speaker is {last_speaker.name}")
             messages = groupchat.messages
             
-            # Call planner when last agent was user
-            if last_speaker is user_agent: # 
-                return planner_agent
-            
-            # Call validation when planner outputs terminate flag
-            shouldTerminate = isTerminate(messages)
-            if last_speaker is planner_agent and shouldTerminate:
-                return validator_agent
-            #if last_speaker is user_agent and shouldTerminate: # added
-            #    return validator_agent # added 
-            
-            # When task is not valid
+            # After task has been validated, called user or planner agent
             if last_speaker is validator_agent:
                 message = messages[-1]
                 content = message.get("content", None)
@@ -401,12 +390,19 @@ class AutogenWrapper:
                     return user_agent # The user agent is expected to terminate the task
                 else:
                     return planner_agent # Continue planning with new feedback
+                
+            # Call validation when planner outputs terminate flag
+            shouldTerminate = isTerminate(messages) # checks the last planner message for a termination message
+            if last_speaker is planner_agent and shouldTerminate:
+                return validator_agent
+            if last_speaker is user_agent and shouldTerminate: 
+               return validator_agent 
             
-            # Until task is complete, go between validation and user agent
+            # Until task is terminated, go between validation and user agent
+            if last_speaker is user_agent and not shouldTerminate: 
+                return planner_agent
             if last_speaker is planner_agent:
                 return user_agent
-            if last_speaker is validator_agent:
-                return planner_agent
             return None
         
         groupchat = autogen.GroupChat(
