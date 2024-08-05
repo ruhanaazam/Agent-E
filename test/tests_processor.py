@@ -420,7 +420,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 # Cleanup pages that are not the one we opened here
                 await browser_manager.close_except_specified_tab(page)
                 
-                # Log/Print issues
+                # Log/Print issues                
                 logger.error(f"Issue with task \"{task_id}\". {e}")
                 logger.error(f"{traceback.format_exc}")
                 logger.info(f"Task failed in attempt {attempt}/{retry_limit+1}...")
@@ -435,6 +435,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 
                 # Retry?
                 if attempt < retry_limit+1:
+                    logger.info(f"Retrying task {task_id}... {attempt+1}/{retry_limit+1}...")
                     time.sleep(5)
                 continue
             else: 
