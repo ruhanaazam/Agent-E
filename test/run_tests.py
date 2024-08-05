@@ -23,7 +23,7 @@ if __name__ == "__main__":
                         help='Path to the test configuration file. Default is "test/tasks/test.json" in the project root.')
     parser.add_argument('-validator', '--validator_type', type=str, default="text",
                         help='The maximum number of times a single tasks rerun if the run fails (e.g. due to page loading)')
-    parser.add_argument('-retry', '--retry_limit', type=int, default=0,
+    parser.add_argument('-retry', '--retry_limit', type=int, default=2,
                         help='The maximum number of times a single tasks rerun if the run fails (e.g. due to page loading)')
 
     # Parse the command line arguments
