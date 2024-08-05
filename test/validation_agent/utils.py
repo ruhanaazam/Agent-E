@@ -199,13 +199,13 @@ def get_final_response(messages: List[Dict[str, str]]):
     # Append final statement from the planner
     message = ""
     for message in reversed(messages):
-        if message.get("role") == "assistant" or message.get("name") == "planner_agent":
-            content = message.get('content', None)
-            if content and "final_response" in content:
-                try:
-                    content = json.loads(content)
-                    message = "The closing statement: " + content.get('final_response', "") + "."
-                    return message
-                except Exception as e:
-                    print(f"Exception getting user chat, likely due to unexpected formatting of {content}: {e} ")# add without final message if there is a parsing issue...
+        #if message.get("role") == "assistant" or message.get("name") == "planner_agent":
+        content = message.get('content', None)
+        if content and "final_response" in content:
+            try:
+                content = json.loads(content)
+                message = "The closing statement: " + content.get('final_response', "") + "."
+                return message
+            except Exception as e:
+                print(f"Exception getting user chat, likely due to unexpected formatting of {content}: {e} ")# add without final message if there is a parsing issue...
     return message
