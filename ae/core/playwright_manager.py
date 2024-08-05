@@ -235,6 +235,10 @@ class PlaywrightManager:
         for page in browser_context.pages: # type: ignore
             if page != page_to_keep:  # Check if the current page is not the one to keep
                 await page.close() # type: ignore
+        
+        # reset screenshot counter
+        self._screenshot_successes: int = 0
+        self._screenshots_attempts: int = 0
 
 
     async def go_to_homepage(self):
