@@ -358,7 +358,7 @@ class AutogenWrapper:
             autogen.AssistantAgent: An instance of PlannerAgent.
         """
         planner_agent = PlannerAgent(self.config_list, assistant_agent) # type: ignore
-        return planner_agent#.agent
+        return planner_agent
     
     def __create_validator_agent(self,):
         # get log directory for current task
