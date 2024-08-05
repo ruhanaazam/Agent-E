@@ -4,6 +4,8 @@ import os
 import sys
 import time
 import traceback
+import shutil
+from datetime import datetime
 
 from regex import E
 from test.evaluators import evaluator_router
@@ -57,6 +59,21 @@ def create_test_results_id(test_results_id: str|None, test_file: str) -> str:
 def create_task_log_folders(task_id: str, test_results_id: str):
     task_log_dir = os.path.join(TEST_LOGS, f"{test_results_id}", f'logs_for_task_{task_id}')
     task_screenshots_dir = os.path.join(task_log_dir, 'snapshots')
+    
+    # If the directory already exists, don't overwrite it, move it's content
+    if os.path.exists(task_log_dir):
+        current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+        temp_dir = os.path.join(task_log_dir, f'try_{current_time}')
+        if not os.path.exists(temp_dir):
+            os.makedirs(temp_dir)
+        
+        for item in os.listdir(task_log_dir):
+                source = os.path.join(task_log_dir, item)
+                destination = os.path.join(temp_dir, item)
+                if "try" not in source:
+                    shutil.move(source, destination)
+                    logger.info(f"Moved past run, {source} to {destination}")
+    
     if not os.path.exists(task_log_dir):
         os.makedirs(task_log_dir)
         logger.info(f"Created log dir for task {task_id} at: {task_log_dir}")
