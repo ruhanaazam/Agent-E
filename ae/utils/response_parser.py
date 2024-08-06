@@ -61,9 +61,14 @@ def isPlanValid(messages:List[Dict[Any, Any]]):
     """
     Given a list of messages from a chat, will determine if the latest plan has been validated.
     """
-    content = getLastValidationMessage(messages)
-    if content:
-        return content.get("valid_plan", None) == "yes"
+    for message in reversed(messages): 
+        role = message.get("name", None)
+
+        # Return the response given by the validator
+        if role == "validator_agent":
+            content = message.get("content", None)
+            if "The task was completed" in content:
+                return True
     return False
 
 def isTerminate(messages:List[Dict[Any, Any]]):
@@ -83,19 +88,24 @@ def group_manager_error_check(messages:List[Dict[Any, Any]]):
     # all these outcomes usually lead to the user agent being called twice in a row when the valiator agent should be called
     
     # Checks if group manager ordering has been broken
-    for i in range(len(messages)-1):
-        role_0: str = messages[i].get("name", None)
-        role_next: str = messages[i+1].get("name", None)
+    
+    #only check this between now and last validator call
+    for i in range(len(messages)-1, 0, -1):
+        role_0: str = messages[i-1].get("name", None)
+        role_next: str = messages[i].get("name", None)
+        
+        if role_0 == "validator_agent": #only check till last validator agent was called
+            return False
         
         # check user is not called twice in a row
         if role_0 == "user" and role_next == "user":
             return True
         
         if role_0 == "planner_agent" and role_next == "user":
-            content = messages[i].get("content", None)
+            content = messages[i-1].get("content", None)
             content_json=parse_response(content)
             if content_json.get("terminate", None) == "yes":
-                print(f"Error with message {i}")
+                print(f"Error with message {i-1}")
                 return True # validator was not called!
                 
     return False
