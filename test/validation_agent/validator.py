@@ -1,11 +1,10 @@
 from random import seed
 from .prompts import (
-    prompt__validate_action, 
-    prompt__validate_with_vision__intro, prompt__validate_with_vision__close, 
-    prompt__validate_with_text__intro, prompt__validate_with_text__close, 
-    prompt__validate_with_text_vision__intro, prompt__validate_with_text_vision__close,
-    prompt__validate_with_vision_final_response__intro, prompt__validate_with_vision_final_response__close,
-    prompt__classifier__intro, prompt__classifier__close
+    prompt_validate_with_vision_intro, prompt_validate_with_vision_close, 
+    prompt_validate_with_text_intro, prompt_validate_with_text_close, 
+    prompt_validate_with_text_vision_intro, prompt_validate_with_text_vision_close,
+    prompt_validate_with_vision_final_response_intro, prompt_validate_with_vision_final_response_close,
+    prompt_classifier_intro, prompt_classifier_close
 )
 from .utils import (
     _fetch_openai_completion,
@@ -16,8 +15,7 @@ from .utils import (
 )
 from typing import Dict, Any, List
 import json
-import argparse
-import os
+from datetime import datetime
 from test_utils import robust_json_loader
 
 def validate_action(init_state: Dict[str, Any], requested_action: Dict[str, Any], resultant_state: Dict[str, Any]) -> Dict[str, str]:
@@ -53,18 +51,20 @@ def validate_action(init_state: Dict[str, Any], requested_action: Dict[str, Any]
 def validate_task_vision(state_seq: List[Any], task: str, final_response: str| None = None) -> Dict[str, str]:
     ## Simple validator function that takes as input the sequence of states and the task, and determines if it succeeded.
     prompt_sequence = build_screenshot_prompt_sequence(state_seq)
+    date_message = f"{datetime.now().strftime('%d %B %Y')}" 
+
     intro_prompt: Dict[str, str] = {
         "role" : "user",
         "content" : [{
             "type" : "text",
-            "text" : prompt__validate_with_vision__intro(task)
+            "text" : prompt_validate_with_vision_intro(task, date_message)
         }]
     }
     close_prompt: Dict[str, str] = {
         "role" : "user",
         "content" : [{
             "type" : "text",
-            "text" : prompt__validate_with_vision__close()
+            "text" : prompt_validate_with_vision_close()
         }]
     }
     
@@ -74,14 +74,14 @@ def validate_task_vision(state_seq: List[Any], task: str, final_response: str| N
             "role" : "user",
             "content" : [{
                 "type" : "text",
-                "text" : prompt__validate_with_vision_final_response__intro(task)
+                "text" : prompt_validate_with_vision_final_response_intro(task, date_message)
             }]
         }
         close_prompt: Dict[str, str] = {
             "role" : "user",
             "content" : [{
                 "type" : "text",
-                "text" : prompt__validate_with_vision_final_response__close()
+                "text" : prompt_validate_with_vision_final_response_close()
             }]
         }
         final_response_formatted = build_text_prompt_sequence([final_response])
@@ -116,11 +116,12 @@ def validate_task_vision(state_seq: List[Any], task: str, final_response: str| N
 def validate_task_text_vision(text_sequence: List[Any], vision_seqence: List[Any], task: str) -> Dict[str, str]:
     try:
         # you need to put the prompt together ruhana
+        date_message = f"{datetime.now().strftime('%d %B %Y')}" 
         intro_prompt: Dict[str, str] = {
             "role" : "user",
             "content" : [{
                 "type" : "text",
-                "text" : prompt__validate_with_text_vision__intro(task)
+                "text" : prompt_validate_with_text_vision_intro(task, date)
             }] # type: ignore
         }
         
@@ -128,7 +129,7 @@ def validate_task_text_vision(text_sequence: List[Any], vision_seqence: List[Any
             "role" : "user",
             "content" : [{
                 "type" : "text",
-                "text" : prompt__validate_with_text_vision__close()
+                "text" : prompt_validate_with_text_vision_close()
             }] # type: ignore
         }
         
@@ -164,19 +165,21 @@ def validate_task_raw_vision_text(text_seq: List[Any], vision_seq: List[Any], ta
 
 def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
     ## Simple validator function that takes as input the sequence of states and the task, and determines if it succeeded.
+    
+    date_message = f"{datetime.now().strftime('%d %B %Y')}" 
     prompt_sequence = build_text_prompt_sequence(state_seq)
     intro_prompt: Dict[str, str] = {
         "role" : "user",
         "content" : [{
             "type" : "text",
-            "text" : prompt__validate_with_text__intro(task)
+            "text" : prompt_validate_with_text_intro(task, date_message)
         }] # type: ignore
     }
     close_prompt: Dict[str, str] = {
         "role" : "user",
         "content" : [{
             "type" : "text",
-            "text" : prompt__validate_with_text__close()
+            "text" : prompt_validate_with_text_close()
         }] # type: ignore
     }  
     
