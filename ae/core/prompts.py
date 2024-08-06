@@ -34,6 +34,7 @@ Complexities of web navigation:
 5. Sometimes search capabilities available on the page will not yield the optimal results. Revise the search query to either more specific or more generic.  
 6. When a page refreshes or navigates to a new page, information entered in the previous page may be lost. Check that the information needs to be re-entered (e.g. what are the values in source and destination on the page?).
 7. Sometimes some elements may not be visible or be disabled until some other action is performed. Ask the helper to confirm if there are any other fields that may need to be interacted for elements to appear or be enabled.
+8. Always opt for using appropriate filters whenever available rather than manually checking for criteria. 
 
 Example 1:
 Task: Find the cheapest store to buy Nothing Phone 2 (128GB). Current Page:www.google.com
