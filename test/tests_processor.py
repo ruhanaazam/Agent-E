@@ -408,6 +408,21 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 # Execute a single task
                 print_progress_bar(index, total_tests)
                 task_result = await execute_single_task(task_config, browser_manager, ag, page, log_folders["task_log_folder"])
+                
+                # Log the screenshot count
+                screenshots_taken:int = browser_manager.get_screenshot_sucesses()
+                screenshots_attempted:int = browser_manager.get_screenshot_attempts()
+                logger.info(f"Screenshot success rate: {screenshots_taken}/{screenshots_attempted}")
+                task_result["screenshot_rate"] = f"{screenshots_taken}/{screenshots_attempted}"
+                
+                # Check how many times validator was called
+                user_agent = ag.agents_map["user"]
+                chat_history:list[dict [str, str]]= ag.manager.chat_messages[user_agent]
+                count = count_validation_calls(chat_history)
+                logger.info(f"Validator was called {count} times in total.")
+                task_result["validation_count"] = count
+                
+                # Save the results
                 test_results.append(task_result)
                 save_individual_test_result(task_result, results_dir)
                 print_test_result(task_result, index + 1, total_tests)
@@ -421,16 +436,6 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                 # Cleanup pages that are not the one we opened here
                 await browser_manager.close_except_specified_tab(page)
                 
-                # Check how many screenshot were taken
-                screenshots_taken:int = browser_manager.get_screenshot_sucesses()
-                screenshots_attempted:int = browser_manager.get_screenshot_attempts()
-                logger.info(f"Screenshot success rate: {screenshots_taken}/{screenshots_attempted}")
-                
-                # Check how many times validator was called
-                user_agent = ag.agents_map["user"]
-                chat_history:list[dict [str, str]]= ag.manager.chat_messages[user_agent]
-                count = count_validation_calls(chat_history)
-                logger.info(f"Validator was called {count} times in total.")
                 logger.info(f"Completed running task id {task_id}.")
                 
             except Exception as e:
