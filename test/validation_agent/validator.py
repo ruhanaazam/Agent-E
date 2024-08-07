@@ -121,7 +121,7 @@ def validate_task_text_vision(text_sequence: List[Any], vision_seqence: List[Any
             "role" : "user",
             "content" : [{
                 "type" : "text",
-                "text" : prompt_validate_with_text_vision_intro(task, date)
+                "text" : prompt_validate_with_text_vision_intro(task, date_message)
             }] # type: ignore
         }
         
