@@ -364,7 +364,7 @@ class PlaywrightManager:
         return self._screenshot_successes
     
     async def take_screenshots(self, name: str, page: Page|None, full_page: bool = True, include_timestamp: bool = True,
-                               load_state: str = 'domcontentloaded', take_snapshot_timeout: int = 10*1000):
+                               load_state: str = 'domcontentloaded', take_snapshot_timeout: int = 10*1000, max_attempts: int = 5):
         if not self._take_screenshots:
             return
         if page is None:
@@ -377,7 +377,6 @@ class PlaywrightManager:
         screenshot_name += ".png"
         screenshot_path = f"{self.get_screenshots_dir()}/{screenshot_name}"
         
-        max_attempts = 3
         self._screenshots_attempts += 1 # this is only counted once per state
         for attempts in range(0, max_attempts):
             try:

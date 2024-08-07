@@ -431,7 +431,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
                     await asyncio.sleep(wait_time_non_headless)  # give time for switching between tasks in case there is a human observer
                 
                 # Take the final screenshot
-                await browser_manager.take_screenshots("final", None)
+                await browser_manager.take_screenshots("final", None, max_attempts=5)
 
                 # Cleanup pages that are not the one we opened here
                 await browser_manager.close_except_specified_tab(page)
