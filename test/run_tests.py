@@ -22,7 +22,7 @@ if __name__ == "__main__":
     parser.add_argument('-config', '--test_config_file', type=str,
                         help='Path to the test configuration file. Default is "test/tasks/test.json" in the project root.')
     parser.add_argument('-validator', '--validator_type', type=str, default="text",
-                        help='The maximum number of times a single tasks rerun if the run fails (e.g. due to page loading)')
+                        help='The modality of the validator (options: text, vision, text_vision))')
     parser.add_argument('-retry', '--retry_limit', type=int, default=2,
                         help='The maximum number of times a single tasks rerun if the run fails (e.g. due to page loading)')
 
