@@ -4,19 +4,22 @@ from typing import List, Dict, Optional, Any, Union
 import asyncio
 
 import sys
+import time
 from ae.config import PROJECT_TEST_ROOT
+from ae.config import MAX_TASK_TIME
 sys.path.append(PROJECT_TEST_ROOT)
 from test.validation_agent.validator import validate_task_text, validate_task_vision, validate_task_text_vision 
 from test.validation_agent.utils import get_screenshot_paths, get_chat_sequence, get_intent, get_final_response 
 
 class ValidationAgent(ConversableAgent):
-    def __init__(self, name: str, modality: str="text",  log_dir: str | None=None, **kwargs):
+    def __init__(self, name: str, task_start_time:float, modality: str="text",  log_dir: str | None=None, **kwargs):
         """
         Initialize the validation agent. This is a custom conversation agent.
         """ 
         self.modality:str = modality
         self.log_dir = log_dir
         self.screenshot_directory =  f"{log_dir}/snapshots" if log_dir else None
+        self.task_start_time = task_start_time
         super().__init__(name, **kwargs)
         return 
     
@@ -44,12 +47,6 @@ class ValidationAgent(ConversableAgent):
         
         messages = list(self.chat_messages.values())[0] # Note: This can probably be done in a better way
         
-        # Check if max validator calls have been hit
-        MAX_VALIDATOR_CALLS = 5
-        if countValidatorAgent(messages) >= MAX_VALIDATOR_CALLS:
-            response = f"The task was completed. Validator was called over {MAX_VALIDATOR_CALLS} times."   
-            return {"content": response}
-        
         # Get the intent from messages
         intent = get_intent(messages=messages) #ignore
         
@@ -71,7 +68,10 @@ class ValidationAgent(ConversableAgent):
                 raise Exception("Screenshot directory is not set in validation_agent. Cannot proceed with vision-based evaluation.")
             screenshot_seq = get_screenshot_paths(self.screenshot_directory) # type: ignore
             final_response = get_final_response(messages=messages)
-            score_dict = validate_task_vision(state_seq=screenshot_seq, task=intent, final_response=final_response) # type: ignore
+            if final_response:
+                score_dict = validate_task_vision(state_seq=screenshot_seq, task=intent, final_response=final_response) # type: ignore
+            else:
+                score_dict = validate_task_vision(state_seq=screenshot_seq, task=intent)
              # TODO: limit the state_seq to be between now and last validation
             
         if self.modality == "text_vision":  
@@ -80,8 +80,23 @@ class ValidationAgent(ConversableAgent):
             score_dict = validate_task_text_vision(state_seq, screenshot_seq, task=intent)
             
         
+        # Build the validator response
+        # Check if max validator calls have been hit
+        MAX_VALIDATOR_CALLS = 3
+        if countValidatorAgent(messages) + 1 >= MAX_VALIDATOR_CALLS:
+            response = f"The task was completed. Ending the task early because validator has been called max number of times."   # this validator response needs to be a real response...
+            reason = score_dict['pred_rationale']
+            return {"content": response + " " + reason}
+        
+        current_time = time.time()
+        if current_time - self.task_start_time > MAX_TASK_TIME:
+            response = f"The task was completed. Ending the task early because the task has hit time limit."    # this validator response needs to be a real response...
+            reason = score_dict.get('pred_rationale')
+            return {"content": response + " " + reason}
+        
         if score_dict["pred_task_completed"]:
-            response = f"The task was completed. {score_dict['pred_rationale']}"   
+            response = f"The task was completed. {score_dict['pred_rationale']}"
+     
         else:
             response = f"The task was not completed succesfully. {score_dict['pred_rationale']} Please come up with a new plan which is different than the previous attempted plan(s). This plan should take into account and avoid issue(s) from prior plan(s). You are allowed to attempt plans which seemed less likely to work previously."   
         

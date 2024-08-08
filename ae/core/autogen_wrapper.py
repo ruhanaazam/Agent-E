@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+import time
 import tempfile
 import traceback
 from string import Template
@@ -15,6 +16,7 @@ import openai
 #from autogen import Cache
 from dotenv import load_dotenv
 
+from ae.config import MAX_TASK_TIME
 from ae.config import SOURCE_LOG_FOLDER_PATH
 from ae.core.agents.browser_nav_agent import BrowserNavAgent
 from ae.core.agents.high_level_planner_agent import PlannerAgent  
@@ -49,6 +51,8 @@ class AutogenWrapper:
 
         self.config_list: list[dict[str, str]] | None = None
         self.chat_logs_dir: str = SOURCE_LOG_FOLDER_PATH
+        self.task_start_time = time.time()
+    
 
     @classmethod
     async def create(cls, agents_needed: list[str] | None = None, max_chat_round: int = 100):
@@ -369,6 +373,7 @@ class AutogenWrapper:
             name="validator_agent",
             log_dir=log_dir,
             human_input_mode="NEVER",
+            task_start_time=self.task_start_time
         )
         return validator_agent
     
@@ -381,6 +386,7 @@ class AutogenWrapper:
         def state_transition(last_speaker, groupchat):
             print(f"Speaker is {last_speaker.name}")
             messages = groupchat.messages
+            
             
             # After task has been validated, called user or planner agent
             if last_speaker is validator_agent:
@@ -397,6 +403,11 @@ class AutogenWrapper:
                 return validator_agent
             if last_speaker is user_agent and shouldTerminate: 
                return validator_agent 
+            
+            # # Check the timer here
+            current_time = time.time()
+            if current_time - self.task_start_time > MAX_TASK_TIME:
+                return validator_agent
             
             # Until task is terminated, go between validation and user agent
             if last_speaker is user_agent and not shouldTerminate: 
@@ -435,6 +446,9 @@ class AutogenWrapper:
             autogen.ChatResult | None: The result of the command processing, or None if an error occurred. Contains chat log, cost(tokens/price)
 
         """
+        # start tracking the start time of the current task
+        self.task_start_time = time.time()
+        
         current_url_prompt_segment = ""
         if current_url:
             current_url_prompt_segment = f"Current Page: {current_url}"
