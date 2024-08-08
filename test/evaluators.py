@@ -324,19 +324,22 @@ class ManualContentEvaluator(Evaluator):
         answer_type = task_config["eval"]["reference_answers"]["manual_check"]["type"]
         id = str(task_config["task_id"])
         index = str(task_config["task_index"])
+        validator_response = kwargs['validator_response']
 
         print(colored("\n\n***************************\n", "green", attrs=["bold"]))
         print(colored("Task ID: ", "blue", attrs=["bold"]) + id + "\n")
         print(colored("Task Index: ", "blue", attrs=["bold"]) + index + "\n")
         print(colored("Task: ", "blue", attrs=["bold"]) + task + "\n")
         print(colored("Agent answer: ", "blue", attrs=["bold"]) + str(answer or "") + "\n")
+        print(colored("Validator answer: ", "blue", attrs=["bold"]) + str(validator_response or "") + "\n")
 
         if answer_type.strip().lower() == "possible":
             print(colored("Possible answer (reference): ", "yellow") + f"~~~{reference_answer}~~~")
         elif answer_type.strip().lower() == "golden":
             print(colored("Golden answer (reference): ", "yellow") + reference_answer)
 
-        user_response = input(colored("Annotate the task as Pass, Fail or Skip (please use Skip sparingly)? ", "magenta", attrs=["bold"])) # skip
+        # Check if Agent-E accomplish the task.
+        user_response = input(colored("\nAnnotate the task as Pass, Fail or Skip (please use Skip sparingly)? ", "magenta", attrs=["bold"])) # skip
         eval_response: dict[str, float|str] = {}
         if(user_response.lower()=="pass"):
             eval_response["score"] = 1.0
@@ -352,7 +355,25 @@ class ManualContentEvaluator(Evaluator):
         if eval_response["score"] <= 0:
             reason = input("Reason for rating: ")
             eval_response["reason"] = reason
+            
+        # Check if Agent-E recognizes it did not accomplish the task.
+        user_response_validator = input(colored("\nBased off the agent answer and validator answer, does the Agent-E believe that it completed it's task successfully? (Answer Yes, No, or Skip) ", "magenta", attrs=["bold"])) # skip
+        if(user_response_validator.lower()=="yes" or user_response_validator.lower()=="pass"):
+            eval_response["validate_score"] = 1.0
+        elif (user_response_validator.lower()=="no"or user_response_validator.lower()=="fail"):
+            eval_response["validate_score"] = 0.0
+        elif user_response_validator.lower()=="skip":
+            eval_response["validate_score"] = -0.1
+        else:
+            print(colored(f"Received response: {user_response_validator}", "red"))
+            raise ValueError("Invalid user response. Please enter 'Yes', 'No' or 'Skip'.")
+        reason: str|None = None
 
+        if eval_response["validate_score"] <= 0:
+            reason = input("Reason for rating: ")
+            eval_response["validate_reason"] = reason
+            
+        # Return the score
         return eval_response
 
 class EvaluatorComb(Evaluator):
@@ -392,15 +413,22 @@ class EvaluatorComb(Evaluator):
         """
         score: float = 1.0
         reason: str | None = None
+        validate_reason: str | None = None
         for evaluator in self.evaluators:
             eval_result = await evaluator(task_config, page, client, answer, **kwargs)
             score: float = score * eval_result["score"] # type: ignore
+            validate_score: float = score * eval_result["validate_score"] # type: ignore
             if "reason" in eval_result:
                 if reason is None:
                     reason = eval_result["reason"] # type: ignore
                 else:
                     reason += f"\n{eval_result['reason']}"
-        return {"score": score, "reason": reason} # type: ignore
+            if "validate_reason" in eval_result:
+                if validate_reason is None:
+                    validate_reason = eval_result["validate_reason"] # type: ignore
+                else:
+                    validate_reason += f"\n{eval_result['validate_reason']}"
+        return {"score": score, "reason": reason, "validate_score": validate_score, "validate_reason": validate_reason} # type: ignore
 
 class VQAEvaluator(Evaluator):
     async def __call__(

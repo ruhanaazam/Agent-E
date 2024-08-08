@@ -140,6 +140,28 @@ def extract_last_response(messages: list[dict[str, Any]]) -> str:
         logger.error("Error extracting last response from chat history.")
         return ""
 
+def extract_last_validator_response(messages: list[dict[str, Any]]) -> str:
+    """Extract the last response message from chat history."""
+    try:
+        # Iterate over the messages in reverse order
+        for message in reversed(messages): 
+            role = message.get("role", None)
+            name = message.get("name", None)
+            
+            # Return the final_response from the planner
+            if name == "validator_agent":
+                content = message.get("content", None)
+                
+                remove_string = "The task was completed. Ending the task early because validator has been called max number of times."
+                content = content.replace(remove_string, "")
+                remove_string_2 = "The task was completed. Ending the task early because the task has hit time limit."
+                content = content.replace(remove_string_2, "")
+                return content
+        return ""
+    except:
+        logger.error("Error extracting validator last response from chat history.")
+        return ""
+
 
 def print_progress_bar(current: int, total: int, bar_length: int = 50) -> None:
     """
@@ -297,10 +319,12 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
     messages_str_keys = {str(key): value for key, value in messages.items()} # type: ignore
     agent_key = list(messages.keys())[0] # type: ignore
     last_agent_response = extract_last_response(messages[agent_key]) # type: ignore
+    last_validator_response = extract_last_validator_response(messages[agent_key])
 
     dump_log(str(task_id), messages_str_keys, logs_dir)
 
     single_task_result["last_statement"] = last_agent_response
+    single_task_result["validator_last_statement"] = last_validator_response
 
 
     evaluator = evaluator_router(task_config)
@@ -310,11 +334,14 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
         page=page,
         client=cdp_session,
         answer=last_agent_response, 
+        validator_response=last_validator_response,
         log_dir=logs_dir, # the logs_dir needs to be added here!!! otherwise evaluations is not possible :(
     )
 
     single_task_result["score"] = evaluator_result["score"]
     single_task_result["reason"] = evaluator_result["reason"]
+    single_task_result["validate_score"] = evaluator_result["validate_score"]
+    single_task_result["validate_reason"] = evaluator_result["validate_reason"]
     # except Exception as e:
     #     logger.error(f"Error getting command cost: {e}")
     #     command_cost = {"cost": -1, "total_tokens": -1}
@@ -384,6 +411,7 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
         # Attempt task
         for attempt in range(retry_limit + 1): # Tasks are retried if an uncaught exception is thrown
             try:
+                
                 task_id = str(task_config.get('task_id'))
                 
                 # Create task log folder
