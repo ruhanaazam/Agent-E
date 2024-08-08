@@ -88,7 +88,7 @@ def build_text_prompt_sequence(state_seq: List[Any]) -> List[str]:
             "role": "user", 
             "content": [{
                 "type": "text",
-                "text": item
+                "text": str(item)
             }],
         }) # type: ignore
     return prompt_sequence
@@ -177,7 +177,8 @@ def get_chat_sequence(messages: List[Dict[str, str]]):
     
     # Append final statement from the planner
     final_message = get_final_response(messages=messages)
-    chat_sequence.append(final_message)
+    if final_message:
+        chat_sequence.append(final_message)
     return chat_sequence
 
 def get_intent(messages: List[Dict[str, str]])-> str | None:
@@ -197,7 +198,7 @@ def get_intent(messages: List[Dict[str, str]])-> str | None:
 
 def get_final_response(messages: List[Dict[str, str]]):
     # Append final statement from the planner
-    message = ""
+    message = None
     for message in reversed(messages):
         #if message.get("role") == "assistant" or message.get("name") == "planner_agent":
         content = message.get('content', None)
