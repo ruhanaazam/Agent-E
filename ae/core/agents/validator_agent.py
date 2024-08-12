@@ -16,6 +16,7 @@ class ValidationAgent(ConversableAgent):
         """
         Initialize the validation agent. This is a custom conversation agent.
         """ 
+        assert(modality in ['text', 'vision', 'text_vision', 'none'])
         self.modality:str = modality
         self.log_dir = log_dir
         self.screenshot_directory =  f"{log_dir}/snapshots" if log_dir else None

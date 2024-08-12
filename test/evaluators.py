@@ -355,25 +355,27 @@ class ManualContentEvaluator(Evaluator):
         if eval_response["score"] <= 0:
             reason = input("Reason for rating: ")
             eval_response["reason"] = reason
-            
-        # Check if Agent-E recognizes it did not accomplish the task.
-        user_response_validator = input(colored("\nBased off the agent answer and validator answer, does the Agent-E believe that it completed it's task successfully? (Answer Yes, No, or Skip) ", "magenta", attrs=["bold"])) # skip
-        if(user_response_validator.lower()=="yes" or user_response_validator.lower()=="pass"):
-            eval_response["validate_score"] = 1.0
-        elif (user_response_validator.lower()=="no"or user_response_validator.lower()=="fail"):
-            eval_response["validate_score"] = 0.0
-        elif user_response_validator.lower()=="skip":
-            eval_response["validate_score"] = -0.1
-        else:
-            print(colored(f"Received response: {user_response_validator}", "red"))
-            raise ValueError("Invalid user response. Please enter 'Yes', 'No' or 'Skip'.")
-        reason: str|None = None
+        
+        check_validator = False
+        if check_validator:     
+            # Check if Agent-E recognizes it did not accomplish the task.
+            user_response_validator = input(colored("\nBased off the agent answer and validator answer, does the Agent-E believe that it completed it's task successfully? (Answer Yes, No, or Skip) ", "magenta", attrs=["bold"])) # skip
+            if(user_response_validator.lower()=="yes" or user_response_validator.lower()=="pass"):
+                eval_response["validate_score"] = 1.0
+            elif (user_response_validator.lower()=="no"or user_response_validator.lower()=="fail"):
+                eval_response["validate_score"] = 0.0
+            elif user_response_validator.lower()=="skip":
+                eval_response["validate_score"] = -0.1
+            else:
+                print(colored(f"Received response: {user_response_validator}", "red"))
+                raise ValueError("Invalid user response. Please enter 'Yes', 'No' or 'Skip'.")
+            reason: str|None = None
 
-        if eval_response["validate_score"] <= 0:
-            reason = input("Reason for rating: ")
-            eval_response["validate_reason"] = reason
-            
-        # Return the score
+            if eval_response["validate_score"] <= 0:
+                reason = input("Reason for rating: ")
+                eval_response["validate_reason"] = reason
+                
+        #Return the score
         return eval_response
 
 class EvaluatorComb(Evaluator):
@@ -417,7 +419,7 @@ class EvaluatorComb(Evaluator):
         for evaluator in self.evaluators:
             eval_result = await evaluator(task_config, page, client, answer, **kwargs)
             score: float = score * eval_result["score"] # type: ignore
-            validate_score: float = score * eval_result["validate_score"] # type: ignore
+            validate_score: float = score * eval_result.get("validate_score", -1) # type: ignore
             if "reason" in eval_result:
                 if reason is None:
                     reason = eval_result["reason"] # type: ignore
@@ -425,9 +427,10 @@ class EvaluatorComb(Evaluator):
                     reason += f"\n{eval_result['reason']}"
             if "validate_reason" in eval_result:
                 if validate_reason is None:
-                    validate_reason = eval_result["validate_reason"] # type: ignore
+                    validate_reason = eval_result.get("validate_reason", "") # type: ignore
                 else:
-                    validate_reason += f"\n{eval_result['validate_reason']}"
+                    __temp_reason = eval_result['validate_reason']
+                    validate_reason += f"\n{__temp_reason}"
         return {"score": score, "reason": reason, "validate_score": validate_score, "validate_reason": validate_reason} # type: ignore
 
 class VQAEvaluator(Evaluator):

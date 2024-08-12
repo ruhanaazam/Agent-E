@@ -340,8 +340,8 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
 
     single_task_result["score"] = evaluator_result["score"]
     single_task_result["reason"] = evaluator_result["reason"]
-    single_task_result["validate_score"] = evaluator_result["validate_score"]
-    single_task_result["validate_reason"] = evaluator_result["validate_reason"]
+    single_task_result["validate_score"] = evaluator_result.get("validate_score", None)
+    single_task_result["validate_reason"] = evaluator_result.get("validate_reason", None)
     # except Exception as e:
     #     logger.error(f"Error getting command cost: {e}")
     #     command_cost = {"cost": -1, "total_tokens": -1}
@@ -387,7 +387,10 @@ async def run_tests(ag: AutogenWrapper, browser_manager: PlaywrightManager, min_
     test_results: list[dict[str, str | int | float | None]] = []
 
     if not ag:
-        ag = await AutogenWrapper.create()
+        if validator_type != "none":
+            ag = await AutogenWrapper.create(agents_needed=["user", "browser_nav_executor", "planner_agent", "browser_nav_agent", "validator_agent"])
+        else: 
+            ag = await AutogenWrapper.create(agents_needed=["user", "browser_nav_executor", "planner_agent", "browser_nav_agent"])
 
     if not browser_manager:
         browser_manager = browserManager.PlaywrightManager(headless=False)

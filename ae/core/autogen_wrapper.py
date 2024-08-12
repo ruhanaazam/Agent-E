@@ -69,7 +69,8 @@ class AutogenWrapper:
         """
         print(f">>> Creating AutogenWrapper with {agents_needed} and {max_chat_round} rounds.")
         if agents_needed is None:
-            agents_needed = ["user", "browser_nav_executor", "planner_agent", "browser_nav_agent"]
+            agents_needed = ["user", "browser_nav_executor", "planner_agent", "browser_nav_agent", "validator_agent"]
+            
         # Create an instance of cls
         self = cls(max_chat_round)
         load_dotenv()
@@ -238,7 +239,8 @@ class AutogenWrapper:
 
         """
         agents_map: dict[str, UserProxyAgent_SequentialFunctionExecution  | autogen.ConversableAgent]= {}
-
+        self.agents_needed = agents_needed
+        
         user_delegate_agent = await self.__create_user_delegate_agent()
         agents_map["user"] = user_delegate_agent
         agents_needed.remove("user")
@@ -246,14 +248,18 @@ class AutogenWrapper:
         browser_nav_executor = self.__create_browser_nav_executor_agent()
         agents_map["browser_nav_executor"] = browser_nav_executor
         agents_needed.remove("browser_nav_executor")
+
+        # make validator agent either way but set to modaility to none if it is not 
+        validator_agent = self.__create_validator_agent()
+        agents_map["validator_agent"] = validator_agent
+        if "validator_agent" not in agents_needed:
+               agents_map["validator_agent"] = validator_agent
+               validator_agent.modality = "none"
         
-        agents_needed.append("validator_agent")
         for agent_needed in agents_needed:
             if agent_needed == "browser_nav_agent":
                 browser_nav_agent: autogen.ConversableAgent = self.__create_browser_nav_agent(agents_map["browser_nav_executor"] )
                 agents_map["browser_nav_agent"] = browser_nav_agent
-            elif agent_needed == "validator_agent":
-                validator_agent = self.__create_validator_agent()
                 agents_map["validator_agent"] = validator_agent
             elif agent_needed == "planner_agent":
                 planner_agent = self.__create_planner_agent(user_delegate_agent)
@@ -288,17 +294,26 @@ class AutogenWrapper:
                 Boolean determining if the intent was completed.
             '''
             print(f"Checking is_planner_termination_message()...")
-            if x.get("name", None) != "validator_agent":
-                return False 
-                # This might be the place to throw an error... if should_terminate is false, then this is bad, the user agent should never been called...
+            if "validator_agent" not in self.agents_needed:
+                # just check if termination was called
+                # should be planner agent here
+                name = x.get("name", None)
+                if name == "planner_agent":
+                    content:Any = x.get("content", "")
+                    if "\"terminate\": \"yes\"" in content:
+                        return True 
             else:
-                content:Any = x.get("content", "")
-                should_terminate = ("The task was completed" in content)
-                print(f"Should terminate ... {should_terminate}")
-                if not should_terminate:
-                    raise Exception('User agent called after validator agent before termination!')
-                return should_terminate # type: ignore
-        
+                if x.get("name", None) != "validator_agent":
+                    return False 
+                    # This might be the place to throw an error... if should_terminate is false, then this is bad, the user agent should never been called...
+                else:
+                    content:Any = x.get("content", "")
+                    should_terminate = ("The task was completed" in content)
+                    print(f"Should terminate ... {should_terminate}")
+                    if not should_terminate:
+                        raise Exception('User agent called after validator agent before termination!')
+                    return should_terminate # type: ignore
+            return False 
         task_delegate_agent = autogen.ConversableAgent(
             name="user",
             llm_config=False, 
@@ -386,7 +401,7 @@ class AutogenWrapper:
         def state_transition(last_speaker, groupchat):
             print(f"Speaker is {last_speaker.name}")
             messages = groupchat.messages
-            
+            involk_validator = (validator_agent.modality != "none")
             
             # After task has been validated, called user or planner agent
             if last_speaker is validator_agent:
@@ -399,14 +414,14 @@ class AutogenWrapper:
                 
             # Call validation when planner outputs terminate flag
             shouldTerminate = isTerminate(messages) # checks the last planner message for a termination message
-            if last_speaker is planner_agent and shouldTerminate:
+            if last_speaker is planner_agent and shouldTerminate and involk_validator:
                 return validator_agent
-            if last_speaker is user_agent and shouldTerminate: 
+            if last_speaker is user_agent and shouldTerminate and involk_validator: 
                return validator_agent 
             
             # # Check the timer here
             current_time = time.time()
-            if current_time - self.task_start_time > MAX_TASK_TIME:
+            if current_time - self.task_start_time > MAX_TASK_TIME and involk_validator:
                 return validator_agent
             
             # Until task is terminated, go between validation and user agent
