@@ -83,7 +83,7 @@ class ValidationAgent(ConversableAgent):
         
         # Build the validator response
         # Check if max validator calls have been hit
-        MAX_VALIDATOR_CALLS = 3
+        MAX_VALIDATOR_CALLS = 5
         if countValidatorAgent(messages) + 1 >= MAX_VALIDATOR_CALLS:
             response = f"The task was completed. Ending the task early because validator has been called max number of times."   # this validator response needs to be a real response...
             reason = score_dict['pred_rationale']
