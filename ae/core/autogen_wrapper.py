@@ -264,6 +264,8 @@ class AutogenWrapper:
             elif agent_needed == "planner_agent":
                 planner_agent = self.__create_planner_agent(user_delegate_agent)
                 agents_map["planner_agent"] = planner_agent
+            elif agent_needed == "validator_agent":
+                continue
             else:
                 raise ValueError(f"Unknown agent type: {agent_needed}")
         
