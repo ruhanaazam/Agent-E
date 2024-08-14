@@ -356,7 +356,7 @@ class ManualContentEvaluator(Evaluator):
             reason = input("Reason for rating: ")
             eval_response["reason"] = reason
         
-        check_validator = False
+        check_validator = True
         if check_validator:     
             # Check if Agent-E recognizes it did not accomplish the task.
             user_response_validator = input(colored("\nBased off the agent answer and validator answer, does the Agent-E believe that it completed it's task successfully? (Answer Yes, No, or Skip) ", "magenta", attrs=["bold"])) # skip
