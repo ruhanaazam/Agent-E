@@ -11,7 +11,7 @@ PROJECT_TEMP_PATH = os.path.join(PROJECT_ROOT, 'temp')
 USER_PREFERENCES_PATH = os.path.join(PROJECT_SOURCE_ROOT, 'user_preferences')
 PROJECT_TEST_ROOT = os.path.join(PROJECT_ROOT, 'test')
 
-MAX_TASK_TIME = 10 * 60
+MAX_TASK_TIME = 50 * 60
 
 # Check if the log folder exists, and if not, create it
 if not os.path.exists(SOURCE_LOG_FOLDER_PATH):
