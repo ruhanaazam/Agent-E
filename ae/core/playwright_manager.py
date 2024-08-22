@@ -364,7 +364,7 @@ class PlaywrightManager:
         return self._screenshot_successes
     
     async def take_screenshots(self, name: str, page: Page|None, full_page: bool = True, include_timestamp: bool = True,
-                               load_state: str = 'domcontentloaded', take_snapshot_timeout: int = 10*1000, max_attempts: int = 5):
+                               load_state: str = 'domcontentloaded', take_snapshot_timeout: int = 25*1000, max_attempts: int = 5):
         if not self._take_screenshots:
             return
         if page is None:
