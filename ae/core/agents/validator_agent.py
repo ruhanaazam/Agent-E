@@ -6,7 +6,6 @@ import asyncio
 import sys
 import time
 from ae.config import PROJECT_TEST_ROOT
-from ae.config import MAX_TASK_TIME
 sys.path.append(PROJECT_TEST_ROOT)
 from test.validation_agent.validator import validate_task_text, validate_task_vision, validate_task_text_vision 
 from test.validation_agent.utils import get_screenshot_paths, get_chat_sequence, get_intent, get_final_response 
@@ -88,13 +87,7 @@ class ValidationAgent(ConversableAgent):
             response = f"The task was completed. Ending the task early because validator has been called max number of times."   # this validator response needs to be a real response...
             reason = score_dict['pred_rationale']
             return {"content": response + " " + reason}
-        
-        current_time = time.time()
-        if current_time - self.task_start_time > MAX_TASK_TIME:
-            response = f"The task was completed. Ending the task early because the task has hit time limit."    # this validator response needs to be a real response...
-            reason = score_dict.get('pred_rationale')
-            return {"content": response + " " + reason}
-        
+         
         if score_dict["pred_task_completed"]:
             response = f"The task was completed. {score_dict['pred_rationale']}"
      

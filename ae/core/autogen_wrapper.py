@@ -16,7 +16,6 @@ import openai
 #from autogen import Cache
 from dotenv import load_dotenv
 
-from ae.config import MAX_TASK_TIME
 from ae.config import SOURCE_LOG_FOLDER_PATH
 from ae.core.agents.browser_nav_agent import BrowserNavAgent
 from ae.core.agents.high_level_planner_agent import PlannerAgent  
@@ -438,11 +437,6 @@ class AutogenWrapper:
                 return validator_agent
             if last_speaker is user_agent and shouldTerminate and involk_validator: 
                return validator_agent 
-            
-            # # Check the timer here
-            current_time = time.time()
-            if current_time - self.task_start_time > MAX_TASK_TIME and involk_validator:
-                return validator_agent
             
             # Until task is terminated, go between validation and user agent
             if last_speaker is user_agent and not shouldTerminate: 
