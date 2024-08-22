@@ -100,8 +100,6 @@ class ValidationAgent(ConversableAgent):
      
         else:
             response = f"The task was not completed succesfully. {score_dict['pred_rationale']} Please come up with a new plan which is different than the previous attempted plan(s). This plan should take into account and avoid issue(s) from prior plan(s). You are allowed to attempt plans which seemed less likely to work previously."   
-        
-        print(f"Validator Raw Response: {score_dict}")
         return {"content": response}
     
     def get_modality(self,)-> str:
