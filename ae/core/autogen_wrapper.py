@@ -29,6 +29,8 @@ from ae.utils.response_parser import getLastPlannerMessage, isTerminate, group_m
 from ae.core.skills.get_url import geturl
 import nest_asyncio # type: ignore
 from ae.core.post_process_responses import final_reply_callback_planner_agent as print_message_from_planner  # type: ignore
+from autogen.agentchat.contrib.capabilities import transform_messages, transforms
+
 nest_asyncio.apply()  # type: ignore
 
 class AutogenWrapper:
@@ -240,7 +242,7 @@ class AutogenWrapper:
         """
         agents_map: dict[str, UserProxyAgent_SequentialFunctionExecution  | autogen.ConversableAgent]= {}
         self.agents_needed = agents_needed
-        
+                
         user_delegate_agent = await self.__create_user_delegate_agent()
         agents_map["user"] = user_delegate_agent
         agents_needed.remove("user")
@@ -272,6 +274,22 @@ class AutogenWrapper:
         # Initalize group chat manager 
         manager_agent: GroupChatManager = self.__create_group_chat_manager_agent(agents_map)
         agents_map["manager"] = manager_agent
+        
+        # TODO: Add handling of long context length, currently getting this error from the code below:
+        # # Tranformation to shorten context lenght
+        # context_handling = transform_messages.TransformMessages(
+        #     transforms=[
+        #         transforms.MessageTokenLimiter(max_tokens=128000)
+        #     ]
+        # )
+        
+        # # Apply transformation to each agent
+        # for agent_name in agents_map.keys():
+        #     if agent_name == "browser_nav_executor":
+        #         continue
+        #     else:
+        #         context_handling.add_to_agent(agents_map[agent_name])
+                
         
         return agents_map
 
@@ -473,28 +491,28 @@ class AutogenWrapper:
         prompt = Template(LLM_PROMPTS["COMMAND_EXECUTION_PROMPT"]).substitute(command=command, current_url_prompt_segment=current_url_prompt_segment)
         logger.info(f"Prompt for command: {prompt}")
         #with Cache.disk() as cache:
-        try:
-            if self.agents_map is None:
-                raise ValueError("Agents map is not initialized.")
-            print(self.agents_map["browser_nav_executor"].function_map) # type: ignore
-            
-            # Clear chat history for each (new) command
-            for agent in self.agents_map.values():
-                agent.clear_history()
-            
-            result=await self.agents_map["user"].a_initiate_chat( # type: ignore
-                self.manager,
-                max_turns=self.number_of_rounds,
-                clear_history=True,
-                message=prompt,
-                silent=False,
-                cache=None,
-            )
-            # reset usage summary for all agents after each command            for agent in self.agents_map.values():
-            if hasattr(agent, "client") and agent.client is not None:
-                    agent.client.clear_usage_summary() # type: ignore
-            return result
-        except openai.BadRequestError as bre:
-            logger.error(f"Unable to process command: \"{command}\". {bre}")
-            traceback.print_exc()
+        # try:
+        if self.agents_map is None:
+            raise ValueError("Agents map is not initialized.")
+        print(self.agents_map["browser_nav_executor"].function_map) # type: ignore
+        
+        # Clear chat history for each (new) command
+        for agent in self.agents_map.values():
+            agent.clear_history()
+        
+        result=await self.agents_map["user"].a_initiate_chat( # type: ignore
+            self.manager,
+            max_turns=self.number_of_rounds,
+            clear_history=True,
+            message=prompt,
+            silent=False,
+            cache=None,
+        )
+        # reset usage summary for all agents after each command            for agent in self.agents_map.values():
+        if hasattr(agent, "client") and agent.client is not None:
+                agent.client.clear_usage_summary() # type: ignore
+        return result
+        # except openai.BadRequestError as bre:
+        #     logger.error(f"Unable to process command: \"{command}\". {bre}")
+        #     traceback.print_exc()
 
