@@ -122,4 +122,9 @@ class PlannerAgent(AssistantAgent):
             json_to_string = json.dumps(json_response)
             return json_to_string 
         else:
-             raise Exception(f"Cannot format plan: {message}")
+             try:
+                formatted_dict = {"final_response": message , "terminate": "yes"}
+                json_to_string = json.dumps(formatted_dict)
+             except Exception as e:
+                 raise Exception(f"Cannot format plan: {message}, {e}")
+             return json_to_string
