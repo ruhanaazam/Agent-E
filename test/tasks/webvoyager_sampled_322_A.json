@@ -1,0 +1,4349 @@
+[
+    {
+        "sites": null,
+        "task_id": 0,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Provide a recipe for vegetarian lasagna with more than 100 reviews and a rating of at least 4.5 stars suitable for 6 people.",
+        "instantiation_dict": {},
+        "intent": "Provide a recipe for vegetarian lasagna with more than 100 reviews and a rating of at least 4.5 stars suitable for 6 people.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'Vegetarian Four Cheese Lasagna', 4.6-star, 181 reviews, Servings 8",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--0",
+        "task_index": 0
+    },
+    {
+        "sites": null,
+        "task_id": 4,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Find a recipe for Baked Salmon that takes less than 30 minutes to prepare and has at least a 4 star rating based on user reviews.",
+        "instantiation_dict": {},
+        "intent": "Find a recipe for Baked Salmon that takes less than 30 minutes to prepare and has at least a 4 star rating based on user reviews.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'Baked Dijon Salmon', 4.6-star, prep time 15 mins",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--4",
+        "task_index": 1
+    },
+    {
+        "sites": null,
+        "task_id": 8,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Search for a recipe for Beef Wellington on Allrecipes that has at least 200 reviews and an average rating of 4.5 stars or higher. List the main ingredients required for the dish.",
+        "instantiation_dict": {},
+        "intent": "Search for a recipe for Beef Wellington on Allrecipes that has at least 200 reviews and an average rating of 4.5 stars or higher. List the main ingredients required for the dish.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'Beef Wellington', <Ingredients>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--8",
+        "task_index": 2
+    },
+    {
+        "sites": null,
+        "task_id": 12,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Search for a popular cookie recipe on Allrecipes with more than 1000 reviews and a rating of 4.5 stars or better. Provide the list of ingredients needed.",
+        "instantiation_dict": {},
+        "intent": "Search for a popular cookie recipe on Allrecipes with more than 1000 reviews and a rating of 4.5 stars or better. Provide the list of ingredients needed.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'Best Chocolate Chip Cookies', 4.6-star, 14493 reviews, <Ingredients>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--12",
+        "task_index": 3
+    },
+    {
+        "sites": null,
+        "task_id": 16,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Find a five-star rated chocolate chip cookie recipe that takes less than 1 hour to make on Allrecipes. Note how many reviews the recipe has and the main ingredients required.",
+        "instantiation_dict": {},
+        "intent": "Find a five-star rated chocolate chip cookie recipe that takes less than 1 hour to make on Allrecipes. Note how many reviews the recipe has and the main ingredients required.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'Chocolate Chip Cookie Cups', 5.0-star, 3 reviews, total time 45 mins, <Ingredients>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--16",
+        "task_index": 4
+    },
+    {
+        "sites": null,
+        "task_id": 20,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Find a recipe for a cauliflower pizza crust that has a preparation time of under 30 minutes and a rating of at least 4 stars on Allrecipes. Include the number of calories per serving.",
+        "instantiation_dict": {},
+        "intent": "Find a recipe for a cauliflower pizza crust that has a preparation time of under 30 minutes and a rating of at least 4 stars on Allrecipes. Include the number of calories per serving.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'Cauliflower Pizza Crust', 4.2 stars, Prep Time: 15 mins, 59 Calories per serving",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--20",
+        "task_index": 5
+    },
+    {
+        "sites": null,
+        "task_id": 24,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Locate a recipe for an eggplant Parmesan on Allrecipes with a rating of at least 4.5 stars and over 50 reviews. Include the preparation time and the number of servings provided by the recipe.",
+        "instantiation_dict": {},
+        "intent": "Locate a recipe for an eggplant Parmesan on Allrecipes with a rating of at least 4.5 stars and over 50 reviews. Include the preparation time and the number of servings provided by the recipe.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'Eggplant Parmesan', 4.5 stars, 2711 reviews, Prep Time: 25 mins, Servings: 10",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--24",
+        "task_index": 6
+    },
+    {
+        "sites": null,
+        "task_id": 28,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "On Allrecipes, find a vegan brownie recipe that has at least 40 reviews and a rating of 4.5 or higher. Include the list of ingredients, total prep and cook time, and a brief overview of the preparation steps.",
+        "instantiation_dict": {},
+        "intent": "On Allrecipes, find a vegan brownie recipe that has at least 40 reviews and a rating of 4.5 or higher. Include the list of ingredients, total prep and cook time, and a brief overview of the preparation steps.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'Vegan Brownies', 4.6 stars, 828 reviews, <Ingredients>, Prep Time: 15 mins, Cook Time: 30 mins, <preparation steps>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--28",
+        "task_index": 7
+    },
+    {
+        "sites": null,
+        "task_id": 32,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Find a high-rated beef stew recipe on Allrecipes that requires a slow cooker and has at least 30 reviews. Detail the cooking time and the first five ingredients listed in the recipe.",
+        "instantiation_dict": {},
+        "intent": "Find a high-rated beef stew recipe on Allrecipes that requires a slow cooker and has at least 30 reviews. Detail the cooking time and the first five ingredients listed in the recipe.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'Slow Cooker Beef Stew', 3994 reviews, Cook Time: 4 hrs, <Ingredients>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--32",
+        "task_index": 8
+    },
+    {
+        "sites": null,
+        "task_id": 36,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Locate a recipe for an American apple pie on Allrecipes with a rating of at least 4 stars and more than 50 reviews. Note the maximum temperature mentioned in the Directions.",
+        "instantiation_dict": {},
+        "intent": "Locate a recipe for an American apple pie on Allrecipes with a rating of at least 4 stars and more than 50 reviews. Note the maximum temperature mentioned in the Directions.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "'All American Apple Pie', 4.6 stars, 490 reviews, 350 degrees F (175 degrees C)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--36",
+        "task_index": 9
+    },
+    {
+        "sites": null,
+        "task_id": 40,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "Browse the about us section of Allrecipes for a brief introduction to The Allrecipes Allstars.",
+        "instantiation_dict": {},
+        "intent": "Browse the about us section of Allrecipes for a brief introduction to The Allrecipes Allstars.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "The Allrecipes Allstars: Social media influencers, registered dietitians, grillmasters, and more seasoned home cooks make up our enthusiastic squad of 100+ brand ambassadors. This diverse, food-loving crew spans the U.S. geographically and represents many different cultures, ethnicities, and family makeups. Since 2011, the Allstars have created tens of thousands of original recipes, photos, and reviews plus shared their cooking expertise via flat and video content on our website, social media, plus more marketing channels.",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--40",
+        "task_index": 10
+    },
+    {
+        "sites": null,
+        "task_id": 44,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.allrecipes.com/",
+        "geolocation": null,
+        "intent_template": "List at least 6 holiday recipes sections mentioned in the Occasions section of Allrecipes.",
+        "instantiation_dict": {},
+        "intent": "List at least 6 holiday recipes sections mentioned in the Occasions section of Allrecipes.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "THANKSGIVING RECIPES; CHRISTMAS RECIPES; LUNAR NEW YEAR RECIPES; HANUKKAH RECIPES; PURIM RECIPES; MARDI GRAS RECIPES ...",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Allrecipes--44",
+        "task_index": 11
+    },
+    {
+        "sites": null,
+        "task_id": 48,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Find climbing gears and sort the results by price high to low. Answer the first 3 results after sorting.",
+        "instantiation_dict": {},
+        "intent": "Find climbing gears and sort the results by price high to low. Answer the first 3 results after sorting.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "First 3 results after sort",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--3",
+        "task_index": 12
+    },
+    {
+        "sites": null,
+        "task_id": 52,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Browse the women's hiking boots on Amazon and filter the results to show only those that are waterproof and have a rating of at least 4 stars and size 6.",
+        "instantiation_dict": {},
+        "intent": "Browse the women's hiking boots on Amazon and filter the results to show only those that are waterproof and have a rating of at least 4 stars and size 6.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Filter: 4-star, waterproof, size 6",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--7",
+        "task_index": 13
+    },
+    {
+        "sites": null,
+        "task_id": 56,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Find a stainless steel kitchen sink with double bowls on Amazon. Sort the results and find the cheapest one with FREE delivery.",
+        "instantiation_dict": {},
+        "intent": "Find a stainless steel kitchen sink with double bowls on Amazon. Sort the results and find the cheapest one with FREE delivery.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Transolid STDE33226-2 Kitchen Sink, Stainless Steel; $120.89",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--11",
+        "task_index": 14
+    },
+    {
+        "sites": null,
+        "task_id": 60,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Find a pair of mens running shoes in black, size 7, 4+ stars and under $50 and add them to my cart on Amazon.",
+        "instantiation_dict": {},
+        "intent": "Find a pair of mens running shoes in black, size 7, 4+ stars and under $50 and add them to my cart on Amazon.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Damyuan Men's Sport Gym Running Shoes Walking Shoes Casual Lace Up Lightweight; black, size 7, 4.0-star, $29.99",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--15",
+        "task_index": 15
+    },
+    {
+        "sites": null,
+        "task_id": 64,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Look for an English language book on roman empire history in the Amazon Kindle store. Sort by newests arrivals and look for a title that will be released within a month.",
+        "instantiation_dict": {},
+        "intent": "Look for an English language book on roman empire history in the Amazon Kindle store. Sort by newests arrivals and look for a title that will be released within a month.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "THE HISTORY OF THE DECLINE AND FALL OF THE ROMAN EMPIRE (All 6 Volumes), released on January 10, 2024.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--19",
+        "task_index": 16
+    },
+    {
+        "sites": null,
+        "task_id": 68,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Look for a men's waterproof digital sports watch with a heart rate monitor on Amazon. It should be priced between $50 to $100.",
+        "instantiation_dict": {},
+        "intent": "Look for a men's waterproof digital sports watch with a heart rate monitor on Amazon. It should be priced between $50 to $100.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Smartwatch for Men Android iPhone, Waterproof, Heart Rate, $54.99",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--23",
+        "task_index": 17
+    },
+    {
+        "sites": null,
+        "task_id": 72,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Look for a USB-C hub on Amazon compatible with MacBook Pro, featuring at least 4 ports, including HDMI and SD card reader. The price should be under $50. Select the one after sorting by Best Sellers.",
+        "instantiation_dict": {},
+        "intent": "Look for a USB-C hub on Amazon compatible with MacBook Pro, featuring at least 4 ports, including HDMI and SD card reader. The price should be under $50. Select the one after sorting by Best Sellers.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Hiearcool USB C Hub, USB C Multi-Port Adapter for MacBook Pro, 7IN1, include 4K HDMI USB3.0 and SD/TF Card Reader, $24.99",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--27",
+        "task_index": 18
+    },
+    {
+        "sites": null,
+        "task_id": 76,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Find a compact digital camera on Amazon with a zoom capability of at least 10x, rated 4 stars or higher, and priced between $100 to $300.",
+        "instantiation_dict": {},
+        "intent": "Find a compact digital camera on Amazon with a zoom capability of at least 10x, rated 4 stars or higher, and priced between $100 to $300.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "5K Digital Camera for Photography Autofocus, 16X Digital Zoom, 5.0 stars,  $129.99",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--31",
+        "task_index": 19
+    },
+    {
+        "sites": null,
+        "task_id": 80,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Find a men's leather wallet on Amazon with RFID blocking, at least 6 card slots, and priced below $50. Check if it's available for FREE delivery.",
+        "instantiation_dict": {},
+        "intent": "Find a men's leather wallet on Amazon with RFID blocking, at least 6 card slots, and priced below $50. Check if it's available for FREE delivery.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "STAY FINE Top Grain Leather Wallet for Men, RFID Blocking, Slim Billfold with 8 Card Slots, FREE delivery Friday, March 1",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--35",
+        "task_index": 20
+    },
+    {
+        "sites": null,
+        "task_id": 84,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.amazon.com/",
+        "geolocation": null,
+        "intent_template": "Locate a travel guide book on Amazon for Japan, published in 2024, with at least 20 customer reviews.",
+        "instantiation_dict": {},
+        "intent": "Locate a travel guide book on Amazon for Japan, published in 2024, with at least 20 customer reviews.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Japan Travel Guide 2024: The Ultimate Route to Authentic Ramen and Beyond \u2013 Tips, Maps, and Must-Sees for Every Traveler, February 1, 2024, 38 ratings",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Amazon--39",
+        "task_index": 21
+    },
+    {
+        "sites": null,
+        "task_id": 88,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Compare the prices and chips for the iPhone 14 Pro and iPhone 15 Pro models directly from Apple's website.",
+        "instantiation_dict": {},
+        "intent": "Compare the prices and chips for the iPhone 14 Pro and iPhone 15 Pro models directly from Apple's website.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "14 Pro: Available at authorized resellers, A16 Bionic chip, 6-core CPU, 5-core GPU, 16-core Neural Engine; 15 Pro: Starting at $999, A17 Pro chip, 6-core CPU, 6-core GPU, 16-core Neural Engine",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--2",
+        "task_index": 22
+    },
+    {
+        "sites": null,
+        "task_id": 92,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Find AirPods on Apple and how many types are currently available.",
+        "instantiation_dict": {},
+        "intent": "Find AirPods on Apple and how many types are currently available.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "4",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--6",
+        "task_index": 23
+    },
+    {
+        "sites": null,
+        "task_id": 96,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Find information on the latest (as of today's date) MacBook model, including its key features such as processor type, memory size, and storage capacity.",
+        "instantiation_dict": {},
+        "intent": "Find information on the latest (as of today's date) MacBook model, including its key features such as processor type, memory size, and storage capacity.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Macbook Pro; processor type: Apple M3 chip, Apple M3 Pro chip, Apple M3 Max chip; memory size: 8GB, 16GB, 18GB, 24GB, 36GB, 48GB, 64GB, 96GB, 128GB; storage capacity: 512GB, 1TB, 2TB, 4TB, 8TB",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--10",
+        "task_index": 24
+    },
+    {
+        "sites": null,
+        "task_id": 100,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Identify the upgrade options available for the cheapest base model of the MacBook Pro 14-inch with M3 chip, and calculate the total price difference from the base model to the maximum upgrade (no Pre-Installed Software) offered by Apple.",
+        "instantiation_dict": {},
+        "intent": "Identify the upgrade options available for the cheapest base model of the MacBook Pro 14-inch with M3 chip, and calculate the total price difference from the base model to the maximum upgrade (no Pre-Installed Software) offered by Apple.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Base model:$1599, difference: $1020",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--14",
+        "task_index": 25
+    },
+    {
+        "sites": null,
+        "task_id": 104,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Check if there are trade-in offers for the latest model of iPhone.",
+        "instantiation_dict": {},
+        "intent": "Check if there are trade-in offers for the latest model of iPhone.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "There are trade-in offers.",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--18",
+        "task_index": 26
+    },
+    {
+        "sites": null,
+        "task_id": 108,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Find out the trade-in value for an iPhone 13 Pro Max in good condition on the Apple website.",
+        "instantiation_dict": {},
+        "intent": "Find out the trade-in value for an iPhone 13 Pro Max in good condition on the Apple website.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "iPhone 13 Pro Max, Up to $500",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--22",
+        "task_index": 27
+    },
+    {
+        "sites": null,
+        "task_id": 112,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Find the maximum video recording resolution supported by the latest iPad mini on the Apple website.",
+        "instantiation_dict": {},
+        "intent": "Find the maximum video recording resolution supported by the latest iPad mini on the Apple website.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "4K video recording at 24 fps, 25 fps, 30 fps, or 60 fps",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--26",
+        "task_index": 28
+    },
+    {
+        "sites": null,
+        "task_id": 116,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Check the storage options and prices for the latest iPad Pro models on Apple's website.",
+        "instantiation_dict": {},
+        "intent": "Check the storage options and prices for the latest iPad Pro models on Apple's website.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "11-inch, 128GB from $799, 256GB from $899, 512GB from $1099, 1TB from $1499, and 2TB from $1899.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--30",
+        "task_index": 29
+    },
+    {
+        "sites": null,
+        "task_id": 120,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Identify the size and weight for the Apple TV 4K and list the Siri Remote features introduced.",
+        "instantiation_dict": {},
+        "intent": "Identify the size and weight for the Apple TV 4K and list the Siri Remote features introduced.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Height: 1.2 inches (31 mm), Width: 3.66 inches (93 mm), Depth: 3.66 inches (93 mm); Siri Remote features",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--34",
+        "task_index": 30
+    },
+    {
+        "sites": null,
+        "task_id": 124,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Explore accessories for Apple Vision Pro, list at least three accessories.",
+        "instantiation_dict": {},
+        "intent": "Explore accessories for Apple Vision Pro, list at least three accessories.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Apple Vision Pro Battery; Apple Vision Pro Travel Case; ZEISS Optical Inserts ...",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--38",
+        "task_index": 31
+    },
+    {
+        "sites": null,
+        "task_id": 128,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.apple.com/",
+        "geolocation": null,
+        "intent_template": "Find updates for Apple Watch Series 7,8,9 on Apple's website.",
+        "instantiation_dict": {},
+        "intent": "Find updates for Apple Watch Series 7,8,9 on Apple's website.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "see https://www.apple.com/watch/compare/, <summary>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Apple--42",
+        "task_index": 32
+    },
+    {
+        "sites": null,
+        "task_id": 132,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "Locate the most recent research paper about 'Algebraic Topology' under Mathematics published on ArXiv. Provide the title of the paper, the name of the authors, and the abstract.",
+        "instantiation_dict": {},
+        "intent": "Locate the most recent research paper about 'Algebraic Topology' under Mathematics published on ArXiv. Provide the title of the paper, the name of the authors, and the abstract.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "math.AT paper, <title>, <authors>, <abstract>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--3",
+        "task_index": 33
+    },
+    {
+        "sites": null,
+        "task_id": 136,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "Find the most recent paper submitted on machine learning in the Computer Science category posted on ArXiv.",
+        "instantiation_dict": {},
+        "intent": "Find the most recent paper submitted on machine learning in the Computer Science category posted on ArXiv.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Latest cs.LG paper",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--7",
+        "task_index": 34
+    },
+    {
+        "sites": null,
+        "task_id": 140,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "For Non-English submissions, do I need to provide a multi-language abstract, if need, answer the separator between the multiple abstracts.",
+        "instantiation_dict": {},
+        "intent": "For Non-English submissions, do I need to provide a multi-language abstract, if need, answer the separator between the multiple abstracts.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "-----",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--11",
+        "task_index": 35
+    },
+    {
+        "sites": null,
+        "task_id": 144,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "Searching Chinese Benchmark on ArXiv, how many papers announced in December 2023 mention being accepted for AAAI 2024?",
+        "instantiation_dict": {},
+        "intent": "Searching Chinese Benchmark on ArXiv, how many papers announced in December 2023 mention being accepted for AAAI 2024?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "2",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--15",
+        "task_index": 36
+    },
+    {
+        "sites": null,
+        "task_id": 148,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "Which university maintains and manages ArXiv. Accessing the university's website from ArXiv, how many underegraduate students are currently at the university.",
+        "instantiation_dict": {},
+        "intent": "Which university maintains and manages ArXiv. Accessing the university's website from ArXiv, how many underegraduate students are currently at the university.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Cornell University, 16071 UNDERGRADUATE STUDENTS",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--19",
+        "task_index": 37
+    },
+    {
+        "sites": null,
+        "task_id": 152,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "Determine how many articles with the keyword 'autonomous vehicles' were published in the 'Electrical Engineering and Systems Science' section of ArXiv yesterday.",
+        "instantiation_dict": {},
+        "intent": "Determine how many articles with the keyword 'autonomous vehicles' were published in the 'Electrical Engineering and Systems Science' section of ArXiv yesterday.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "eess.SY paper related to autonomous vehicles",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--23",
+        "task_index": 38
+    },
+    {
+        "sites": null,
+        "task_id": 156,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "On ArXiv, what categories does Economics include, and what are their abbreviations?",
+        "instantiation_dict": {},
+        "intent": "On ArXiv, what categories does Economics include, and what are their abbreviations?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Econometrics (econ.EM), General Economics (econ.GN), and Theoretical Economics (econ.TH)",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--27",
+        "task_index": 39
+    },
+    {
+        "sites": null,
+        "task_id": 160,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "Search ArXiv for papers with 'Graph Neural Networks' in the abstract that were submitted between Jan 1, 2024, and Jan 3, 2024, and determine how many of these papers have more than five authors.",
+        "instantiation_dict": {},
+        "intent": "Search ArXiv for papers with 'Graph Neural Networks' in the abstract that were submitted between Jan 1, 2024, and Jan 3, 2024, and determine how many of these papers have more than five authors.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "7 papers",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--31",
+        "task_index": 40
+    },
+    {
+        "sites": null,
+        "task_id": 164,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "Retrieve the latest research paper in Quantum Physics from ArXiv and provide the title, author(s), and date of submission.",
+        "instantiation_dict": {},
+        "intent": "Retrieve the latest research paper in Quantum Physics from ArXiv and provide the title, author(s), and date of submission.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "paper related to Quantum Physics",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--35",
+        "task_index": 41
+    },
+    {
+        "sites": null,
+        "task_id": 168,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://arxiv.org/",
+        "geolocation": null,
+        "intent_template": "Search the title 'GPT-4 Technical Report' and access this paper through HTML format. Read the paper on this page and tell me what is 'one of the main goals of developing such models' mentioned in the Introduction.",
+        "instantiation_dict": {},
+        "intent": "Search the title 'GPT-4 Technical Report' and access this paper through HTML format. Read the paper on this page and tell me what is 'one of the main goals of developing such models' mentioned in the Introduction.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "One of the main goals of developing such models is to improve their ability to understand and generate natural language text, particularly in more complex and nuanced scenarios.",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ArXiv--39",
+        "task_index": 42
+    },
+    {
+        "sites": null,
+        "task_id": 172,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Find a report on the BBC News website about recent developments in renewable energy technologies in the UK.",
+        "instantiation_dict": {},
+        "intent": "Find a report on the BBC News website about recent developments in renewable energy technologies in the UK.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<report> (about developments in renewable energy technologies in the UK)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--0",
+        "task_index": 43
+    },
+    {
+        "sites": null,
+        "task_id": 176,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Find the latest article regarding the economic implications of climate change in Europe as reported by BBC News and summarize the central points.",
+        "instantiation_dict": {},
+        "intent": "Find the latest article regarding the economic implications of climate change in Europe as reported by BBC News and summarize the central points.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<summary> (economic implications of climate change in Europe)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--4",
+        "task_index": 44
+    },
+    {
+        "sites": null,
+        "task_id": 180,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Get a brief overview of the economic implications of the UK's latest trade deal posted on BBC News and the date when the article was published.",
+        "instantiation_dict": {},
+        "intent": "Get a brief overview of the economic implications of the UK's latest trade deal posted on BBC News and the date when the article was published.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "CPTPP trade deal, <summary>; 16th July 2023",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--8",
+        "task_index": 45
+    },
+    {
+        "sites": null,
+        "task_id": 184,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Find a picture in the travel section that contains food, tell me what the food is called and what region it comes from.",
+        "instantiation_dict": {},
+        "intent": "Find a picture in the travel section that contains food, tell me what the food is called and what region it comes from.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "ramen, Tokyo",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--12",
+        "task_index": 46
+    },
+    {
+        "sites": null,
+        "task_id": 188,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Identify the most recent development or update in Brexit negotiations as reported on BBC News and report the key points and any stated impacts on European economies.",
+        "instantiation_dict": {},
+        "intent": "Identify the most recent development or update in Brexit negotiations as reported on BBC News and report the key points and any stated impacts on European economies.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<summary> (Brexit negotiations)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--16",
+        "task_index": 47
+    },
+    {
+        "sites": null,
+        "task_id": 192,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Find the latest article in the Green Living section on BBC News and provide a summary of its main points.",
+        "instantiation_dict": {},
+        "intent": "Find the latest article in the Green Living section on BBC News and provide a summary of its main points.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Earth - Green Living, <article>, <summary>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--20",
+        "task_index": 48
+    },
+    {
+        "sites": null,
+        "task_id": 196,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Search the latest article about space exploration on BBC News and summarize its key points.",
+        "instantiation_dict": {},
+        "intent": "Search the latest article about space exploration on BBC News and summarize its key points.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Search for space exploration, eg. SpaceX blasts private firm's lunar lander into orbit",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--24",
+        "task_index": 49
+    },
+    {
+        "sites": null,
+        "task_id": 200,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Find the Market Data section on BBC News and tell me which company the data comes from.",
+        "instantiation_dict": {},
+        "intent": "Find the Market Data section on BBC News and tell me which company the data comes from.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Business - Market Data, Source: Morningstar",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--28",
+        "task_index": 50
+    },
+    {
+        "sites": null,
+        "task_id": 204,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Find the artificial intelligence section, what is the top headline at this time, and which companies are involved?",
+        "instantiation_dict": {},
+        "intent": "Find the artificial intelligence section, what is the top headline at this time, and which companies are involved?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Innovation - Artificial Intelligence, <headline>, <companies>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--32",
+        "task_index": 51
+    },
+    {
+        "sites": null,
+        "task_id": 208,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Look up recent articles in the Africa news section in World, summarize what topics most of these news are about",
+        "instantiation_dict": {},
+        "intent": "Look up recent articles in the Africa news section in World, summarize what topics most of these news are about",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "News - World - Africa, <article>, <summary>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--36",
+        "task_index": 52
+    },
+    {
+        "sites": null,
+        "task_id": 212,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.bbc.com/news/",
+        "geolocation": null,
+        "intent_template": "Read and summarise a recent story on BBC News about people being injured or killed in wars.",
+        "instantiation_dict": {},
+        "intent": "Read and summarise a recent story on BBC News about people being injured or killed in wars.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "News - Israel-Gaza War, <article>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "BBC News--40",
+        "task_index": 53
+    },
+    {
+        "sites": null,
+        "task_id": 216,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Find a hotel in Ohio From December 20th to December 23th for 3 adults and 2 rooms.",
+        "instantiation_dict": {},
+        "intent": "Find a hotel in Ohio From December 20th to December 23th for 3 adults and 2 rooms.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Berlin Heritage Inn, US$549 for 3 adults and 2 rooms",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--2",
+        "task_index": 54
+    },
+    {
+        "sites": null,
+        "task_id": 220,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Book one room which provides breakfast, and airport shuttle from Aug 22 to 25 in Los Angeles.",
+        "instantiation_dict": {},
+        "intent": "Book one room which provides breakfast, and airport shuttle from Aug 22 to 25 in Los Angeles.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "La Quinta by Wyndham LAX",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--6",
+        "task_index": 55
+    },
+    {
+        "sites": null,
+        "task_id": 224,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Find a well-reviewed hotel in Paris with available bookings suitable for a couple (2 adults) on Valentine's Day week, August 14-21, 2024, that offers free cancellation options.",
+        "instantiation_dict": {},
+        "intent": "Find a well-reviewed hotel in Paris with available bookings suitable for a couple (2 adults) on Valentine's Day week, August 14-21, 2024, that offers free cancellation options.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Villa Alessandra",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--10",
+        "task_index": 56
+    },
+    {
+        "sites": null,
+        "task_id": 228,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Book a highly-rated hotel with a swimming pool and free WiFi near the Louvre Museum in Paris for the weekend of October 3-5, 2024.",
+        "instantiation_dict": {},
+        "intent": "Book a highly-rated hotel with a swimming pool and free WiFi near the Louvre Museum in Paris for the weekend of October 3-5, 2024.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Nolinski Paris",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--14",
+        "task_index": 57
+    },
+    {
+        "sites": null,
+        "task_id": 232,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Search a hotel in London with a user rating of 8 or higher for a stay between September 14th, 2024, and September 21st, 2024, suitable for a couple. Provide the name and a short description of the hotel.",
+        "instantiation_dict": {},
+        "intent": "Search a hotel in London with a user rating of 8 or higher for a stay between September 14th, 2024, and September 21st, 2024, suitable for a couple. Provide the name and a short description of the hotel.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Cromwell Serviced Apartments; Cromwell Serviced Apartments is an apartment featuring rooms with free Wifi and air conditioning in the center of London",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--18",
+        "task_index": 58
+    },
+    {
+        "sites": null,
+        "task_id": 236,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Search for a hotel in Amsterdam with a customer review score of 9 or higher, offering bicycle rentals, for a week-long stay from October 15 to October 22, 2024, for two adults.",
+        "instantiation_dict": {},
+        "intent": "Search for a hotel in Amsterdam with a customer review score of 9 or higher, offering bicycle rentals, for a week-long stay from October 15 to October 22, 2024, for two adults.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "nhow Amsterdam Rai, 9.0 ratings, bicycle rentals",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--22",
+        "task_index": 59
+    },
+    {
+        "sites": null,
+        "task_id": 240,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Check Booking.com for a 3-star hotel or higher in Paris with a guest rating above 8.0 and available parking for dates August 20-23, 2024.",
+        "instantiation_dict": {},
+        "intent": "Check Booking.com for a 3-star hotel or higher in Paris with a guest rating above 8.0 and available parking for dates August 20-23, 2024.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "InterContinental Paris Le Grand, an IHG Hotel, US$2208, 8.6 ratings, 5-star, parking",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--26",
+        "task_index": 60
+    },
+    {
+        "sites": null,
+        "task_id": 244,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Search for hotels in London from August 20 to August 23, 2024, on Booking. How many hotels are left after applying the Breakfast included and Fitness center filters?",
+        "instantiation_dict": {},
+        "intent": "Search for hotels in London from August 20 to August 23, 2024, on Booking. How many hotels are left after applying the Breakfast included and Fitness center filters?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "After applying the Breakfast included and Fitness center: 228 hotels",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--30",
+        "task_index": 61
+    },
+    {
+        "sites": null,
+        "task_id": 248,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Search for a hotel in Berlin available for a three-night stay from March 15 to March 18, 2024, for one adult. Tell me the price in USD and CNY for the three-night stay.",
+        "instantiation_dict": {},
+        "intent": "Search for a hotel in Berlin available for a three-night stay from March 15 to March 18, 2024, for one adult. Tell me the price in USD and CNY for the three-night stay.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Hotel Adlon Kempinski Berlin, US$1185, CNY 8528",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--34",
+        "task_index": 62
+    },
+    {
+        "sites": null,
+        "task_id": 252,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Look up Vienna hotel options with availability for a 4-night stay from September 28 to October 2, 2024, with amenities that include a Parking, breakfast included, and a rating of 8+ on Booking.com.",
+        "instantiation_dict": {},
+        "intent": "Look up Vienna hotel options with availability for a 4-night stay from September 28 to October 2, 2024, with amenities that include a Parking, breakfast included, and a rating of 8+ on Booking.com.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "ARCOTEL Wimberger Wien, 8.2 ratings, Parking, breakfast included",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--38",
+        "task_index": 63
+    },
+    {
+        "sites": null,
+        "task_id": 256,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.booking.com/",
+        "geolocation": null,
+        "intent_template": "Search for a hotel in Hokkaido for the period October 1 to October 7, 2024, with a rating of 9+, check out its user reviews, which categories are greater than 9 and which are less than 9?",
+        "instantiation_dict": {},
+        "intent": "Search for a hotel in Hokkaido for the period October 1 to October 7, 2024, with a rating of 9+, check out its user reviews, which categories are greater than 9 and which are less than 9?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Heiseikan Shiosaitei Hanatsuki, 9.0 ratings, high: Staff 9.3, Facilities 9.0, Cleanliness 9.4, Comfort 9.3. low: Value for money 8.2, Location 8.7, Free WiFi 8.1",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Booking--42",
+        "task_index": 64
+    },
+    {
+        "sites": null,
+        "task_id": 260,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Look up the pronunciation, definition, and example sentence for the word \"ubiquitous\" in UK and US English.",
+        "instantiation_dict": {},
+        "intent": "Look up the pronunciation, definition, and example sentence for the word \"ubiquitous\" in UK and US English.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "UK: /ju\u02d0\u02c8b\u026ak.w\u026a.t\u0259s/, US: /ju\u02d0\u02c8b\u026ak.w\u0259.t\u032c\u0259s/; seeming to be everywhere; Leather is very much in fashion this season, as is the ubiquitous denim.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--2",
+        "task_index": 65
+    },
+    {
+        "sites": null,
+        "task_id": 264,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Search for the word \"sustainability\" on the Cambridge Dictionary, what is the translation of sustainability into Chinese and French in the dictionary.",
+        "instantiation_dict": {},
+        "intent": "Search for the word \"sustainability\" on the Cambridge Dictionary, what is the translation of sustainability into Chinese and French in the dictionary.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "\u53ef\u6301\u7eed\u6027; durabilit\u00e9 , viabilit\u00e9",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--6",
+        "task_index": 66
+    },
+    {
+        "sites": null,
+        "task_id": 268,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Look up the definition and pronunciation of the word \"impeccable\" and also find an example sentence using that word.",
+        "instantiation_dict": {},
+        "intent": "Look up the definition and pronunciation of the word \"impeccable\" and also find an example sentence using that word.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "UK: /\u026am\u02c8pek.\u0259.b\u0259l/, US: /\u026am\u02c8pek.\u0259.b\u0259l/; perfect, with no problems or bad parts; His English is impeccable.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--10",
+        "task_index": 67
+    },
+    {
+        "sites": null,
+        "task_id": 272,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Use the Cambridge Dictionary to find the pronunciation, definition, and one example sentence for the word \"concatenate\".",
+        "instantiation_dict": {},
+        "intent": "Use the Cambridge Dictionary to find the pronunciation, definition, and one example sentence for the word \"concatenate\".",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "UK: /k\u0259n\u02c8k\u00e6t.\u0259.ne\u026at/, US: /k\u0259n\u02c8k\u00e6t\u032c.\u0259.ne\u026at/; to put things together as a connected series; The filename is a series of concatenated words with no spaces.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--14",
+        "task_index": 68
+    },
+    {
+        "sites": null,
+        "task_id": 276,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Search for \"to behave well\" in Cambridge Dictionary's Thesaurus and see which synonyms the dictionary gives.",
+        "instantiation_dict": {},
+        "intent": "Search for \"to behave well\" in Cambridge Dictionary's Thesaurus and see which synonyms the dictionary gives.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "behaves themselves; be on their best behaviour",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--18",
+        "task_index": 69
+    },
+    {
+        "sites": null,
+        "task_id": 280,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Use the Cambridge Dictionary to find the definition, UK pronunciation, and an example sentence for the word \"quintessential.\"",
+        "instantiation_dict": {},
+        "intent": "Use the Cambridge Dictionary to find the definition, UK pronunciation, and an example sentence for the word \"quintessential.\"",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "UK: /\u02cckw\u026an.t\u026a\u02c8sen.\u0283\u0259l/, US:/\u02cckw\u026an.t\u026a\u02c8sen.\u0283\u0259l/; Def: being the most typical example or most important part of something; Sheep's milk cheese is the quintessential Corsican cheese.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--22",
+        "task_index": 70
+    },
+    {
+        "sites": null,
+        "task_id": 284,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Search for the word \"nostalgia\" in the Cambridge Dictionary and report the translation of this word into Chinese.",
+        "instantiation_dict": {},
+        "intent": "Search for the word \"nostalgia\" in the Cambridge Dictionary and report the translation of this word into Chinese.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "\u6000\u65e7",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--26",
+        "task_index": 71
+    },
+    {
+        "sites": null,
+        "task_id": 288,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Find the grammar for present perfect simple uses in English, including examples of affirmative, negative, and interrogative sentences, on the Cambridge Dictionary website.",
+        "instantiation_dict": {},
+        "intent": "Find the grammar for present perfect simple uses in English, including examples of affirmative, negative, and interrogative sentences, on the Cambridge Dictionary website.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Present perfect simple: uses;  I\u2019ve been there a couple of times before; We haven\u2019t met before, have we?; Have you ever tried to write your name and address with your left hand?",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--30",
+        "task_index": 72
+    },
+    {
+        "sites": null,
+        "task_id": 292,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Use the Cambridge Dictionary to understand the rules for forming and using comparative and superlative adjectives in English Grammar, including example sentences.",
+        "instantiation_dict": {},
+        "intent": "Use the Cambridge Dictionary to understand the rules for forming and using comparative and superlative adjectives in English Grammar, including example sentences.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "This car is more expensive than my last one; Joe used to be the slowest runner in the class.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--34",
+        "task_index": 73
+    },
+    {
+        "sites": null,
+        "task_id": 296,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Go to the Plus section of Cambridge Dictionary, finish a recommended Grammar quiz without login and tell me your final score.",
+        "instantiation_dict": {},
+        "intent": "Go to the Plus section of Cambridge Dictionary, finish a recommended Grammar quiz without login and tell me your final score.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Action: finish a recommended Grammar quiz",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--38",
+        "task_index": 74
+    },
+    {
+        "sites": null,
+        "task_id": 300,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://dictionary.cambridge.org/",
+        "geolocation": null,
+        "intent_template": "Convert the Cambridge Dictionary homepage from English (UK) to Deutsch.",
+        "instantiation_dict": {},
+        "intent": "Convert the Cambridge Dictionary homepage from English (UK) to Deutsch.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Action: Click English (UK), change language to: Deutsch",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Cambridge Dictionary--42",
+        "task_index": 75
+    },
+    {
+        "sites": null,
+        "task_id": 304,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Identify a new course or Specialization on Coursera related to Python Data Science, sort the courses by newest, what the first course is and which institution offers it.",
+        "instantiation_dict": {},
+        "intent": "Identify a new course or Specialization on Coursera related to Python Data Science, sort the courses by newest, what the first course is and which institution offers it.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Data Science with NumPy, Sets, and Dictionaries; Duke University",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--3",
+        "task_index": 76
+    },
+    {
+        "sites": null,
+        "task_id": 308,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Find a course on Coursera that teaches Reinforcement Learning for Intermediate with a rating of at least 4.5. Provide the name of the course, the institution offering it, and the number of reviews it has received.",
+        "instantiation_dict": {},
+        "intent": "Find a course on Coursera that teaches Reinforcement Learning for Intermediate with a rating of at least 4.5. Provide the name of the course, the institution offering it, and the number of reviews it has received.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Reinforcement Learning, Specialization; University of Alberta; 3.3K reviews",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--7",
+        "task_index": 77
+    },
+    {
+        "sites": null,
+        "task_id": 312,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Search for a Specialization on Coursera about project management that is produced by a university, show a testimonial for this Specialization.",
+        "instantiation_dict": {},
+        "intent": "Search for a Specialization on Coursera about project management that is produced by a university, show a testimonial for this Specialization.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Project Management, Specialization; Felipe M. \"To be able to take courses at my own pace and rhythm has been an amazing experience. I can learn whenever it fits my schedule and mood.\"",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--11",
+        "task_index": 78
+    },
+    {
+        "sites": null,
+        "task_id": 316,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Find a course on Coursera named 'Introduction to Mathematical Thinking' offered by Stanford, what is the percentage (rounded) of 5 star ratings in reviews and which level has the least percentage?.",
+        "instantiation_dict": {},
+        "intent": "Find a course on Coursera named 'Introduction to Mathematical Thinking' offered by Stanford, what is the percentage (rounded) of 5 star ratings in reviews and which level has the least percentage?.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "85%; 2-star",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--15",
+        "task_index": 79
+    },
+    {
+        "sites": null,
+        "task_id": 320,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Identify a course on Coursera that provides an introduction to Psychology, list the instructor's name, the institution offering it, and how many hours it will approximately take to complete.",
+        "instantiation_dict": {},
+        "intent": "Identify a course on Coursera that provides an introduction to Psychology, list the instructor's name, the institution offering it, and how many hours it will approximately take to complete.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Instructor: Paul Bloom; Yale University; 14 hours",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--19",
+        "task_index": 80
+    },
+    {
+        "sites": null,
+        "task_id": 324,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Find a course on Coursera about 'Artificial Intelligence Ethics', which has a duration of less than 5 weeks and has been rated 4.5 stars or higher. Provide the course name and the instructor's name.",
+        "instantiation_dict": {},
+        "intent": "Find a course on Coursera about 'Artificial Intelligence Ethics', which has a duration of less than 5 weeks and has been rated 4.5 stars or higher. Provide the course name and the instructor's name.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Artificial Intelligence: Ethics & Societal Challenges; Lund University; 4.6 stars; Instructors: Maria Hedlund, Lena Lindstr\u00f6m, Erik Persson",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--23",
+        "task_index": 81
+    },
+    {
+        "sites": null,
+        "task_id": 328,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Search for a Specialization on Coursera about 'Data Visualization' that includes a project. Provide the name of the Specialization, the institution offering it, and the skills that will be developed by completing it.",
+        "instantiation_dict": {},
+        "intent": "Search for a Specialization on Coursera about 'Data Visualization' that includes a project. Provide the name of the Specialization, the institution offering it, and the skills that will be developed by completing it.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Data Visualization with Tableau Specialization; University of California, Davis; <skills>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--27",
+        "task_index": 82
+    },
+    {
+        "sites": null,
+        "task_id": 332,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Search for the course 'Exploring Quantum Physics' on Coursera, offered by the University of Maryland, College Park. Identify the percentage (rounded) of 5-star ratings in the reviews.",
+        "instantiation_dict": {},
+        "intent": "Search for the course 'Exploring Quantum Physics' on Coursera, offered by the University of Maryland, College Park. Identify the percentage (rounded) of 5-star ratings in the reviews.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "52.6%",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--31",
+        "task_index": 83
+    },
+    {
+        "sites": null,
+        "task_id": 336,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Find a Coursera course on Sustainable Agriculture practices, and detail the course's objectives and the background of the lead instructor.",
+        "instantiation_dict": {},
+        "intent": "Find a Coursera course on Sustainable Agriculture practices, and detail the course's objectives and the background of the lead instructor.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Introduction to Sustainability; <objectives>; Instructor: Dr. Jonathan Tomkin",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--35",
+        "task_index": 84
+    },
+    {
+        "sites": null,
+        "task_id": 340,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.coursera.org/",
+        "geolocation": null,
+        "intent_template": "Find the Space Safety course offered by TUM on Coursera. How many videos are there in module 2? What is the name of each video?",
+        "instantiation_dict": {},
+        "intent": "Find the Space Safety course offered by TUM on Coursera. How many videos are there in module 2? What is the name of each video?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "6 videos; Introduction; Space Debris; Mitigation; Measurements; Protection; Atmospheric Re-entry",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Coursera--39",
+        "task_index": 85
+    },
+    {
+        "sites": null,
+        "task_id": 344,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Check the latest articles on ESPN for updates on any trades that occurred in the NBA within the past 2 days.",
+        "instantiation_dict": {},
+        "intent": "Check the latest articles on ESPN for updates on any trades that occurred in the NBA within the past 2 days.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<article> (trades), maybe no article",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--1",
+        "task_index": 86
+    },
+    {
+        "sites": null,
+        "task_id": 348,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Identify the top scorer in the NBA from the latest completed game and note down the points scored, the team they play for, and their position on the team.",
+        "instantiation_dict": {},
+        "intent": "Identify the top scorer in the NBA from the latest completed game and note down the points scored, the team they play for, and their position on the team.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<player>; <PTS>; <team>; <position> (eg, James Harden; scored 35 points; LA Clippers; Shooting Guard (SG))",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--5",
+        "task_index": 87
+    },
+    {
+        "sites": null,
+        "task_id": 352,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Search on ESPN for how many teams have Los Angeles in their name and how many of them are NBA.",
+        "instantiation_dict": {},
+        "intent": "Search on ESPN for how many teams have Los Angeles in their name and how many of them are NBA.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "10 teams have Los Angeles in their name; 2 teams are NBA",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--9",
+        "task_index": 88
+    },
+    {
+        "sites": null,
+        "task_id": 356,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Identify today's top headline in the Basketball section of ESPN, and summarize the main points of that article.",
+        "instantiation_dict": {},
+        "intent": "Identify today's top headline in the Basketball section of ESPN, and summarize the main points of that article.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<headline>; <summary>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--13",
+        "task_index": 89
+    },
+    {
+        "sites": null,
+        "task_id": 360,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Check out the NBA Basketball Power Index 2023-24 to see which teams are in first place and which are in last place.",
+        "instantiation_dict": {},
+        "intent": "Check out the NBA Basketball Power Index 2023-24 to see which teams are in first place and which are in last place.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Boston Celtics; San Antonio Spurs",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--17",
+        "task_index": 90
+    },
+    {
+        "sites": null,
+        "task_id": 364,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Show the scores and main highlight of the Denver Nuggets game that occurred within the last 3 days on ESPN.",
+        "instantiation_dict": {},
+        "intent": "Show the scores and main highlight of the Denver Nuggets game that occurred within the last 3 days on ESPN.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<score> within 3 days; <highlight>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--21",
+        "task_index": 91
+    },
+    {
+        "sites": null,
+        "task_id": 368,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Identify the player with the most assists in the latest NBA game and show me the assists, the team they play for, and their position.",
+        "instantiation_dict": {},
+        "intent": "Identify the player with the most assists in the latest NBA game and show me the assists, the team they play for, and their position.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "NBA game, latest, eg, February 2, 2024, Lakers - Celtics, 114 - 105, most assist: 14, D. Russell, position: PG, team: Los Angeles Lakers",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--25",
+        "task_index": 92
+    },
+    {
+        "sites": null,
+        "task_id": 372,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Identify today's top headline in the Soccer section of ESPN, and summarize the main points of that article.",
+        "instantiation_dict": {},
+        "intent": "Identify today's top headline in the Soccer section of ESPN, and summarize the main points of that article.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<headline> today",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--29",
+        "task_index": 93
+    },
+    {
+        "sites": null,
+        "task_id": 376,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Locate the latest ESPN articles discussing potential MVP candidates in the NFL for 2023 season.",
+        "instantiation_dict": {},
+        "intent": "Locate the latest ESPN articles discussing potential MVP candidates in the NFL for 2023 season.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Article, '2023 NFL MVP: Ranking five finalists, plus stats'",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--33",
+        "task_index": 94
+    },
+    {
+        "sites": null,
+        "task_id": 380,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Check out LeBron James' Stats to see how many games he has played in his career so far.",
+        "instantiation_dict": {},
+        "intent": "Check out LeBron James' Stats to see how many games he has played in his career so far.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "1471",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--37",
+        "task_index": 95
+    },
+    {
+        "sites": null,
+        "task_id": 384,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.espn.com/",
+        "geolocation": null,
+        "intent_template": "Find out which four teams the NFC North contains in the NFL on ESPN.",
+        "instantiation_dict": {},
+        "intent": "Find out which four teams the NFC North contains in the NFL on ESPN.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Chicago Bears, Detroit Lions, Green Bay Packers, and Minnesota Vikings",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "ESPN--41",
+        "task_index": 96
+    },
+    {
+        "sites": null,
+        "task_id": 388,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "Search for an open-source repository for machine learning in Python, specifically focused on decision trees, updated within the last 2 days.",
+        "instantiation_dict": {},
+        "intent": "Search for an open-source repository for machine learning in Python, specifically focused on decision trees, updated within the last 2 days.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "google/yggdrasil-decision-forests",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--1",
+        "task_index": 97
+    },
+    {
+        "sites": null,
+        "task_id": 392,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "Find a Python repository on GitHub that has been updated in the past 2 days and has at least 500 stars.",
+        "instantiation_dict": {},
+        "intent": "Find a Python repository on GitHub that has been updated in the past 2 days and has at least 500 stars.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<repo> (stars:\"> 500\" language:Python), then choose recently undated",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--5",
+        "task_index": 98
+    },
+    {
+        "sites": null,
+        "task_id": 396,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "Locate a repository on GitHub that was created in the last week and has 50 or more stars. Provide brief details about the project's purpose and its programming language.",
+        "instantiation_dict": {},
+        "intent": "Locate a repository on GitHub that was created in the last week and has 50 or more stars. Provide brief details about the project's purpose and its programming language.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<repo> (stars:>=50 created:>=xxxx-xx-xx)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--9",
+        "task_index": 99
+    },
+    {
+        "sites": null,
+        "task_id": 400,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "Identify the latest top-trending open-source project in the category of 'Machine Learning' on GitHub, and check the number of stars it has received.",
+        "instantiation_dict": {},
+        "intent": "Identify the latest top-trending open-source project in the category of 'Machine Learning' on GitHub, and check the number of stars it has received.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "microsoft/ML-For-Beginners",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--13",
+        "task_index": 100
+    },
+    {
+        "sites": null,
+        "task_id": 404,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "Locate a C++ project on GitHub that has been recently updated in the last week and has at least 500 stars, then describe its main purpose.",
+        "instantiation_dict": {},
+        "intent": "Locate a C++ project on GitHub that has been recently updated in the last week and has at least 500 stars, then describe its main purpose.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "microsoft/terminal; The new Windows Terminal and the original Windows console host, all in the same place!",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--17",
+        "task_index": 101
+    },
+    {
+        "sites": null,
+        "task_id": 408,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "Find the Security topic in GitHub Resources and answer the role of GitHub Advanced Security.",
+        "instantiation_dict": {},
+        "intent": "Find the Security topic in GitHub Resources and answer the role of GitHub Advanced Security.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "With AI-powered application security testing tools embedded in your development workflow, GitHub Advanced Security outperforms non-native add-ons by delivering 7x faster remediation rates for identified vulnerabilities.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--21",
+        "task_index": 102
+    },
+    {
+        "sites": null,
+        "task_id": 412,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "Search for a 'virtual reality' related repository on GitHub updated in the last 10 days with at least 200 stars and summarize its main objective.",
+        "instantiation_dict": {},
+        "intent": "Search for a 'virtual reality' related repository on GitHub updated in the last 10 days with at least 200 stars and summarize its main objective.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<repo> (virtual reality stars:>=200), <summary>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--25",
+        "task_index": 103
+    },
+    {
+        "sites": null,
+        "task_id": 416,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "Compare the maximum number of private repositories allowed in the Free and Pro plans in GitHub Pricing.",
+        "instantiation_dict": {},
+        "intent": "Compare the maximum number of private repositories allowed in the Free and Pro plans in GitHub Pricing.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Unlimited",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--29",
+        "task_index": 104
+    },
+    {
+        "sites": null,
+        "task_id": 420,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "Find Customer Stories on the GitHub page and list the 2 stories that appear on the web page.",
+        "instantiation_dict": {},
+        "intent": "Find Customer Stories on the GitHub page and list the 2 stories that appear on the web page.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Philips builds and deploys digital health technology faster with innersource on GitHub. Shopify keeps pushing eCommerce forward with help from GitHub tools.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--33",
+        "task_index": 105
+    },
+    {
+        "sites": null,
+        "task_id": 424,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://github.com/",
+        "geolocation": null,
+        "intent_template": "List the 3 features mentioned in GitHub's Copilot product page.",
+        "instantiation_dict": {},
+        "intent": "List the 3 features mentioned in GitHub's Copilot product page.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "The AI coding assistant elevating developer workflows. Get AI-based suggestions in real time. Docs that feel tailored for you.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "GitHub--37",
+        "task_index": 106
+    },
+    {
+        "sites": null,
+        "task_id": 428,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Book a journey with return option on same day from Edinburg to Manchester on December 28th and show me the lowest price option available.",
+        "instantiation_dict": {},
+        "intent": "Book a journey with return option on same day from Edinburg to Manchester on December 28th and show me the lowest price option available.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Aer Lingus 11:40am - 4:45pm, $412 (real-time)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--0",
+        "task_index": 107
+    },
+    {
+        "sites": null,
+        "task_id": 432,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Search for one-way flights from New York to London on Dec. 26th and filter the results to show only non-stop flights.",
+        "instantiation_dict": {},
+        "intent": "Search for one-way flights from New York to London on Dec. 26th and filter the results to show only non-stop flights.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Norse Atlantic UK 6:10\u202fPM \u2013 6:00\u202fAM(+1), $331, Nonstop (real-time)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--4",
+        "task_index": 108
+    },
+    {
+        "sites": null,
+        "task_id": 436,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Search a one-way filght from Dublin To Athens Greece for 1 Adult that leaves on December 30 and analyse the price graph for the next 2 months.",
+        "instantiation_dict": {},
+        "intent": "Search a one-way filght from Dublin To Athens Greece for 1 Adult that leaves on December 30 and analyse the price graph for the next 2 months.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Analyse the picture of Price graph (real-time)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--8",
+        "task_index": 109
+    },
+    {
+        "sites": null,
+        "task_id": 440,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Find the best-priced round-trip flight from New York to London leaving on August 25, 2023, and returning on September 5, 2024, with one stop or fewer.",
+        "instantiation_dict": {},
+        "intent": "Find the best-priced round-trip flight from New York to London leaving on August 25, 2023, and returning on September 5, 2024, with one stop or fewer.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Norse Atlantic UK, 6:10\u202fPM \u2013 6:00\u202fAM(+1), $757, Nonstop (real-time)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--12",
+        "task_index": 110
+    },
+    {
+        "sites": null,
+        "task_id": 444,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Find the cheapest one-way flight from New York to Tokyo departing on August 15, 2024, and provide the airline and total flight duration.",
+        "instantiation_dict": {},
+        "intent": "Find the cheapest one-way flight from New York to Tokyo departing on August 15, 2024, and provide the airline and total flight duration.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Norse Atlantic UK, Air China, 6:10\u202fPM \u2013 1:40\u202fPM(+2), $671, 2 stops (real-time)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--16",
+        "task_index": 111
+    },
+    {
+        "sites": null,
+        "task_id": 448,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Book a round-trip flight from San Francisco to Berlin, departing on October 5, 2024, and returning on October 12, 2024, and find the option with the shortest total travel time.",
+        "instantiation_dict": {},
+        "intent": "Book a round-trip flight from San Francisco to Berlin, departing on October 5, 2024, and returning on October 12, 2024, and find the option with the shortest total travel time.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Lufthansa United, 2:40\u202fPM \u2013 12:55\u202fPM(+1), 13 hr 15 min",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--20",
+        "task_index": 112
+    },
+    {
+        "sites": null,
+        "task_id": 452,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Compare prices for economy class round-trip flights from Dubai to Rome, departing on October 1, 2024, and returning on October 8, 2024, and select the option with the fewest stops.",
+        "instantiation_dict": {},
+        "intent": "Compare prices for economy class round-trip flights from Dubai to Rome, departing on October 1, 2024, and returning on October 8, 2024, and select the option with the fewest stops.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Etihad ITA, 2:25\u202fAM \u2013 5:45\u202fAM, 6 hr 20 min, Nonstop",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--24",
+        "task_index": 113
+    },
+    {
+        "sites": null,
+        "task_id": 456,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Find the best-priced round-trip flight from Seattle to Paris, departing on August 27, 2024, and returning on September 1, 2024, with a maximum of one stop.",
+        "instantiation_dict": {},
+        "intent": "Find the best-priced round-trip flight from Seattle to Paris, departing on August 27, 2024, and returning on September 1, 2024, with a maximum of one stop.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Icelandair, 2:35\u202fPM \u2013 12:00\u202fPM(+1), 1 stop, $1602",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--28",
+        "task_index": 114
+    },
+    {
+        "sites": null,
+        "task_id": 460,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Search for round-trip flights from Stockholm to Toronto, departing on October 3, 2024, and returning on October 10, 2024, and sort the results to find the shortest total travel time.",
+        "instantiation_dict": {},
+        "intent": "Search for round-trip flights from Stockholm to Toronto, departing on October 3, 2024, and returning on October 10, 2024, and sort the results to find the shortest total travel time.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Icelandair, 12:50\u202fPM \u2013 6:15\u202fPM, 11 hr 25 min",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--32",
+        "task_index": 115
+    },
+    {
+        "sites": null,
+        "task_id": 464,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Search for round-trip flights from Helsinki to New Delhi, departing on August 28, 2024, and returning on September 4, 2024, and filter the results to show only flights under $1000.",
+        "instantiation_dict": {},
+        "intent": "Search for round-trip flights from Helsinki to New Delhi, departing on August 28, 2024, and returning on September 4, 2024, and filter the results to show only flights under $1000.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Finnair, 6:00\u202fPM \u2013 6:05\u202fAM(+1), $744 ...",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--36",
+        "task_index": 116
+    },
+    {
+        "sites": null,
+        "task_id": 468,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/travel/flights/",
+        "geolocation": null,
+        "intent_template": "Browse destinations on the Google Flights homepage from Seattle, look at destinations on a map, and recommend some famous places to travel that are within a reasonable distance and price.",
+        "instantiation_dict": {},
+        "intent": "Browse destinations on the Google Flights homepage from Seattle, look at destinations on a map, and recommend some famous places to travel that are within a reasonable distance and price.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Seattle to Las Vegas $21, Seattle to Los Angeles $42",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Flights--40",
+        "task_index": 117
+    },
+    {
+        "sites": null,
+        "task_id": 472,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Find Apple Stores close to zip code 90028",
+        "instantiation_dict": {},
+        "intent": "Find Apple Stores close to zip code 90028",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Apple The Grove, Apple Beverly Center",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--2",
+        "task_index": 118
+    },
+    {
+        "sites": null,
+        "task_id": 476,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Find all Uniqlo locations in Chicago, IL.",
+        "instantiation_dict": {},
+        "intent": "Find all Uniqlo locations in Chicago, IL.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "UNIQLO State Street",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--6",
+        "task_index": 119
+    },
+    {
+        "sites": null,
+        "task_id": 480,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Search for a park in the state of California called Castle Mountains National Monument and find out it's Basic Information.",
+        "instantiation_dict": {},
+        "intent": "Search for a park in the state of California called Castle Mountains National Monument and find out it's Basic Information.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "located in Barstow, CA 92311; open 24 hours; phone number is (760) 252-6100",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--10",
+        "task_index": 120
+    },
+    {
+        "sites": null,
+        "task_id": 484,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Find motorcycle parking near Radio City Music Hall.",
+        "instantiation_dict": {},
+        "intent": "Find motorcycle parking near Radio City Music Hall.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Rising Wolf Garage (should be motorcycle parking)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--14",
+        "task_index": 121
+    },
+    {
+        "sites": null,
+        "task_id": 488,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Find a route between Chicago to Los Angeles, then print the route details.",
+        "instantiation_dict": {},
+        "intent": "Find a route between Chicago to Los Angeles, then print the route details.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Drive via I-80 W, about 29 hours",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--18",
+        "task_index": 122
+    },
+    {
+        "sites": null,
+        "task_id": 492,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Find a Best Buy store near zip code 33139.",
+        "instantiation_dict": {},
+        "intent": "Find a Best Buy store near zip code 33139.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Best Buy, 1131 5th St, Miami Beach, FL 33139",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--22",
+        "task_index": 123
+    },
+    {
+        "sites": null,
+        "task_id": 496,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Search for Los Angeles on Google Map, try to print the map as PDF and summarize the information on the map.",
+        "instantiation_dict": {},
+        "intent": "Search for Los Angeles on Google Map, try to print the map as PDF and summarize the information on the map.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<Action>, print PDF",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--26",
+        "task_index": 124
+    },
+    {
+        "sites": null,
+        "task_id": 500,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Locate a parking lot near the Brooklyn Bridge that open 24 hours. Review the user comments about it.",
+        "instantiation_dict": {},
+        "intent": "Locate a parking lot near the Brooklyn Bridge that open 24 hours. Review the user comments about it.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "2-68 Division St Garage, <reviews>",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--30",
+        "task_index": 125
+    },
+    {
+        "sites": null,
+        "task_id": 504,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Find a hiking trail within 2 miles of zip code 80202.",
+        "instantiation_dict": {},
+        "intent": "Find a hiking trail within 2 miles of zip code 80202.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Speer Blvd Park ...",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--34",
+        "task_index": 126
+    },
+    {
+        "sites": null,
+        "task_id": 508,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/maps/",
+        "geolocation": null,
+        "intent_template": "Search for bicycle parking near the Empire State Building.",
+        "instantiation_dict": {},
+        "intent": "Search for bicycle parking near the Empire State Building.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Bike Parking, 104 W 38th St, New York, NY 10018",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Map--38",
+        "task_index": 127
+    },
+    {
+        "sites": null,
+        "task_id": 512,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "Find Kevin Durant's bio",
+        "instantiation_dict": {},
+        "intent": "Find Kevin Durant's bio",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Born on September 29, 1988; Professional basketball player for the Phoenix Suns now.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--1",
+        "task_index": 128
+    },
+    {
+        "sites": null,
+        "task_id": 516,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "find the score of the latest nba game played by the phoenix suns.",
+        "instantiation_dict": {},
+        "intent": "find the score of the latest nba game played by the phoenix suns.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Suns 120-107 Trail Blazers (real-time)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--5",
+        "task_index": 129
+    },
+    {
+        "sites": null,
+        "task_id": 520,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "Show the rating of Prometheus movie on IMDb and Rotten Tomatoes.",
+        "instantiation_dict": {},
+        "intent": "Show the rating of Prometheus movie on IMDb and Rotten Tomatoes.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "IMDb 7.0/10, Rotten Tomatoes 73%",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--9",
+        "task_index": 130
+    },
+    {
+        "sites": null,
+        "task_id": 524,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "What are Jerry Trainor's upcoming projects?",
+        "instantiation_dict": {},
+        "intent": "What are Jerry Trainor's upcoming projects?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Strange Planet, 2023",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--13",
+        "task_index": 131
+    },
+    {
+        "sites": null,
+        "task_id": 528,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "Tell me the names of Trump's kids",
+        "instantiation_dict": {},
+        "intent": "Tell me the names of Trump's kids",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Ivanka Trump, Barron Trump, Donald Trump Jr., Tiffany Trump, Eric Trump",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--17",
+        "task_index": 132
+    },
+    {
+        "sites": null,
+        "task_id": 532,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "Show a list of the top 5 highest-grossing animated movies, sorted by box office earnings.",
+        "instantiation_dict": {},
+        "intent": "Show a list of the top 5 highest-grossing animated movies, sorted by box office earnings.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "The Lion King (2019); Frozen II (2019); The Super Mario Bros. Movie (2023); Frozen (2013); Incredibles 2 (2018)",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--21",
+        "task_index": 133
+    },
+    {
+        "sites": null,
+        "task_id": 536,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "Get the latest news headline about the English Premier League football club Manchester United.",
+        "instantiation_dict": {},
+        "intent": "Get the latest news headline about the English Premier League football club Manchester United.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "eg, Manchester United 1-2 Fulham: Alex Iwobi scores in added time for huge away win",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--25",
+        "task_index": 134
+    },
+    {
+        "sites": null,
+        "task_id": 540,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "Find out the current world record for the men's 100m sprint.",
+        "instantiation_dict": {},
+        "intent": "Find out the current world record for the men's 100m sprint.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "9.58s held by Usain Bolt of Jamaica",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--29",
+        "task_index": 135
+    },
+    {
+        "sites": null,
+        "task_id": 544,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "Find and copy the SHA of the latest commit in the TensorFlow repository on GitHub, then find a textbox to paste and tell me what the SHA is.",
+        "instantiation_dict": {},
+        "intent": "Find and copy the SHA of the latest commit in the TensorFlow repository on GitHub, then find a textbox to paste and tell me what the SHA is.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<SHA> of latest Tensorflow",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--33",
+        "task_index": 136
+    },
+    {
+        "sites": null,
+        "task_id": 548,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "Find the current top 3 super-earth planets and give a brief introduction to them.",
+        "instantiation_dict": {},
+        "intent": "Find the current top 3 super-earth planets and give a brief introduction to them.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Gliese 667Cc, Kepler-22b, Kepler-69c",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--37",
+        "task_index": 137
+    },
+    {
+        "sites": null,
+        "task_id": 552,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.google.com/",
+        "geolocation": null,
+        "intent_template": "Look up the current statistics of air pollution level in Los Angeles using Google Search.",
+        "instantiation_dict": {},
+        "intent": "Look up the current statistics of air pollution level in Los Angeles using Google Search.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "current air pollution level in Los Angeles",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Google Search--41",
+        "task_index": 138
+    },
+    {
+        "sites": null,
+        "task_id": 556,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "Discover three new and popular open-source NLP models for language translation released in the past month on Huggingface.",
+        "instantiation_dict": {},
+        "intent": "Discover three new and popular open-source NLP models for language translation released in the past month on Huggingface.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<model 1>; <model 2>; <model 3>; (last month, recently created)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--2",
+        "task_index": 139
+    },
+    {
+        "sites": null,
+        "task_id": 560,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "Find the model sentence-transformers/all-MiniLM-L6-v2 and use the Inference API on the webpage to get the similarity of the following two sentences: 'Tomorrow is Sunday', 'Eat a burger on Sunday'.",
+        "instantiation_dict": {},
+        "intent": "Find the model sentence-transformers/all-MiniLM-L6-v2 and use the Inference API on the webpage to get the similarity of the following two sentences: 'Tomorrow is Sunday', 'Eat a burger on Sunday'.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "0.550",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--6",
+        "task_index": 140
+    },
+    {
+        "sites": null,
+        "task_id": 564,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "Open space: argilla/notux-chat-ui and interact with it by asking it 'which team trained you'. What is its answer.",
+        "instantiation_dict": {},
+        "intent": "Open space: argilla/notux-chat-ui and interact with it by asking it 'which team trained you'. What is its answer.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Mistral AI team",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--10",
+        "task_index": 141
+    },
+    {
+        "sites": null,
+        "task_id": 568,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "How much is the Pro account of Hugging face for a month and what are the features?",
+        "instantiation_dict": {},
+        "intent": "How much is the Pro account of Hugging face for a month and what are the features?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "$9/month; Pro Account: Get a PRO badge on your profile, Early access to new features, Unlock Inference for PROs, Higher tier for AutoTrain",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--14",
+        "task_index": 142
+    },
+    {
+        "sites": null,
+        "task_id": 572,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "Look up TRL's forward modelling in the hugging face documentation on how to add a margin to a loss.",
+        "instantiation_dict": {},
+        "intent": "Look up TRL's forward modelling in the hugging face documentation on how to add a margin to a loss.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "As in the Llama 2 paper, you can add a margin to the loss by adding a margin column to the dataset. The reward collator will automatically pass it through and the loss will be computed accordingly.",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--18",
+        "task_index": 143
+    },
+    {
+        "sites": null,
+        "task_id": 576,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "Identify the steps to convert a PyTorch model to TensorFlow using the Hugging Face Transformers library as described in their documentation.",
+        "instantiation_dict": {},
+        "intent": "Identify the steps to convert a PyTorch model to TensorFlow using the Hugging Face Transformers library as described in their documentation.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<summary> of https://huggingface.co/docs/transformers/main/en/add_tensorflow_model#4-model-implementation",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--22",
+        "task_index": 144
+    },
+    {
+        "sites": null,
+        "task_id": 580,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "Identify a model on Hugging Face designed for generating travel chats. Obtain information about the model, including its name, size and training framwork.",
+        "instantiation_dict": {},
+        "intent": "Identify a model on Hugging Face designed for generating travel chats. Obtain information about the model, including its name, size and training framwork.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "PhilipTheGreat/DiabloGPT-small-Traveller, GPT2LMHeadModel, 510 MB",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--26",
+        "task_index": 145
+    },
+    {
+        "sites": null,
+        "task_id": 584,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "Identify the most downloaded English-Chinese (en-zh) machine translation model on Huggingface and report its latest performance metrics and usage guidelines.",
+        "instantiation_dict": {},
+        "intent": "Identify the most downloaded English-Chinese (en-zh) machine translation model on Huggingface and report its latest performance metrics and usage guidelines.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Helsinki-NLP/opus-mt-en-zh; testset, BLEU, chr-F: Tatoeba-test.eng.zho, 31.4, 0.268",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--30",
+        "task_index": 146
+    },
+    {
+        "sites": null,
+        "task_id": 588,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "List the benefits of hugging face classroom mentioned on Hugging face website.",
+        "instantiation_dict": {},
+        "intent": "List the benefits of hugging face classroom mentioned on Hugging face website.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "Empower your students with state-of-the-art resources; Give your students unlimited access to modern machine learning tools; Easily manage your classroom ...",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--34",
+        "task_index": 147
+    },
+    {
+        "sites": null,
+        "task_id": 592,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "Investigate the 'transformers' library in the Hugging Face documentation, focusing on how to add new tokens to a tokenizer.",
+        "instantiation_dict": {},
+        "intent": "Investigate the 'transformers' library in the Hugging Face documentation, focusing on how to add new tokens to a tokenizer.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "use add_tokens method",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--38",
+        "task_index": 148
+    },
+    {
+        "sites": null,
+        "task_id": 596,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://huggingface.co/",
+        "geolocation": null,
+        "intent_template": "Check the Dataset Viewer for ai2lumos/lumos_complex_qa_plan_onetime on Hugging face. what is the content corresponding to user in the first message?",
+        "instantiation_dict": {},
+        "intent": "Check the Dataset Viewer for ai2lumos/lumos_complex_qa_plan_onetime on Hugging face. what is the content corresponding to user in the first message?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "content: Please provide a reasonable subgoal-based plan to solve the given task.\\nTask: What was the opening date of the museum dedicated to the war that, after it occurred, Boston became one of the wealthiest international ports?; Initial Environment Description: None.",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Huggingface--42",
+        "task_index": 149
+    },
+    {
+        "sites": null,
+        "task_id": 600,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Let g(x) be the integral of x^2 cos(2x). Write the expression of g(x).",
+        "instantiation_dict": {},
+        "intent": "Let g(x) be the integral of x^2 cos(2x). Write the expression of g(x).",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "1/4 (2 x cos(2 x) + (-1 + 2 x^2) sin(2 x)) + Constant",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--3",
+        "task_index": 150
+    },
+    {
+        "sites": null,
+        "task_id": 604,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Give the final angle and final length after 6s of a Spring pendulum with spring equilibrium length=0.12m, initial length=0.24m, initial angle=80deg, mass=1kg, spring constant=120 N/m .",
+        "instantiation_dict": {},
+        "intent": "Give the final angle and final length after 6s of a Spring pendulum with spring equilibrium length=0.12m, initial length=0.24m, initial angle=80deg, mass=1kg, spring constant=120 N/m .",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "-73.26\u00b0 from vertical; 0.252 m",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--7",
+        "task_index": 151
+    },
+    {
+        "sites": null,
+        "task_id": 608,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Show the electrical resistivity of UNS A92024 and UNS G10800 at 20 degrees Celsius.",
+        "instantiation_dict": {},
+        "intent": "Show the electrical resistivity of UNS A92024 and UNS G10800 at 20 degrees Celsius.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "UNS A92024: 4.9\u00d710^-6 \u03a9 cm (ohm centimeters) (at 20 \u00b0C); UNS G10800: 1.8\u00d710^-5 \u03a9 cm (ohm centimeters)",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--11",
+        "task_index": 152
+    },
+    {
+        "sites": null,
+        "task_id": 612,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Show the blood relationship fraction between you and your father's mother's sister's son.",
+        "instantiation_dict": {},
+        "intent": "Show the blood relationship fraction between you and your father's mother's sister's son.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "3.125%",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--15",
+        "task_index": 153
+    },
+    {
+        "sites": null,
+        "task_id": 616,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Standing in the sun from 11:00 am with SPF 5 in Australia. Approximate time to sunburn for each skin type.",
+        "instantiation_dict": {},
+        "intent": "Standing in the sun from 11:00 am with SPF 5 in Australia. Approximate time to sunburn for each skin type.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "<sunborn time> (real-time date)",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--19",
+        "task_index": 154
+    },
+    {
+        "sites": null,
+        "task_id": 620,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Calculate the population growth rate of Canada from 2020 to 2023 using Wolfram Alpha.",
+        "instantiation_dict": {},
+        "intent": "Calculate the population growth rate of Canada from 2020 to 2023 using Wolfram Alpha.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "mean population growth rate of Canada from 2020 to 2023 is 0.9998% per year",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--23",
+        "task_index": 155
+    },
+    {
+        "sites": null,
+        "task_id": 624,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Display the thermal conductivity of Copper (Cu) and Aluminum (Al) at 25 degrees Celsius.",
+        "instantiation_dict": {},
+        "intent": "Display the thermal conductivity of Copper (Cu) and Aluminum (Al) at 25 degrees Celsius.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "401.2 W/(m K); 236.9 W/(m K)",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--27",
+        "task_index": 156
+    },
+    {
+        "sites": null,
+        "task_id": 628,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Using Wolfram Alpha, determine the current temperature and wind speed in Chicago, IL.",
+        "instantiation_dict": {},
+        "intent": "Using Wolfram Alpha, determine the current temperature and wind speed in Chicago, IL.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "real-time, search query: current temperature and wind speed in Chicago, IL.",
+                    "type": "possible"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--31",
+        "task_index": 157
+    },
+    {
+        "sites": null,
+        "task_id": 632,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Calculate the determinant of a 6x6 Hilbert matrix.",
+        "instantiation_dict": {},
+        "intent": "Calculate the determinant of a 6x6 Hilbert matrix.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "1/186313420339200000",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--35",
+        "task_index": 158
+    },
+    {
+        "sites": null,
+        "task_id": 636,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "Use Wolfram alpha to write the expression of the ellipse x^2 + 3 y^2 = 4 rotated 33 degrees counterclockwise.",
+        "instantiation_dict": {},
+        "intent": "Use Wolfram alpha to write the expression of the ellipse x^2 + 3 y^2 = 4 rotated 33 degrees counterclockwise.",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "x^2(\\sin(\frac{2\u03c0}{15}) - 2) + 2xy \\cos(\frac{2\u03c0}{15}) + 4 = y^2(2 + \\sin(\frac{2\u03c0}{15}))",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--39",
+        "task_index": 159
+    },
+    {
+        "sites": null,
+        "task_id": 640,
+        "require_login": false,
+        "storage_state": null,
+        "start_url": "https://www.wolframalpha.com/",
+        "geolocation": null,
+        "intent_template": "A polyominoes of order 6 means you have 6 identical squares to combine different shapes (2-sided). How many combinations are there? Looking at all the shapes in the result, how many of them have only 2 rows in total?",
+        "instantiation_dict": {},
+        "intent": "A polyominoes of order 6 means you have 6 identical squares to combine different shapes (2-sided). How many combinations are there? Looking at all the shapes in the result, how many of them have only 2 rows in total?",
+        "require_reset": false,
+        "eval": {
+            "eval_types": [
+                "manual"
+            ],
+            "reference_answers": {
+                "manual_check": {
+                    "answer": "35; 12",
+                    "type": "golden"
+                }
+            },
+            "reference_url": null,
+            "program_html": null
+        },
+        "task_alias": "Wolfram Alpha--43",
+        "task_index": 160
+    }
+]
