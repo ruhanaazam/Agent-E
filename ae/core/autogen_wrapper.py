@@ -54,6 +54,21 @@ class AutogenWrapper:
         self.chat_logs_dir: str = SOURCE_LOG_FOLDER_PATH
         self.task_start_time = time.time()
     
+    def summarize_agents(self,):
+        try:
+            for agent_name in self.agents_map.keys():
+                if agent_name == "browser_nav_executor":
+                    continue
+                else:
+                    agent = self.agents_map[agent_name]
+                    if hasattr(agent, "client") and agent.client is not None and hasattr(agent.client, "actual_usage_summary") and agent.client.actual_usage_summary is not None :
+                        #print(f"Summary of {agent_name}: " + str(agent.client.actual_usage_summary))
+                        logger.info(f"Summary of {agent_name}: " + str(agent.client.actual_usage_summary))
+                    else:
+                        logger.info(f"Summary of {agent_name}: Empty" )
+        except Exception as e:
+            logger.warning("Could not get agent's OpenAI client summary...") 
+        return
 
     @classmethod
     async def create(cls, agents_needed: list[str] | None = None, max_chat_round: int = 100):
@@ -320,6 +335,7 @@ class AutogenWrapper:
                 if name == "planner_agent":
                     content:Any = x.get("content", "")
                     if "\"terminate\": \"yes\"" in content:
+                        self.summarize_agents() # log the summary for the agents
                         return True 
             else:
                 if x.get("name", None) != "validator_agent":
@@ -331,6 +347,8 @@ class AutogenWrapper:
                     print(f"Should terminate ... {should_terminate}")
                     if not should_terminate:
                         raise Exception('User agent called after validator agent before termination!')
+                    else:
+                        self.summarize_agents() 
                     return should_terminate # type: ignore
             return False 
         task_delegate_agent = autogen.ConversableAgent(
@@ -510,3 +528,4 @@ class AutogenWrapper:
         #     logger.error(f"Unable to process command: \"{command}\". {bre}")
         #     traceback.print_exc()
 
+        
