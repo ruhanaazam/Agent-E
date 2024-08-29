@@ -1,0 +1,1109 @@
+[
+{
+    "sites": null,
+    "task_id": 45,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Search an Xbox Wireless controller with green color and rated above 4 stars.",
+    "instantiation_dict": {},
+    "intent": "Search an Xbox Wireless controller with green color and rated above 4 stars.",
+    "require_reset": false, 
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Xbox Core Wireless Gaming Controller - Velocity Green; 4.7-star",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--0",
+    "task_index": 45
+},
+{
+    "sites": null,
+    "task_id": 46,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Search for women's golf polos in m size, priced between 50 to 75 dollars, and save the lowest priced among results.",
+    "instantiation_dict": {},
+    "intent": "Search for women's golf polos in m size, priced between 50 to 75 dollars, and save the lowest priced among results.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "PUMA Golf 2019 Men's Rotation Polo; $50.00",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--1",
+    "task_index": 46
+},
+{
+    "sites": null,
+    "task_id": 47,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a gaming desktop with Windows 11 Home, and the disk size should be 1TB.",
+    "instantiation_dict": {},
+    "intent": "Find a gaming desktop with Windows 11 Home, and the disk size should be 1TB.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "HP Victus 15L Gaming Desktop with Windows 11 Home and 1TB disk size",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--2",
+    "task_index": 47
+},
+{
+    "sites": null,
+    "task_id": 48,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find climbing gears and sort the results by price high to low. Answer the first 3 results after sorting.",
+    "instantiation_dict": {},
+    "intent": "Find climbing gears and sort the results by price high to low. Answer the first 3 results after sorting.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "First 3 results after sort",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--3",
+    "task_index": 48
+},
+{
+    "sites": null,
+    "task_id": 49,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find the used Nintendo Switch Lite on Target then filter by 'Used - Good', tell me the cheapest one that is 'Used - Good'.",
+    "instantiation_dict": {},
+    "intent": "Find the used Nintendo Switch Lite on Target then filter by 'Used - Good', tell me the cheapest one that is 'Used - Good'.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Nintendo Switch Lite - Blue; Used Good: $170",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--4",
+    "task_index": 49
+},
+{
+    "sites": null,
+    "task_id": 50,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a Blue iPhone 12 Pro 128gb and add to cart.",
+    "instantiation_dict": {},
+    "intent": "Find a Blue iPhone 12 Pro 128gb and add to cart.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Apple iPhone 12 Pro, 128GB, Pacific Blue - Fully Unlocked (Renewed); Action: ADD_TO_CHART",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--5",
+    "task_index": 50
+},
+{
+    "sites": null,
+    "task_id": 51,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Browse black strollers within $100 to $200 on Target. Then find one Among these black strollers with over 20,000 reviews and a rating greater than 4 star.",
+    "instantiation_dict": {},
+    "intent": "Browse black strollers within $100 to $200 on Target. Then find one Among these black strollers with over 20,000 reviews and a rating greater than 4 star.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Baby Trend Expedition Jogger, Dash Black; 22146 reviews; 4.7-star",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--6",
+    "task_index": 51
+},
+{
+    "sites": null,
+    "task_id": 52,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Browse the women's hiking boots on Target and filter the results to show only those that are waterproof and have a rating of at least 4 stars and size 6.",
+    "instantiation_dict": {},
+    "intent": "Browse the women's hiking boots on Target and filter the results to show only those that are waterproof and have a rating of at least 4 stars and size 6.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Filter: 4-star, waterproof, size 6",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--7",
+    "task_index": 52
+},
+{
+    "sites": null,
+    "task_id": 53,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find the cheapest Samsung-made Android tablet with screen between 10-10.9 inches on Target. Only answer the cheapest one.",
+    "instantiation_dict": {},
+    "intent": "Find the cheapest Samsung-made Android tablet with screen between 10-10.9 inches on Target. Only answer the cheapest one.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Samsung Galaxy Tab S 10.5in 16GB Android Tablet - Titanium Gold (Renewed); $139.94",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--8",
+    "task_index": 53
+},
+{
+    "sites": null,
+    "task_id": 54,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a dog bed on Target that is washable and has a length of at least 30 inches.",
+    "instantiation_dict": {},
+    "intent": "Find a dog bed on Target that is washable and has a length of at least 30 inches.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Gulokoka Large Dog Bed for Crate Comfortable Washable Pet Mat for Dogs, Cats, Gray",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--9",
+    "task_index": 54
+},
+{
+    "sites": null,
+    "task_id": 55,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find the cost of a 2-year protection for PS4 on Target.",
+    "instantiation_dict": {},
+    "intent": "Find the cost of a 2-year protection for PS4 on Target.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Sony Playstation PS4 1TB Black Console; 2-Year Protection for $30.99",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--10",
+    "task_index": 55
+},
+{
+    "sites": null,
+    "task_id": 56,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a stainless steel kitchen sink with double bowls on Target. Sort the results and find the cheapest one with FREE delivery.",
+    "instantiation_dict": {},
+    "intent": "Find a stainless steel kitchen sink with double bowls on Target. Sort the results and find the cheapest one with FREE delivery.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Transolid STDE33226-2 Kitchen Sink, Stainless Steel; $120.89",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--11",
+    "task_index": 56
+},
+{
+    "sites": null,
+    "task_id": 57,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Check reviews for a Ride On Car with 100+ reviews & 4+ stars rating on Target. Give me the top review about this Ride On Car.",
+    "instantiation_dict": {},
+    "intent": "Check reviews for a Ride On Car with 100+ reviews & 4+ stars rating on Target. Give me the top review about this Ride On Car.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Worth every penny",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--12",
+    "task_index": 57
+},
+{
+    "sites": null,
+    "task_id": 58,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Browse best selling black hoodies in mens size Big and Tall that is between $25 and $50 on Target.",
+    "instantiation_dict": {},
+    "intent": "Browse best selling black hoodies in mens size Big and Tall that is between $25 and $50 on Target.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "adidas Men's Essentials Fleece Hoodie; 500+ bought in past month",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--13",
+    "task_index": 58
+},
+{
+    "sites": null,
+    "task_id": 59,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find the new surge protector on Target with 6 to 8 outlets under 25 dollars with customer reviews above 4+ stars.",
+    "instantiation_dict": {},
+    "intent": "Find the new surge protector on Target with 6 to 8 outlets under 25 dollars with customer reviews above 4+ stars.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Surge Protector Power Strip $15.99, 8 Outlets, 4.7-star",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--14",
+    "task_index": 59
+},
+{
+    "sites": null,
+    "task_id": 60,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a pair of mens running shoes in black, size 7, 4+ stars and under $50 and add them to my cart on Target.",
+    "instantiation_dict": {},
+    "intent": "Find a pair of mens running shoes in black, size 7, 4+ stars and under $50 and add them to my cart on Target.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Damyuan Men's Sport Gym Running Shoes Walking Shoes Casual Lace Up Lightweight; black, size 7, 4.0-star, $29.99",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--15",
+    "task_index": 60
+},
+{
+    "sites": null,
+    "task_id": 61,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find the Return Policy for Mens Rhinestone Skull Graphic Shirt on Target. Color: Black, Size: XX-Large. If Free return is avaliable, tell me how to return this item.",
+    "instantiation_dict": {},
+    "intent": "Find the Return Policy for Mens Rhinestone Skull Graphic Shirt on Target. Color: Black, Size: XX-Large. If Free return is avaliable, tell me how to return this item.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "FREE Returns, 1. Go to Your Orders to start the return; 2. Print the return shipping label; 3. Ship it!",
+                "type": "golden"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--16",
+    "task_index": 61
+},
+{
+    "sites": null,
+    "task_id": 62,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Show me the list of baby products that are on sale and under 10 dollars on Target. Provide at least 2 on sale products",
+    "instantiation_dict": {},
+    "intent": "Show me the list of baby products that are on sale and under 10 dollars on Target. Provide at least 2 on sale products",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Johnson's Baby Care Essentials Gift Set, $7.55; SWEET DOLPHIN 12 Pack Muslin Burp Cloths Large 100% Cotton Hand Washcloths for Baby, $9.98",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--17",
+    "task_index": 62
+},
+{
+    "sites": null,
+    "task_id": 63,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Open Target's home page and tell me what the deal is that is going on at the moment, list the names of at least 2 items that are on offer and tell me what percent off they are.",
+    "instantiation_dict": {},
+    "intent": "Open Target's home page and tell me what the deal is that is going on at the moment, list the names of at least 2 items that are on offer and tell me what percent off they are.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Gevi Household V2.0 Countertop Nugget Ice Maker, 20% off; Osmo - Little Genius Starter Kit for iPad & iPhone, 7% off;",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--18",
+    "task_index": 63
+},
+{
+    "sites": null,
+    "task_id": 64,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Look for an English language book on roman empire history in the Target Kindle store. Sort by newests arrivals and look for a title that will be released within a month.",
+    "instantiation_dict": {},
+    "intent": "Look for an English language book on roman empire history in the Target Kindle store. Sort by newests arrivals and look for a title that will be released within a month.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "THE HISTORY OF THE DECLINE AND FALL OF THE ROMAN EMPIRE (All 6 Volumes), released on January 10, 2024.",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--19",
+    "task_index": 64
+},
+{
+    "sites": null,
+    "task_id": 65,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Search for a wireless ergonomic keyboard with backlighting and a rating of at least 4 stars. The price should be between $40 to $60. Save the product with the 500+ customer reviews.",
+    "instantiation_dict": {},
+    "intent": "Search for a wireless ergonomic keyboard with backlighting and a rating of at least 4 stars. The price should be between $40 to $60. Save the product with the 500+ customer reviews.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Logitech Wave Keys Wireless Ergonomic Keyboard, $57.99, 4.6 stars, 26005 ratings",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--20",
+    "task_index": 65
+},
+{
+    "sites": null,
+    "task_id": 66,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a stainless steel, 12-cup programmable coffee maker on Target. The price range should be between $100 to $200. Report the one with the 4+ customer rating.",
+    "instantiation_dict": {},
+    "intent": "Find a stainless steel, 12-cup programmable coffee maker on Target. The price range should be between $100 to $200. Report the one with the 4+ customer rating.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Braun BrewSense 12-Cup Drip Coffee Maker, Stainless Steel, 4.3 stars, $129.95",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--21",
+    "task_index": 66
+},
+{
+    "sites": null,
+    "task_id": 67,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Search for a set of non-stick, oven-safe cookware on Target. The set should include at least 10 pieces and be priced under $150.",
+    "instantiation_dict": {},
+    "intent": "Search for a set of non-stick, oven-safe cookware on Target. The set should include at least 10 pieces and be priced under $150.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "CAROTE 11pcs Nonstick Cookware Set, Non Stick, Oven Safe, $129.99 ($11.82 / Count)",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--22",
+    "task_index": 67
+},
+{
+    "sites": null,
+    "task_id": 68,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Look for a men's waterproof digital sports watch with a heart rate monitor on Target. It should be priced between $50 to $100.",
+    "instantiation_dict": {},
+    "intent": "Look for a men's waterproof digital sports watch with a heart rate monitor on Target. It should be priced between $50 to $100.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Smartwatch for Men Android iPhone, Waterproof, Heart Rate, $54.99",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--23",
+    "task_index": 68
+},
+{
+    "sites": null,
+    "task_id": 69,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Browse for a compact air fryer on Target with a capacity of 2 to 3 quarts. It should have a digital display, auto shutoff and be priced under $100.",
+    "instantiation_dict": {},
+    "intent": "Browse for a compact air fryer on Target with a capacity of 2 to 3 quarts. It should have a digital display, auto shutoff and be priced under $100.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Dash DMAF360GBAQ02 Aircrisp\u00ae Pro Digital Air Fryer, Digital Display, Auto Shut Off, 3qt, $90.10",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--24",
+    "task_index": 69
+},
+{
+    "sites": null,
+    "task_id": 70,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Search for a queen-sized, hypoallergenic mattress topper on Target. It should have a memory foam material and be priced between $50 to $100.",
+    "instantiation_dict": {},
+    "intent": "Search for a queen-sized, hypoallergenic mattress topper on Target. It should have a memory foam material and be priced between $50 to $100.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "2 Inch 7-Zone Memory Foam Mattress Topper Queen with 100% Bamboo Rayon Cover, Cooling Gel-Infused Swirl Egg Crate Memory Foam, $99.99",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--25",
+    "task_index": 70
+},
+{
+    "sites": null,
+    "task_id": 71,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a portable Bluetooth speaker on Target with a water-resistant design, under $50. It should have a minimum battery life of 10 hours.",
+    "instantiation_dict": {},
+    "intent": "Find a portable Bluetooth speaker on Target with a water-resistant design, under $50. It should have a minimum battery life of 10 hours.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Portable Bluetooth Speaker, IPX7 Waterproof Wireless Speaker, 25W Super Bass 24H Playtime, $29.97",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--26",
+    "task_index": 71
+},
+{
+    "sites": null,
+    "task_id": 72,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Look for a USB-C hub on Target compatible with MacBook Pro, featuring at least 4 ports, including HDMI and SD card reader. The price should be under $50. Select the one after sorting by Best Sellers.",
+    "instantiation_dict": {},
+    "intent": "Look for a USB-C hub on Target compatible with MacBook Pro, featuring at least 4 ports, including HDMI and SD card reader. The price should be under $50. Select the one after sorting by Best Sellers.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Hiearcool USB C Hub, USB C Multi-Port Adapter for MacBook Pro, 7IN1, include 4K HDMI USB3.0 and SD/TF Card Reader, $24.99",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--27",
+    "task_index": 72
+},
+{
+    "sites": null,
+    "task_id": 73,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Search for a yoga mat on Target that is at least 6mm thick, non-slip, and eco-friendly. The price should be under $50.",
+    "instantiation_dict": {},
+    "intent": "Search for a yoga mat on Target that is at least 6mm thick, non-slip, and eco-friendly. The price should be under $50.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Retrospec Solana Yoga Mat 1\" Thick, Non Slip, $38.51",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--28",
+    "task_index": 73
+},
+{
+    "sites": null,
+    "task_id": 74,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a set of solar-powered garden lights on Target with a minimum pack of 10 lights. They should be LED and priced under $50.",
+    "instantiation_dict": {},
+    "intent": "Find a set of solar-powered garden lights on Target with a minimum pack of 10 lights. They should be LED and priced under $50.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "KelvinLux Solar Garden Lights Outdoor, 12 Packs, 12 LEDs, $35.99 ($3.00 / Count)",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--29",
+    "task_index": 74
+},
+{
+    "sites": null,
+    "task_id": 75,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Locate the highest-rated fiction book released in 2024 on Target, with a minimum of 50 customer reviews.",
+    "instantiation_dict": {},
+    "intent": "Locate the highest-rated fiction book released in 2024 on Target, with a minimum of 50 customer reviews.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "The Women Library Binding \u2013 Large Print, March 1, 2024, 4.8 stars",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--30",
+    "task_index": 75
+},
+{
+    "sites": null,
+    "task_id": 76,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a compact digital camera on Target with a zoom capability of at least 10x, rated 4 stars or higher, and priced between $100 to $300.",
+    "instantiation_dict": {},
+    "intent": "Find a compact digital camera on Target with a zoom capability of at least 10x, rated 4 stars or higher, and priced between $100 to $300.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "5K Digital Camera for Photography Autofocus, 16X Digital Zoom, 5.0 stars,  $129.99",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--31",
+    "task_index": 76
+},
+{
+    "sites": null,
+    "task_id": 77,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Search for an electric kettle on Target with a capacity of at least 1.5 liters, made of stainless steel, and with a customer rating of 4 stars or above.",
+    "instantiation_dict": {},
+    "intent": "Search for an electric kettle on Target with a capacity of at least 1.5 liters, made of stainless steel, and with a customer rating of 4 stars or above.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "COMFEE' Stainless Steel Electric Kettle, 1.7 Liter, 4.6 stars",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--32",
+    "task_index": 77
+},
+{
+    "sites": null,
+    "task_id": 78,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Search for a portable air conditioner on Target suitable for a room size of 300 sq ft, with energy efficiency rating, and compare the prices of the top three search results.",
+    "instantiation_dict": {},
+    "intent": "Search for a portable air conditioner on Target suitable for a room size of 300 sq ft, with energy efficiency rating, and compare the prices of the top three search results.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "price compare: 1) Shinco 10,000 BTU Portable Air Conditioner, $314.99; 2) Renogy 8,000 BTU Portable Air Conditioners, $283.09; 3) SereneLife Compact Freestanding Portable Air Conditioner, $247.54",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--33",
+    "task_index": 78
+},
+{
+    "sites": null,
+    "task_id": 79,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a beginner's acrylic paint set on Target, with at least 24 colors, suitable for canvas painting, and priced under $40.",
+    "instantiation_dict": {},
+    "intent": "Find a beginner's acrylic paint set on Target, with at least 24 colors, suitable for canvas painting, and priced under $40.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Complete Acrylic Paint Set, 24\u0445 Rich Pigment Colors, for Painting Canvas, $16.97",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--34",
+    "task_index": 79
+},
+{
+    "sites": null,
+    "task_id": 80,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a men's leather wallet on Target with RFID blocking, at least 6 card slots, and priced below $50. Check if it's available for FREE delivery.",
+    "instantiation_dict": {},
+    "intent": "Find a men's leather wallet on Target with RFID blocking, at least 6 card slots, and priced below $50. Check if it's available for FREE delivery.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "STAY FINE Top Grain Leather Wallet for Men, RFID Blocking, Slim Billfold with 8 Card Slots, FREE delivery Friday, March 1",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--35",
+    "task_index": 80
+},
+{
+    "sites": null,
+    "task_id": 81,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Search for a children's science experiment kit on Target suitable for ages 8-13, with at least a 4-star rating and priced under $30.",
+    "instantiation_dict": {},
+    "intent": "Search for a children's science experiment kit on Target suitable for ages 8-13, with at least a 4-star rating and priced under $30.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "UNGLINGA 150 Experiments Science Kits for Kids Age 6-8-10-12-14, 4.6 stars, $29.99",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--36",
+    "task_index": 81
+},
+{
+    "sites": null,
+    "task_id": 82,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Locate a queen-sized bedspread on Target with a floral pattern, and check if it's available in blue color.",
+    "instantiation_dict": {},
+    "intent": "Locate a queen-sized bedspread on Target with a floral pattern, and check if it's available in blue color.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "NEWLAKE Cotton Bedspread Quilt Sets-Reversible Patchwork Coverlet Set, Blue Classic Royal Pattern, Queen Size",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--37",
+    "task_index": 82
+},
+{
+    "sites": null,
+    "task_id": 83,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Find a bird feeder on Target suitable for small birds, with an anti-squirrel mechanism, and check if it's available with free shipping.",
+    "instantiation_dict": {},
+    "intent": "Find a bird feeder on Target suitable for small birds, with an anti-squirrel mechanism, and check if it's available with free shipping.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Bird Feeder for Outdoors Hanging, Squirrel Proof, FREE delivery Friday, March 1",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--38",
+    "task_index": 83
+},
+{
+    "sites": null,
+    "task_id": 84,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Locate a travel guide book on Target for Japan, published in 2024, with at least 20 customer reviews.",
+    "instantiation_dict": {},
+    "intent": "Locate a travel guide book on Target for Japan, published in 2024, with at least 20 customer reviews.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "Japan Travel Guide 2024: The Ultimate Route to Authentic Ramen and Beyond \u2013 Tips, Maps, and Must-Sees for Every Traveler, February 1, 2024, 38 ratings",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--39",
+    "task_index": 84
+},
+{
+    "sites": null,
+    "task_id": 85,
+    "require_login": false,
+    "storage_state": null,
+    "start_url": "https://www.target.com/",
+    "geolocation": null,
+    "intent_template": "Locate a women's yoga mat in purple, with a thickness of at least 5mm, rated 4+ stars, and priced under $30 on Target. Check how many colors are available in total, and what is the return and delivery policy.",
+    "instantiation_dict": {},
+    "intent": "Locate a women's yoga mat in purple, with a thickness of at least 5mm, rated 4+ stars, and priced under $30 on Target. Check how many colors are available in total, and what is the return and delivery policy.",
+    "require_reset": false,
+    "eval": {
+        "eval_types": [
+            "manual"
+        ],
+        "reference_answers": {
+            "manual_check": {
+                "answer": "ProsourceFit Extra Thick Yoga Pilates Exercise Mat, 1/2\", 4.6 stars, $21.99, 7 colors, FREE delivery Friday, March 1 on orders shipped by Target over $35",
+                "type": "possible"
+            }
+        },
+        "reference_url": null,
+        "program_html": null
+    },
+    "task_alias": "Target--40",
+    "task_index": 85
+}
+]
