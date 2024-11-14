@@ -28,7 +28,7 @@ class PlannerAgent:
         enable_user_input = os.getenv("PLANNER_USER_INPUT_SKILL_ENABLED", "false").lower() == "true"
 
         user_ltm = self.__get_ltm()
-        system_message = LLM_PROMPTS["PLANNER_AGENT_PROMPT"]
+        system_message = LLM_PROMPTS["PLANNER_PROMPT_WITH_EXAMPLE"]
 
         if system_prompt and len(system_prompt) > 0:
             if isinstance(system_prompt, list):
