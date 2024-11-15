@@ -22,6 +22,7 @@ from test.evaluators import evaluator_router
 from test.test_utils import get_formatted_current_timestamp
 from test.test_utils import load_config
 from test.test_utils import task_config_validator
+from ae.core.rap.planner_experience import PlannerExperience
 
 nltk.download("punkt")  # type: ignore
 
@@ -233,7 +234,14 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
 
     task_config_validator(task_config)
 
-    command: str = task_config.get("intent", "")
+    # build a prompt
+    example_id: int | None = task_config.get("example_id", None)
+    mem = PlannerExperience()
+    auto_gen_config = ag.get_config()
+    strategy = auto_gen_config.get("rag_method", None)
+    few_shot_example = mem.build_few_shot_prompt(strategy, example_id)
+    command: str = few_shot_example + task_config.get("intent", "")
+
     task_id = task_config.get("task_id")
     task_index = task_config.get("task_index")
     start_url = task_config.get("start_url")
@@ -293,7 +301,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
 
 
 async def run_tests(
-    ag: AutogenWrapper, browser_manager: PlaywrightManager, min_task_index: int, max_task_index: int, test_file: str = "", test_results_id: str = "", wait_time_non_headless: int = 5, take_screenshots: bool = False
+    ag: AutogenWrapper, browser_manager: PlaywrightManager, min_task_index: int, max_task_index: int, config: dict[str, str], test_file: str = "", test_results_id: str = "", wait_time_non_headless: int = 5, take_screenshots: bool = False
 ) -> list[dict[str, Any]]:
     """
     Runs a specified range of test tasks using Playwright for browser interactions and AutogenWrapper for task automation.
@@ -330,7 +338,7 @@ async def run_tests(
 
     llm_config = AgentsLLMConfig()
     if not ag:
-        ag = await AutogenWrapper.create(llm_config.get_planner_agent_config(), llm_config.get_browser_nav_agent_config())
+        ag = await AutogenWrapper.create(llm_config.get_planner_agent_config(), llm_config.get_browser_nav_agent_config(), config)
 
     if not browser_manager:
         browser_manager = browserManager.PlaywrightManager(headless=False)
