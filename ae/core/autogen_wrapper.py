@@ -54,9 +54,19 @@ class AutogenWrapper:
 
         self.chat_logs_dir: str = SOURCE_LOG_FOLDER_PATH
         self.save_chat_logs_to_files = save_chat_logs_to_files
+        
+        self.config = {}
+        return
 
+    def get_config(self,) -> dict[str, str]:
+        return self.config
+    
+    def set_config(self, config: dict[str, str]) -> None:
+        self.config = config
+        return
+        
     @classmethod
-    async def create(cls, planner_agent_config: dict[str, Any], browser_nav_agent_config: dict[str, Any], agents_needed: list[str] | None = None,
+    async def create(cls, planner_agent_config: dict[str, Any], browser_nav_agent_config: dict[str, Any], config: dict[str, str], agents_needed: list[str] | None = None,
                      save_chat_logs_to_files: bool = True, planner_max_chat_round: int = 50, browser_nav_max_chat_round: int = 10):
         """
         Create an instance of AutogenWrapper.
@@ -89,6 +99,7 @@ class AutogenWrapper:
             agents_needed = ["user", "browser_nav_executor", "planner_agent", "browser_nav_agent"]
         # Create an instance of cls
         self = cls(save_chat_logs_to_files=save_chat_logs_to_files, planner_max_chat_round=planner_max_chat_round, browser_nav_max_chat_round=browser_nav_max_chat_round)
+        self.config = config
 
         os.environ["AUTOGEN_USE_DOCKER"] = "False"
 
@@ -160,7 +171,6 @@ class AutogenWrapper:
         )
 
         return self
-
 
     def convert_model_config_to_autogen_format(self, model_config: dict[str, str]) -> list[dict[str, Any]]:
         env_var: list[dict[str, str]] = [model_config]
@@ -360,31 +370,6 @@ class AutogenWrapper:
  
         prompt = Template(LLM_PROMPTS["COMMAND_EXECUTION_PROMPT"]).substitute(command=command, current_url_prompt_segment=current_url_prompt_segment)
          
-        # Parse and load the prior plan execution
-        def load_main_chat(file_path):
-            with open(file_path, 'r') as f:
-                json_data = json.load(f)
-            message_json = list(json_data.values())[0]
-            
-            # Load each message
-            fomatted_messages = []
-            for message in message_json:
-                role = message.get("role", "")
-                content = message.get("content", "")
-                fomatted_messages.append(f"{role}: {content}")
-            return fomatted_messages
-        task_id = 569
-        main_chat_path = f"/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/logs/logs_for_task_{task_id}/execution_logs_{task_id}.json"#put your example path here
-        result_path = f"/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/results/results_for_task_{task_id}.json"
-        example_plan = load_main_chat(main_chat_path)
-        reason = None
-        
-        #example_plan = None
-        if example_plan:
-            example_prompt = f"Below is an example of the same task being executed successfully. Please use this plan as a guideline: {example_plan}"
-            negative_example = f"Below is an example a prior plan and execution which did not execute correctly because {reason}. Please consider this plan when coming up with your plan: {example_plan}"
-            prompt = prompt + example_prompt
-            print(prompt)
             
         logger.info(f"Prompt for command: {prompt}")
         #with Cache.disk() as cache:
@@ -408,4 +393,3 @@ class AutogenWrapper:
         except openai.BadRequestError as bre:
             logger.error(f"Unable to process command: \"{command}\". {bre}")
             traceback.print_exc()
-
