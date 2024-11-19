@@ -17,7 +17,6 @@ from typing import Dict, Any, List
 import json
 from datetime import datetime
 from test_utils import robust_json_loader
-from ae.utils.logger import logger
 
 def validate_action(init_state: Dict[str, Any], requested_action: Dict[str, Any], resultant_state: Dict[str, Any]) -> Dict[str, str]:
     ## Simple validator function of an action that takes as input the initial state, the requested action, and the resultant state, and determines if it succeeded.
@@ -91,7 +90,6 @@ def validate_task_vision(state_seq: List[Any], task: str, final_response: str| N
         messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
         #print(f"model: gpt-4-turbo-preview")
     pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-vision-preview', temperature=0.0, seed=1234) #gpt-4-vision-preview
-    logger.info(f"Raw Validator Response: {pred_raw_response}")
 
     # Evaluate
     try:
@@ -100,7 +98,6 @@ def validate_task_vision(state_seq: List[Any], task: str, final_response: str| N
         pred_is_met: bool = pred_json['was_completed']
         pred_questions: List[Any] = pred_json["visual_questions"]
     except Exception as e:
-        logger.error(f"Error in parsing: {pred_raw_response}. Exception given: {e}")
         pred_rationale = None
         pred_is_met = True #default answer -- basically an answer given at random
         pred_questions = None
@@ -140,14 +137,12 @@ def validate_task_text_vision(text_sequence: List[Any], vision_seqence: List[Any
         vision_prompt = build_text_prompt_sequence(["Vision Observations:"]) + build_screenshot_prompt_sequence(vision_seqence)
         messages: List[str] = [intro_prompt] + text_prompt + vision_prompt + [close_prompt]
         pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4o', temperature=0.0, seed=1234)
-        logger.info(f"Raw Validator Response: {pred_raw_response}")
         
         pred_json = json.loads(pred_raw_response.replace("```json", "").replace("```", "").strip())
         pred_rationale: Dict[str, str] = pred_json['rationale']
         pred_is_met: bool = pred_json['was_completed']
         pred_questions: List[Any] = pred_json["reasoning_questions"]
     except Exception as e:
-        logger.error(f"Error in parsing: {pred_raw_response}. Exception given: {e}")
         pred_rationale = None
         pred_is_met = True #default answer -- basically an answer given at random
         pred_questions = None
@@ -169,7 +164,7 @@ def validate_task_raw_vision_text(text_seq: List[Any], vision_seq: List[Any], ta
     return result
 
 def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
-    ## Simple validator function that takes as input the sequence of states and the task, and determines if it succeeded.
+    ## Simple validator function that takes as input the sequence of states (a list of text) and the task, and determines if it succeeded.
     
     date_message = f"{datetime.now().strftime('%d %B %Y')}" 
     prompt_sequence = build_text_prompt_sequence(state_seq)
@@ -191,7 +186,6 @@ def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
     # Feed (S, S', S'', ...) -- i.e. all screenshots at once
     messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
     pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4o', temperature=0.0, seed=1234) # model='gpt-4-turbo-preview'
-    logger.info(f"Raw Validator Response: {pred_raw_response}")
 
     # Evaluate
     try:
@@ -200,7 +194,6 @@ def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
         pred_is_met: bool = pred_json['was_completed']
         pred_questions: List[Any] = pred_json["reasoning_questions"]
     except Exception as e:
-        logger.error(f"Error in parsing: {pred_raw_response}. Exception given: {e}")
         pred_rationale = None
         pred_is_met = True #default answer -- basically an answer given at random
         pred_questions = None
