@@ -22,9 +22,6 @@ class PlannerExperience:
         if strategy == "initial_plan_example":
             main_chat_list = load_main_chat(self.main_chat_path(example_id))
             intial_plan = get_last_plan(main_chat_list)
-            intial_plan = '''
-            {\n  \"plan\": \"1. Navigate to the Hugging Face models page.\\n2. Go to the libraries tab and select PaddlePaddle\\n3. Sort the models by most downloads count by typing sort=dowloads at the end of the url.\\n4. Identify the most downloaded models that use the PaddlePaddle library. This should appear first.\\n5. Verify that the models listed are indeed using the PaddlePaddle library and are among the most downloaded.\",\n  \"next_step\": \"Navigate to the models section of the Hugging Face website.\",\n  \"terminate\": \"no\"\n}\n
-            '''
             intent = main_chat_list[0].get("content", "")
             
             directions = "Use the example below to help accomplish the provided task."

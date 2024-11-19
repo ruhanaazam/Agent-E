@@ -31,6 +31,3 @@ def get_last_plan(message_json):
     
     last_plan = message_json[last_plan_index].get("content", "")
     return last_plan
-
-    
-    
