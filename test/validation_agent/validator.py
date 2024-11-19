@@ -48,7 +48,7 @@ def validate_action(init_state: Dict[str, Any], requested_action: Dict[str, Any]
         "pred_raw_response": pred_raw_response,
     }
 
-def validate_task_vision(state_seq: List[Any], task: str, final_response: str| None = None) -> Dict[str, str]:
+def validate_task_vision(state_seq: List[Any], task: str, model: str, final_response: str| None = None) -> Dict[str, str]:
     ## Simple validator function that takes as input the sequence of states and the task, and determines if it succeeded.
     prompt_sequence = build_screenshot_prompt_sequence(state_seq)
     date_message = f"{datetime.now().strftime('%d %B %Y')}" 
@@ -89,7 +89,7 @@ def validate_task_vision(state_seq: List[Any], task: str, final_response: str| N
     else: 
         messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
         #print(f"model: gpt-4-turbo-preview")
-    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4-vision-preview', temperature=0.0, seed=1234) #gpt-4-vision-preview
+    pred_raw_response: str = _fetch_openai_completion(messages, model=model, temperature=0.0, seed=1234) #gpt-4-vision-preview
 
     # Evaluate
     try:
@@ -113,7 +113,7 @@ def validate_task_vision(state_seq: List[Any], task: str, final_response: str| N
         "pred_raw_response": pred_raw_response
     }
     
-def validate_task_text_vision(text_sequence: List[Any], vision_seqence: List[Any], task: str) -> Dict[str, str]:
+def validate_task_text_vision(text_sequence: List[Any], vision_seqence: List[Any], task: str, model: str) -> Dict[str, str]:
     try:
         # you need to put the prompt together ruhana
         date_message = f"{datetime.now().strftime('%d %B %Y')}" 
@@ -136,7 +136,7 @@ def validate_task_text_vision(text_sequence: List[Any], vision_seqence: List[Any
         text_prompt= build_text_prompt_sequence(["Text Observations:"]) + build_text_prompt_sequence(text_sequence)
         vision_prompt = build_text_prompt_sequence(["Vision Observations:"]) + build_screenshot_prompt_sequence(vision_seqence)
         messages: List[str] = [intro_prompt] + text_prompt + vision_prompt + [close_prompt]
-        pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4o', temperature=0.0, seed=1234)
+        pred_raw_response: str = _fetch_openai_completion(messages, model=model, temperature=0.0, seed=1234)
         
         pred_json = json.loads(pred_raw_response.replace("```json", "").replace("```", "").strip())
         pred_rationale: Dict[str, str] = pred_json['rationale']
@@ -156,14 +156,8 @@ def validate_task_text_vision(text_sequence: List[Any], vision_seqence: List[Any
         "pred_task_completed" : pred_is_met,
         "pred_raw_response": pred_raw_response
     } # type: ignore   
-     
-def validate_task_raw_vision_text(text_seq: List[Any], vision_seq: List[Any], task: str) -> Dict[str, str]:
-    vision_result: Dict[str, str] = validate_task_vqa(vision_seq, task=task)
-    text_result: Dict[str, str] = validate_task_text(text_seq, task=task)
-    result: Dict[str, str] = validate_task_vqa_text(text_result=str(text_result), vision_result=str(vision_result), task=task)
-    return result
 
-def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
+def validate_task_text(state_seq: List[Any], task: str, model: str) -> Dict[str, str]:
     ## Simple validator function that takes as input the sequence of states (a list of text) and the task, and determines if it succeeded.
     
     date_message = f"{datetime.now().strftime('%d %B %Y')}" 
@@ -185,7 +179,7 @@ def validate_task_text(state_seq: List[Any], task: str) -> Dict[str, str]:
     
     # Feed (S, S', S'', ...) -- i.e. all screenshots at once
     messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
-    pred_raw_response: str = _fetch_openai_completion(messages, model='gpt-4o', temperature=0.0, seed=1234) # model='gpt-4-turbo-preview'
+    pred_raw_response: str = _fetch_openai_completion(messages, model=model, temperature=0.0, seed=1234) # model='gpt-4-turbo-preview'
 
     # Evaluate
     try:
