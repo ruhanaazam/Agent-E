@@ -122,6 +122,7 @@ class AnnotationLoader:
                 
                 # Add token count from main_chat
                 high_level_chat = self.get_high_level_trajectory(task_id)
+                high_level_chat = self.format_main_chat(high_level_chat)
                 total_generated_tokens = sum(len(string.split()) for string in high_level_chat[1:]) - len(high_level_chat[1:]) 
                 result_df["total_main_chat_token"] = total_generated_tokens
                 result_df["main_chat_length"] = len(high_level_chat)
@@ -141,16 +142,19 @@ class AnnotationLoader:
         with open(file_path, 'r') as f:
             json_data = json.load(f)
         message_json = list(json_data.values())[0]
-        
-        # # Load each message
-        # fomatted_messages = []
-        # for message in message_json:
-        #     role = message.get("role", "")
-        #     content = message.get("content", "")
-        #     fomatted_messages.append(f"{role}: {content}")
-        #     # TODO: might be better to remove the json formatting message, migth be more intuitive
         return message_json
     
+    def format_main_chat(self, message_json):
+        # Load each message
+        fomatted_messages = []
+        for message in message_json:
+            role = message.get("role", "")
+            content = message.get("content", "")
+            fomatted_messages.append(f"{role}: {content}")
+            # TODO: might be better to remove the json formatting message, migth be more intuitive
+        return fomatted_messages
+        
+        
     def load_main_chat_seqence(self, task_id: int):
         # Load the main chat as json
         chat_path = os.path.join(self.log_path, f"{self.log_prefix}{task_id}/execution_logs_{task_id}.json")
