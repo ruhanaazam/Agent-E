@@ -12,7 +12,7 @@ for SEED in 0 1 2; do
         python test_validator.py \
             --log_path "$LOG_PATH" \
             --result_path "$RESULT_PATH" \
-            --raw_result_path "$RAW_JSON_PATH" \
+            --raw_json_path "$RAW_JSON_PATH" \
             --output_file "text_${MODEL}_seed_${SEED}.json" \
             --method "$METHOD" \
             --model "$MODEL" &
