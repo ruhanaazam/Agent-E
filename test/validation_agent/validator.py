@@ -88,8 +88,7 @@ def validate_task_vision(state_seq: List[Any], task: str, model: str, final_resp
         messages: List[str] = [intro_prompt] + prompt_sequence + final_response_formatted +[close_prompt]
     else: 
         messages: List[str] = [intro_prompt] + prompt_sequence + [close_prompt]
-        #print(f"model: gpt-4-turbo-preview")
-    pred_raw_response: str = _fetch_openai_completion(messages, model=model, temperature=0.0, seed=1234) #gpt-4-vision-preview
+    pred_raw_response: str = _fetch_openai_completion(messages, model=model, temperature=0.0, seed=1234)
 
     # Evaluate
     try:
