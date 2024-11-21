@@ -6,10 +6,6 @@ build-backend = "uv.build_api"
 name = "Agent-E"
 version = "0.1.0"
 description = "Automation tool for agents to perform tasks starting with on the web browser."
-authors = [
-    { name = "Deepak Akkil", email = "deepak.akkil@merlyn.org" },
-    { name = "Tamer Abuelsaad", email = "tea@merlyn.org" },
-]
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.10"
