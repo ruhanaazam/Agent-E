@@ -4,7 +4,6 @@ from .prompts import (
     prompt_validate_with_text_intro, prompt_validate_with_text_close, 
     prompt_validate_with_text_vision_intro, prompt_validate_with_text_vision_close,
     prompt_validate_with_vision_final_response_intro, prompt_validate_with_vision_final_response_close,
-    prompt_classifier_intro, prompt_classifier_close
 )
 from .utils import (
     _fetch_openai_completion,
@@ -57,7 +56,7 @@ def validate_task_vision(state_seq: List[Any], task: str, model: str, final_resp
         "role" : "user",
         "content" : [{
             "type" : "text",
-            "text" : prompt_validate_with_vision_intro(task, date_message)
+            "text" : prompt_validate_with_vision_intro(task)
         }]
     }
     close_prompt: Dict[str, str] = {
@@ -74,7 +73,7 @@ def validate_task_vision(state_seq: List[Any], task: str, model: str, final_resp
             "role" : "user",
             "content" : [{
                 "type" : "text",
-                "text" : prompt_validate_with_vision_final_response_intro(task, date_message)
+                "text" : prompt_validate_with_vision_final_response_intro(task)
             }]
         }
         close_prompt: Dict[str, str] = {
@@ -120,7 +119,7 @@ def validate_task_text_vision(text_sequence: List[Any], vision_seqence: List[Any
             "role" : "user",
             "content" : [{
                 "type" : "text",
-                "text" : prompt_validate_with_text_vision_intro(task, date_message)
+                "text" : prompt_validate_with_text_vision_intro(task)
             }] # type: ignore
         }
         
@@ -165,7 +164,7 @@ def validate_task_text(state_seq: List[Any], task: str, model: str) -> Dict[str,
         "role" : "user",
         "content" : [{
             "type" : "text",
-            "text" : prompt_validate_with_text_intro(task, date_message)
+            "text" : prompt_validate_with_text_intro(task)
         }] # type: ignore
     }
     close_prompt: Dict[str, str] = {
