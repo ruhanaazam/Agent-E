@@ -64,7 +64,7 @@ class AnnotationLoader:
         return result_df
     
     def get_intent(self, task_id):
-        return self.get_result(task_id)['intent']
+        return self.get_result(task_id)['intent'].squeeze()
     
     def get_high_level_trajectory(self, task_id):
         '''

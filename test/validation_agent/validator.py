@@ -80,7 +80,7 @@ def validate_task_vision(state_seq: List[Any], task: str, model: str, final_resp
             "role" : "user",
             "content" : [{
                 "type" : "text",
-                "text" : prompt_validate_with_vision_final_response_close()
+                "text" : prompt_validate_with_vision_final_response_close(task)
             }]
         }
         final_response_formatted = build_text_prompt_sequence([final_response])

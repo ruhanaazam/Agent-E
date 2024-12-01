@@ -8,32 +8,38 @@ import os
 
 def validate_task_id(task_id, annotation_loader, config):
     try: 
-        intent = annotation_loader.get_intent(task_id)
+        results = annotation_loader.get_result(task_id)
+        intent = results['intent'].squeeze()
+        final_response = results['last_statement'].squeeze()
         main_chat_sequence = annotation_loader.get_high_level_trajectory(task_id)
         screenshot_paths = annotation_loader.get_screenshot_paths(task_id)
+        if len(screenshot_paths) == 0:
+            return task_id
+        final_response = annotation_loader.get_result(task_id)['last_statement'].squeeze()
     except Exception as e:
-        return {"error": f"Unable to load workflow, failed with: {e}"}
-        
+        return task_id
+        #return {"error": f"Unable to load workflow, failed with: {e}"}
     
-    method = config.get("method", None)
-    model = config.get("model", "gpt-4o")
+    return -1
+    # method = config.get("method", None)
+    # model = config.get("model", "gpt-4o")
     
-    validation_result = {}
-    if method == "main_chat_only":
-        validation_result = validate_task_text(main_chat_sequence, intent, model)
-    elif method == "nested_chat_only":
-        pass
-    elif method == "DOM_tree_only":
-        pass
-    elif method == "screenshots_only":
-        # validate_task_vision(screenshot_paths, intent, model)
-        pass
-    elif method == "screenshot_final_response":
-        pass 
-    else:
-        print("Error! No method specified!")
+    # validation_result = {}
+    # if method == "main_chat_only":
+    #     validation_result = validate_task_text(main_chat_sequence, intent, model)
+    # elif method == "nested_chat_only":
+    #     pass
+    # elif method == "DOM_tree_only":
+    #     pass
+    # elif method == "screenshots_only":
+    #     validation_result = validate_task_vision(screenshot_paths, intent, model)
+    # elif method == "screenshot_final_response":
+    #     validation_result = validate_task_vision(screenshot_paths, intent, model, final_response=final_response)
+    #     pass 
+    # else:
+    #     print("Error! No method specified!")
     
-    return validation_result
+    # return validation_result
 
 def summarize_validator(original_df):
     # Ensure the necessary columns exist
@@ -118,21 +124,24 @@ def main():
         original_df["pred_reason"] = None
 
     # Iterate through each task_id and validate
+    no_screenshots = []
     for index, row in tqdm(original_df.iterrows(), total=len(original_df), desc="Processing predictions"):
         if row['pred_score'] is None:
             task_id = row["task_id"]
             validation_result = validate_task_id(task_id, original_annotation, config)
-            
+            if validation_result > -1:
+                no_screenshots.append(validation_result)
             # Update the DataFrame with the results
-            original_df.at[index, "pred_reason"] = validation_result.get("pred_rationale", None)
-            original_df.at[index, "pred_score"] = validation_result.get("pred_task_completed", None)
+            #original_df.at[index, "pred_reason"] = validation_result.get("pred_rationale", None)
+            #original_df.at[index, "pred_score"] = validation_result.get("pred_task_completed", None)
         else:
             pass # task_id is already complete
         
-        if index % 20:
-            original_df.to_json(output_file, orient="records", indent=4)
-            summarize_validator(original_df)
-
+        #if index % 20:
+        #    original_df.to_json(output_file, orient="records", indent=4)
+        #    summarize_validator(original_df)
+    print(no_screenshots)
+    
     # Save the updated DataFrame to a JSON file
     original_df.to_json(output_file, orient="records", indent=4)
     print(f"Results saved to {output_file}")
@@ -140,11 +149,11 @@ def main():
 if __name__ == "__main__":
     main()
     
-    # EXAMPLE:
-    # python test_validator.py \
-    # --log_path "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/logs" \
-    # --result_path "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/results" \
-    # --raw_json_path "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/raw_results.json" \
-    # --output_file "hehe.json" \
-    # --method "main_chat_only" \
-    # --model "gpt-4o"
+# # # EXAMPLE:
+# python test_validator.py \
+# --log_path "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/logs" \
+# --result_path "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/results" \
+# --raw_json_path "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/raw_results.json" \
+# --output_file "hehe.json" \
+# --method "screenshot_final_response" \
+# --model "gpt-4o"
