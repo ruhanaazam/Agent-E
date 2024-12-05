@@ -276,7 +276,7 @@ class AutogenWrapper:
                     should_terminate = True
 
              return should_terminate # type: ignore
-
+          
         task_delegate_agent = UserProxyAgent_SequentialFunctionExecution(
             name="user",
             llm_config=False,
@@ -368,8 +368,7 @@ class AutogenWrapper:
         if current_url:
             current_url_prompt_segment = f"Current Page: {current_url}"
  
-        prompt = Template(LLM_PROMPTS["COMMAND_EXECUTION_PROMPT"]).substitute(command=command, current_url_prompt_segment=current_url_prompt_segment)
-         
+        prompt = Template(LLM_PROMPTS["COMMAND_EXECUTION_PROMPT"]).substitute(command=command, current_url_prompt_segment=current_url_prompt_segment) 
             
         logger.info(f"Prompt for command: {prompt}")
         #with Cache.disk() as cache:

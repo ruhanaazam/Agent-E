@@ -5,15 +5,15 @@ class PlannerExperience:
         """
         Constructor to initialize width and height of the rectangle.
         """
+        self.results_folder = "/Users/ruhana/Agent-E/new_ruhana_notes/All/results/results_for_test_full_text"
+        self.log_folder = "/Users/ruhana/Agent-E/new_ruhana_notes/All/logs/test_results_for_full_text/"
         return 
     
     def main_chat_path(self, example_id) -> str: 
-            #return f"/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/logs/logs_for_task_{example_id}/execution_logs_{example_id}.json"
-            return f"/Users/ruhana/Agent-E/new_ruhana_notes/All/logs/test_results_for_full_text/logs_for_task_{example_id}/execution_logs_{example_id}.json"
+            return f"{self.log_folder}/logs_for_task_{example_id}/execution_logs_{example_id}.json"
         
     def result_path(self, example_id) -> str:
-            #return f"/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/results/results_for_task_{example_id}.json"
-            return f"/Users/ruhana/Agent-E/new_ruhana_notes/All/results/results_for_test_full_text/results_for_task_{example_id}.json"
+            return f"{self.results_folder}/results_for_task_{example_id}.json"
 
     def build_few_shot_prompt(self, strategy:str, example_id=None) -> str:
         """
@@ -35,4 +35,9 @@ class PlannerExperience:
             formatted_main_chat = format_main_chat(main_chat_list)
             direction = "Please use this plan as a guideline"
             prompt = f"Please use this plan as a guideline:{formatted_main_chat}"
+        elif strategy == "rag-self-reflection":
+            reflections_folder = f"" # TODO: get the tip folder
+            tips = "Try to be helpful" # TODO: get the tip
+            direction = f"\n When planning consider the following tips:\n"
+            prompt = direction + tips
         return prompt
