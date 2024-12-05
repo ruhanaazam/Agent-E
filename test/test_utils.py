@@ -348,3 +348,23 @@ def robust_json_loader(json_str):
         new_json_str:str = response.choices[0].message.content
         json_object = json.loads(new_json_str)
     return json_object
+
+def count_skill_calls(task_log_directory):
+    full_nested_chat = []
+    # Loop through all nested chat files
+    for file_name in os.listdir(task_log_directory):
+        if file_name.startswith("nested_chat_log") and file_name.endswith(".json"):
+            file_path = os.path.join(task_log_directory, file_name)
+            # Load the JSON file
+            with open(file_path, 'r') as json_file:
+                try:
+                    json_data = json.load(json_file)
+                    full_nested_chat = full_nested_chat + json_data
+                except json.JSONDecodeError as e:
+                    print(f"Error loading {file_name}: {e}")
+
+    # count number of tool calls
+    tool_call_count = 0
+    for item in full_nested_chat:
+        tool_call_count += len(item.get("tool_calls", []))
+    return tool_call_count

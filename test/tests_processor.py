@@ -22,6 +22,7 @@ from test.evaluators import evaluator_router
 from test.test_utils import get_formatted_current_timestamp
 from test.test_utils import load_config
 from test.test_utils import task_config_validator
+from test.test_utils import count_skill_calls
 from ae.core.rap.planner_experience import PlannerExperience
 
 nltk.download("punkt")  # type: ignore
@@ -181,9 +182,10 @@ def print_test_result(task_result: dict[str, str | int | float | None], index: i
     cost = task_result.get("compute_cost", None)
     total_cost = None if cost is None else round(cost.get("cost", -1), 4)  # type: ignore
     total_tokens = None if cost is None else cost.get("total_tokens", -1)  # type: ignore
+    skill_calls = task_result.get("skill_calls", -1)  # type: ignore
     result_table = [  # type: ignore
-        ["Test Index", "Task ID", "Intent", "Status", "Time Taken (s)", "Total Tokens", "Total Cost ($)"],
-        [index, task_result["task_id"], task_result["intent"], colored(status, color), round(task_result["tct"], 2), total_tokens, total_cost],  # type: ignore
+        ["Test Index", "Task ID", "Intent", "Status", "Time Taken (s)", "Skill Calls", "Total Tokens", "Total Cost ($)"],
+        [index, task_result["task_id"], task_result["intent"], colored(status, color), round(task_result["tct"], 2), skill_calls, total_tokens, total_cost],  # type: ignore
     ]
     print("\n" + tabulate(result_table, headers="firstrow", tablefmt="grid"))  # type: ignore
 
@@ -267,7 +269,6 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
         command_cost = get_command_exec_cost(command_exec_result)  # type: ignore
         print(f"Command cost: {command_cost}")
         single_task_result["compute_cost"] = command_cost
-
         logger.info(f'Command "{command}" took: {round(end_time - start_time, 2)} seconds.')
         logger.info(f"Task {task_id} completed.")
 
@@ -362,6 +363,11 @@ async def run_tests(
 
         print_progress_bar(index - min_task_index, total_tests)
         task_result = await execute_single_task(task_config, browser_manager, ag, page, log_folders["task_log_folder"])
+        
+        # Check how many skills were called 
+        skill_count = count_skill_calls(log_folders['task_log_folder'])
+        task_result["skill_calls"] = skill_count
+        
         test_results.append(task_result)
         save_individual_test_result(task_result, results_dir)
         print_test_result(task_result, index + 1, total_tests)
@@ -378,14 +384,15 @@ async def run_tests(
 
     # Aggregate and print individual test results
     print("\nDetailed Test Results:")
-    detailed_results_table = [["Test Index", "Task ID", "Intent", "Status", "Time Taken (s)", "Total Tokens", "Total Cost ($)"]]
+    detailed_results_table = [["Test Index", "Task ID", "Intent", "Status", "Time Taken (s)", "Skill Calls", "Total Tokens", "Total Cost ($)"]]
     for idx, result in enumerate(test_results, 1):
         status, color = determine_status_and_color(result["score"])  # type: ignore
 
         cost: str | int | float | None = result.get("compute_cost", None)
         total_cost = None if cost is None else round(cost.get("cost", -1), 4)  # type: ignore
         total_tokens = None if cost is None else cost.get("total_tokens", -1)  # type: ignore
-
+        
+        
         detailed_results_table.append(
             [
                 idx,
@@ -393,6 +400,7 @@ async def run_tests(
                 result["intent"],
                 colored(status, color),
                 round(result["tct"], 2),  # type: ignore
+                skill_count,
                 total_tokens,
                 total_cost,
             ]
@@ -405,12 +413,14 @@ async def run_tests(
     # Calculate aggregated cost and token totals for all tests that have compute cost
     total_cost = 0
     total_tokens = 0
+    total_skill_calls = 0
 
     for result in test_results:
         compute_cost = result.get("compute_cost", 0)  # type: ignore
         if compute_cost is not None and isinstance(compute_cost, dict):
             total_cost += compute_cost.get("cost", 0)  # type: ignore
             total_tokens += compute_cost.get("total_tokens", 0)  # type: ignore
+            total_skill_calls += result.get("skill_calls", 0)
 
     passed_tests = []
     skipped_tests = []
@@ -424,7 +434,7 @@ async def run_tests(
             failed_tests.append(result)  # type: ignore
 
     summary_table = [  # type: ignore
-        ["Total Tests", "Passed", "Failed", "Skipped", "Average Time Taken (s)", "Total Time Taken (s)", "Total Tokens", "Total Cost ($)"],
+        ["Total Tests", "Passed", "Failed", "Skipped", "Average Time Taken (s)", "Total Time Taken (s)", "Total Skill Calls", "Total Tokens", "Total Cost ($)"],
         [
             total_tests,
             len(passed_tests),
@@ -432,6 +442,7 @@ async def run_tests(
             len(skipped_tests),
             round(sum(test["tct"] for test in test_results) / total_tests, 2),  # type: ignore
             round(sum(test["tct"] for test in test_results), 2),  # type: ignore
+            total_skill_calls,
             total_tokens,
             total_cost,
         ],
