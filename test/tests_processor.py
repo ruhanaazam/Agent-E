@@ -270,8 +270,7 @@ async def execute_single_task(task_config: dict[str, Any], browser_manager: Play
 
         dump_log(str(task_id), messages_str_keys, logs_dir)
 
-        single_task_result["last_statement"] = last_agent_response
-
+        single_task_result["last_statement"] = last_agent_response        
         evaluator = evaluator_router(task_config)
         cdp_session = await page.context.new_cdp_session(page)
         evaluator_result = await evaluator(
