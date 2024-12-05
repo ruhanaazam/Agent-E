@@ -23,7 +23,7 @@ from test.test_utils import evaluate_must_include
 from test.test_utils import evaluate_ua_match
 from test.test_utils import list_items_in_folder
 
-from .validation_agent.validator import validate_task_vqa
+from .validation_agent.validator import validate_task_vision
 
 TEST_LOGS = os.path.join(PROJECT_TEST_ROOT, "logs")
 
@@ -426,7 +426,7 @@ class VQAEvaluator(Evaluator):
             state_seq.append({"id": task_id, "path_to_screenshot": f"{path_to_screenshots}/{screenshot_name}"})
 
         # Calculate VQA Score
-        score_dict = validate_task_vqa(state_seq, task)  # type: ignore
+        score_dict = validate_task_vision(state_seq, task)  # type: ignore
         score = score_dict["pred_task_completed"]
         reason = score_dict["pred_rationale"]
         return {"score": score, "reason": reason}
