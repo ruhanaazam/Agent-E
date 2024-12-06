@@ -450,7 +450,6 @@ class TaskLogEvaluator(Evaluator):
         score = -1.0
         reason = None
 
-        # TODO: load the main chat properly 
         # Get path to screenshots for the given task
         test_folder = list_items_in_folder(TEST_LOGS)[-1]  # Get the most recent log folder
         # path_to_main_chat = f"{TEST_LOGS}/{test_folder}/logs_for_task_{task_id}/execution_logs_{task_id}.json"
@@ -461,7 +460,7 @@ class TaskLogEvaluator(Evaluator):
         annotation_loader = AnnotationLoader(log_path, result_path)
         state_seq = annotation_loader.get_high_level_trajectory(task_id)
 
-        # TODO: call the evaluator and return the score
+
         # # Calculate VQA Score
         model = "gpt4-o"
         score_dict = validate_task_text(state_seq, task, model=model)  # type: ignore

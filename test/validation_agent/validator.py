@@ -11,12 +11,12 @@ from .utils import (
     fetch_openai_vision_completion,
     load_screenshot_for_state,
     build_screenshot_prompt_sequence,
-    build_text_prompt_sequence
+    build_text_prompt_sequence,
+    robust_json_loader
 )
 from typing import Dict, Any, List
 import json
 from datetime import datetime
-from test.test_utils import robust_json_loader
 
 def validate_task_vision(state_seq: List[Any], task: str, model: str, final_response: str| None = None) -> Dict[str, str]:
     ## Simple validator function that takes as input the sequence of states and the task, and determines if it succeeded.
