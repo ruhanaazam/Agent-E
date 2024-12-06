@@ -1,7 +1,13 @@
 import os
+import sys
+# Add project home directory in the path
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, parent_dir)
+
 import json
 import pandas as pd
 from test.validation_agent.utils import get_screenshot_paths
+from test.test_utils import count_skill_calls
 
 class AnnotationLoader:
     def __init__(self, log_path, results_path):
@@ -122,14 +128,17 @@ class AnnotationLoader:
                 
                 # Add token count from main_chat
                 high_level_chat = self.get_high_level_trajectory(task_id)
-                total_generated_tokens = sum(len(string.split()) for string in high_level_chat[1:]) - len(high_level_chat[1:]) 
+                total_generated_tokens = sum(len(str(string).split()) for string in high_level_chat[1:]) - len(high_level_chat[1:]) 
                 result_df["total_main_chat_token"] = total_generated_tokens
                 result_df["main_chat_length"] = len(high_level_chat)
 
                 # Add trajectory length from fine-grained actions
-                low_level_trajectory = self.get_low_level_trajectory(task_id)
-                total_trajectory_length = len(low_level_trajectory)
-                result_df["total_trajectory_length"] = total_trajectory_length
+                # low_level_trajectory = self.get_low_level_trajectory(task_id)
+                # total_trajectory_length = len(low_level_trajectory)
+                # result_df["total_trajectory_length"] = total_trajectory_length
+                log_path = os.path.join(self.log_path, f"{self.log_prefix}{task_id}")
+                result_df['skill_calls'] = count_skill_calls(log_path)
+                
                 result_df_list.append(result_df)
             except Exception as err: 
                 print(err)
