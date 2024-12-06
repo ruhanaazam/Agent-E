@@ -12,6 +12,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score
 from tqdm import tqdm
 
 def print_confusion(gpt_eval):
+    total = len(gpt_eval)
     true_positive = gpt_eval[(gpt_eval['pred_score'] == 1) & (gpt_eval['score'] == 1)]
     true_negative = gpt_eval[(gpt_eval['pred_score'] == 0) & (gpt_eval['score'] == 0)]
     false_positive = gpt_eval[(gpt_eval['pred_score'] == 1) & (gpt_eval['score'] == 0)]
@@ -27,10 +28,10 @@ def print_confusion(gpt_eval):
     
     # Print the results
     print(f"Accuracy: {accuracy:.4f}")
-    print(f"True Positive (TP): {len(true_positive)}")
-    print(f"True Negative (TN): {len(true_negative)}")
-    print(f"False Positive (FP): {len(false_positive)}")
-    print(f"False Negative (FN): {len(false_negative)}")
+    print(f"True Positive (TP): {len(true_positive)/total:.4f}")
+    print(f"True Negative (TN): {len(true_negative)/total:.4f}")
+    print(f"False Positive (FP): {len(false_positive)/total:.4f}")
+    print(f"False Negative (FN): {len(false_negative)/total:.4f}")
     print(f"Recall: {recall:.4f}")
     print(f"Precision: {precision:.4f}")
     print(f"F1 Score: {f1:.4f}")
@@ -46,6 +47,17 @@ def validate_task_id(task_id, annotation_loader, config):
     validation_result = {}
     if method == "main_chat_only":
         validation_result = validate_task_text(main_chat_sequence, intent, model=model)
+    elif method == "main_chat_consistency":
+        c = 1
+        validation_result_list = [validate_task_text(main_chat_sequence, intent, model=model) for i in range(c)]
+        pred_scores = [result.get("pred_task_completed", None) for result in validation_result_list]
+        print(pred_scores)
+        avg_score = sum(pred_scores) / len(pred_scores)
+        pred_score = 1.0 if avg_score > 0.5 else 0.0
+        
+        index = pred_scores.index(pred_score)
+        validation_result = validation_result_list[index]
+        
     elif method == "nested_chat_only":
         pass # TODO
     elif method == "DOM_tree_only":
@@ -61,7 +73,7 @@ def validate_task_id(task_id, annotation_loader, config):
 
 def validate_all_annotation(annotation_loader, config):
     result_dfs = []
-    task_id_list = range(0, 643, 5)
+    task_id_list = range(0, 643, 20)
     
     for task_id in tqdm(task_id_list, desc="Processing tasks", unit="task"):
         original_results = annotation_loader.get_result(task_id)
@@ -87,7 +99,7 @@ def validate_all_annotation(annotation_loader, config):
 LOG_PATH = "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/logs"
 RESULT_PATH = "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/results"
 original_annotation = AnnotationLoader(LOG_PATH, RESULT_PATH)
-config = {"method": "main_chat_only",
+config = {"method": "main_chat_consistency",
             "model": "gpt-4-vision-preview"}
 
 # Test a single task_id
