@@ -23,7 +23,7 @@ def load_screenshot_for_state(state: Dict[str, Any]) -> Tuple[str, str]:
     return path_to_screenshot, encoded_image
 
 def fetch_openai_vision_completion(
-    prompt: str, base64_images: List[str], **kwargs
+    prompt: str, base64_images: List[str], model: str, **kwargs
 ) -> str:
     """Helper function to call OpenAI's Vision API. Handles rate limit errors and other exceptions"""
     messages: List[Any] = [
@@ -39,7 +39,7 @@ def fetch_openai_vision_completion(
             + [{"type": "text", "text": prompt}],
         },
     ]
-    return _fetch_openai_completion(messages, model="gpt-4-vision-preview", **kwargs)
+    return _fetch_openai_completion(messages, model=model, **kwargs)
 
 def _fetch_openai_completion(messages: List[Any], model: str, **kwargs) -> str | None:
     """Helper function to call OpenAI's Vision API. Handles rate limit errors and other exceptions"""
