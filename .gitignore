@@ -166,3 +166,7 @@ ae/testing.py
 
 # All $HOME directory for the chrome browser
 $HOME/
+
+# File(s) storing results 
+test/evaluator_results
+test/rag_tests/
