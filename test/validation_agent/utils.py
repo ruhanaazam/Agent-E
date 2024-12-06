@@ -210,3 +210,31 @@ def get_final_response(messages: List[Dict[str, str]]):
             except Exception as e:
                 print(f"Exception getting user chat, likely due to unexpected formatting of {content}: {e} ")# add without final message if there is a parsing issue...
     return message
+
+def robust_json_loader(json_str):
+    '''
+    This function will correct any incorrectly formatted json objects then load it.
+    (Can be helpful when you have json objects created by an LLM)
+    '''
+    try:
+        json_object = json.loads(json_str)
+    except Exception as e:
+        model_name = os.environ['AUTOGEN_MODEL_NAME']
+        print(f"Json formatting issue... Calling {model_name} to reformat...")
+
+        #call gpt-4 to fix
+        client = OpenAI(api_key=os.environ['OPENAI_API_KEY'],)
+        prompt = f"Your job is to correct a string to be a perfect json object so it can be parsed. The given string is almost is json. Please help me make this string into proper json format. Please only respond with a plain text and nothing else: {json_str} "
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=150,
+            n=1,
+            temperature=0.0
+        )
+        new_json_str:str = response.choices[0].message.content
+        json_object = json.loads(new_json_str)
+    return json_object

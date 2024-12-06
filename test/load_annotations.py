@@ -1,7 +1,7 @@
 import os
 import json
 import pandas as pd
-from validation_agent.utils import get_screenshot_paths
+from test.validation_agent.utils import get_screenshot_paths
 
 class AnnotationLoader:
     def __init__(self, log_path, results_path):
@@ -64,7 +64,7 @@ class AnnotationLoader:
         return result_df
     
     def get_intent(self, task_id):
-        return self.get_result(task_id)['intent'].squeeze()
+        return self.get_result(task_id)['intent']
     
     def get_high_level_trajectory(self, task_id):
         '''
@@ -97,27 +97,6 @@ class AnnotationLoader:
                 trajectories = trajectories + trajectory
         return trajectories
     
-    
-
-    def get_high_level_trajectory_as_formatted_string(self, task_id):
-        raw_chat = self.get_high_level_trajectory(task_id)
-        intent = raw_chat[0].get("content")
-        raw_final_response = raw_chat[-1].get("content")
-
-        trajectory = ""
-        for i in range(1, len(raw_chat)-1, 2):
-            assert raw_chat[i].get('role') == 'assistant' # this is action
-            assert raw_chat[i+1].get('role') == 'user' # this is observation after the action
-            action_i = raw_chat[i].get('content')
-            action_i = action_i.split('"next_step":')[-1].strip() # remove intial planning message, and "next step" message
-            action_i = action_i.split('"terminate":')[0].strip()
-            observation_i_1 = raw_chat[i+1].get('content')
-            
-            curr_step = i//2
-            one_step = f"action {curr_step}: {action_i}\nobservation {curr_step+1}: {observation_i_1}\n"
-            trajectory = trajectory + one_step
-        return intent, trajectory, raw_final_response
-    
     def get_screenshot_paths(self, task_id):
         screenshot_directory = os.path.join(self.log_path, f"{self.log_prefix}{task_id}/snapshots")
         screenshot_path_list = get_screenshot_paths(screenshot_directory)
@@ -143,7 +122,6 @@ class AnnotationLoader:
                 
                 # Add token count from main_chat
                 high_level_chat = self.get_high_level_trajectory(task_id)
-                high_level_chat = self.format_main_chat(high_level_chat)
                 total_generated_tokens = sum(len(string.split()) for string in high_level_chat[1:]) - len(high_level_chat[1:]) 
                 result_df["total_main_chat_token"] = total_generated_tokens
                 result_df["main_chat_length"] = len(high_level_chat)
@@ -163,19 +141,16 @@ class AnnotationLoader:
         with open(file_path, 'r') as f:
             json_data = json.load(f)
         message_json = list(json_data.values())[0]
+        
+        # # Load each message
+        # fomatted_messages = []
+        # for message in message_json:
+        #     role = message.get("role", "")
+        #     content = message.get("content", "")
+        #     fomatted_messages.append(f"{role}: {content}")
+        #     # TODO: might be better to remove the json formatting message, migth be more intuitive
         return message_json
     
-    def format_main_chat(self, message_json):
-        # Load each message
-        fomatted_messages = []
-        for message in message_json:
-            role = message.get("role", "")
-            content = message.get("content", "")
-            fomatted_messages.append(f"{role}: {content}")
-            # TODO: might be better to remove the json formatting message, migth be more intuitive
-        return fomatted_messages
-        
-        
     def load_main_chat_seqence(self, task_id: int):
         # Load the main chat as json
         chat_path = os.path.join(self.log_path, f"{self.log_prefix}{task_id}/execution_logs_{task_id}.json")
@@ -262,19 +237,3 @@ class AnnotationLoaderForEmbedding():
         full_df = pd.concat(df_list, ignore_index=True)
         full_df.to_csv(file_name, index=False)
         return 
-    
-def main():
-    LOG_PATH = "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/logs"
-    RESULT_PATH = "/Users/ruhana/Agent-E/ruhana_notes/baseline_annotated/original_annotations/All/results"
-    
-    annon = AnnotationLoaderForEmbedding(LOG_PATH, RESULT_PATH)
-    csv_name = "agent_e_webvoyager_rollouts.csv"
-    print(annon.build_csv(csv_name))
-    # double check the log and result exits 
-    
-    # now we look for specific example task_id runs, we want to improve on!, and double check that issues persists,
-    # the goal here is to find trajectories that are long and successfull
-    
-main()
-    
-    

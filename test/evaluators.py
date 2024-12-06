@@ -22,8 +22,9 @@ from test.test_utils import evaluate_fuzzy_match
 from test.test_utils import evaluate_must_include
 from test.test_utils import evaluate_ua_match
 from test.test_utils import list_items_in_folder
+from test.load_annotations import AnnotationLoader
 
-from .validation_agent.validator import validate_task_vision
+from .validation_agent.validator import validate_task_vision, validate_task_text
 
 TEST_LOGS = os.path.join(PROJECT_TEST_ROOT, "logs")
 
@@ -426,11 +427,45 @@ class VQAEvaluator(Evaluator):
             state_seq.append({"id": task_id, "path_to_screenshot": f"{path_to_screenshots}/{screenshot_name}"})
 
         # Calculate VQA Score
-        score_dict = validate_task_vision(state_seq, task)  # type: ignore
+        model = "gpt-4-vision-preview"
+        score_dict = validate_task_vision(state_seq, task, model=model)  # type: ignore
         score = score_dict["pred_task_completed"]
         reason = score_dict["pred_rationale"]
         return {"score": score, "reason": reason}
 
+class TaskLogEvaluator(Evaluator):
+    async def __call__(self, task_config: dict[str, Any], page: Page, client: CDPSession, answer: str) -> float:
+        """Evaluates the current task using a VQA model
+        Parameters:
+            task_config (dict[str, Any]): The task configuration containing evaluation criteria.
+            page (Page): The Playwright page object for the current webpage.
+            client (CDPSession | None, optional): The Chrome DevTools Protocol session object.
+            answer (str | None, optional): Not used in this evaluator.
+        Returns:
+            float: 0.0 for failure and 1.0 if the VQA evaluates the task as complete
+        """
+        task_id = task_config["task_id"]
+        task = task_config["intent"]
+        state_seq: list[Any] = []
+        score = -1.0
+        reason = None
+
+        # Get path to screenshots for the given task
+        test_folder = list_items_in_folder(TEST_LOGS)[-1]  # Get the most recent log folder
+        # path_to_main_chat = f"{TEST_LOGS}/{test_folder}/logs_for_task_{task_id}/execution_logs_{task_id}.json"
+        
+         
+        log_path = f"{TEST_LOGS}/{test_folder}"
+        result_path = None # Not needed so left blank
+        annotation_loader = AnnotationLoader(log_path, result_path)
+        state_seq = annotation_loader.get_high_level_trajectory(task_id)
+
+        # # Calculate VQA Score
+        model = "gpt4-o"
+        score_dict = validate_task_text(state_seq, task, model=model)  # type: ignore
+        score = score_dict["pred_task_completed"]
+        reason = score_dict["pred_rationale"]
+        return {"score": score, "reason": reason}
 
 def evaluator_router(task_config: dict[str, Any]) -> EvaluatorComb:
     """Creates and configures a composite evaluator based on the evaluation types specified in the configuration file.
@@ -461,9 +496,12 @@ def evaluator_router(task_config: dict[str, Any]) -> EvaluatorComb:
             case "manual":
                 logger.info("Adding manual evaluator")
                 evaluators.append(ManualContentEvaluator())
-            case "vqa":
-                logger.info("Adding vqa evaluator")
+            case "vision":
+                logger.info("Adding vision evaluator")
                 evaluators.append(VQAEvaluator())
+            case "text":
+                logger.info("Adding text evaluator")
+                evaluators.append(TaskLogEvaluator())
             case _:
                 raise ValueError(f"eval_type {eval_type} is not supported")
 
