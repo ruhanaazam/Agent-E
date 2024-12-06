@@ -461,7 +461,7 @@ class TaskLogEvaluator(Evaluator):
         state_seq = annotation_loader.get_high_level_trajectory(task_id)
 
         # # Calculate VQA Score
-        model = "gpt4-o"
+        model = "gpt-4o"
         score_dict = validate_task_text(state_seq, task, model=model)  # type: ignore
         score = score_dict["pred_task_completed"]
         reason = score_dict["pred_rationale"]
