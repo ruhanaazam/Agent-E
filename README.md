@@ -443,6 +443,7 @@ We support various evaluation types to enable users to easily build and evaluate
 - `program_html`: Executes JavaScript code to retrieve a value from the HTML page and compares it with a reference answer.
 - `manual`: Pauses the test execution for manual pass/fail annotation.
 - `vqa`: Uses GPT-4 Vision to evaluate task success based on a sequence of screenshots taken at each step. To use the `vqa` evaluation, ensure `--take_screenshots true` is set when running the test.
+- `text`: Uses GPT-4o to evaluate the task success based off the chat between the planner agent and the user proxy agent. 
 
 Examples of how each evaluation type is configured can be found in `test/tasks/test.json`.
 
