@@ -16212,7 +16212,7 @@
         "require_reset": false,
         "eval": {
             "eval_types": [
-                "text"
+                "vqa"
             ],
             "reference_answers": {
                 "text_check": {

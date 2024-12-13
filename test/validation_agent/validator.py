@@ -26,7 +26,7 @@ def validate_task_vision(state_seq: List[Any], task: str, model: str, final_resp
         "role" : "user",
         "content" : [{
             "type" : "text",
-            "text" : prompt_validate_with_vision_intro(task, date_message)
+            "text" : prompt_validate_with_vision_intro(task)
         }]
     }
     close_prompt: Dict[str, str] = {

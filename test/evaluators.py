@@ -497,7 +497,7 @@ def evaluator_router(task_config: dict[str, Any]) -> EvaluatorComb:
             case "manual":
                 logger.info("Adding manual evaluator")
                 evaluators.append(ManualContentEvaluator())
-            case "vision":
+            case "vqa":
                 logger.info("Adding vision evaluator")
                 evaluators.append(VQAEvaluator())
             case "text":
